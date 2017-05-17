@@ -18,7 +18,7 @@ module.exports = {
   }, 
   context: __dirname + "/src",
   entry: {
-    app: ['./statisticApp.js'],
+    statisticApp: ['./statisticApp.js'],
     // vendor: ['whatwg-fetch', './lib/hammer.min.js']
   },
   output: {

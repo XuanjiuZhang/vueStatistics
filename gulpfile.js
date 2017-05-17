@@ -10,8 +10,8 @@ var path = require('path');
 del = require('del');
 
 
-gulp.task('dev', ['cleanImage', 'copyImage'], function() {
-  config.entry.app.unshift('webpack-dev-server/client?http://10.41.3.223:8085/', 'webpack/hot/only-dev-server');
+gulp.task('dev', ['copyStyle'], function() {
+  config.entry.statisticApp.unshift('webpack-dev-server/client?http://localhost:8089/', 'webpack/hot/only-dev-server');
 
   var compiler = webpack(config);
   var server = new webpackDevServer(compiler, {
@@ -24,9 +24,23 @@ gulp.task('dev', ['cleanImage', 'copyImage'], function() {
     publicPath: '/build/',
     // match the output `publicPath`
 
-    stats: { colors: true }
+    stats: { colors: true },
+
+    proxy: {
+      '/h5/service/*': {
+        // target: 'http://192.168.51.22/'
+       target: 'http://10.41.3.219/'
+      }
+    }
   });
-  server.listen(8085);
+  server.listen(8089);
+});
+
+gulp.task('copyStyle', function(){
+  return gulp.src([
+    './src/style/*',
+  ])
+    .pipe(gulp.dest('./build/style/'));
 });
 
 /*gulp.task('build', ['cleanImage', 'copyImage'], function() {
