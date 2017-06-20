@@ -55,7 +55,7 @@ gulp.task('copyStyle', function(){
   console.log('clean /build/img folder.');
 });
 
-// 缩小PNG，JPEG，GIF和SVG图像
+// 压缩PNG，JPEG，GIF和SVG图像
 gulp.task('copyImage', function(){
   return gulp.src([
     './src/img/*',

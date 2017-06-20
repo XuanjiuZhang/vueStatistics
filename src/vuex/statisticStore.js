@@ -4,7 +4,7 @@ Vue.use(Vuex);
 import statisticApi from '../api/statisticApi';
 import echarts from '../components/echarts/echartsRegister';
 
-const getRGBAColor = i => {
+/*const getRGBAColor = i => {
   var randomR;
   var randomB;
   var randomG;
@@ -60,50 +60,32 @@ const initLegendColorList = (count) => {
     legendColorList.push(getRGBAColor(i));
   };
   return legendColorList;
-};
+};*/
 
 const initStore = () => {
   const state = {
-    sceneId: '463c9e00356b11e7947badc1235072ab',
+    // sceneId: '463c9e00356b11e7947badc1235072ab',
     statisticApi,
     echarts,
-    legendColorList: initLegendColorList(2000),
+    /*legendColorList: initLegendColorList(2000),
     sceneChannelTree: undefined,
-    currentShowChannel: undefined,
+    currentShowChannel: undefined,*/
   };
 
   const store = new Vuex.Store({
     state,
     mutations: {
-      changeChannelTree(state, payload) {
+      /*changeChannelTree(state, payload) {
         state.sceneChannelTree = payload.tree;
       },
       changeCurrentShowChannel(state, payload) {
         state.currentShowChannel = payload.currentShowChannel;
-      }
+      }*/
     },
     getters: {
-      statisticApi: state => {
-        return state.statisticApi;
-      },
-      echarts: state => {
-        return state.echarts
-      },
-      sceneChannelTree: state => {
-        return state.sceneChannelTree;
-      },
-      currentShowChannel: state => {
-        return state.currentShowChannel;
-      },
-      sceneId: state => {
-        return state.sceneId;
-      },
-      legendColorList: state => {
-        return state.legendColorList;
-      }
     },
     actions: {
-      getSceneChannelTree(context, payload) {
+      /*getSceneChannelTree(context, payload) {
         statisticApi.getSceneChannelTree(payload.sceneId).then(res => {
           if (res.ok) {
             return res.json();
@@ -113,7 +95,7 @@ const initStore = () => {
           context.commit('changeChannelTree', { tree: data });
           context.commit('changeCurrentShowChannel', { currentShowChannel: data });
         });
-      }
+      }*/
     }
   });
 

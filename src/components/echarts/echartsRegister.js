@@ -1,6 +1,6 @@
 import echarts from 'echarts';
-import registerChinaMap from './echartsChinaMap';
-registerChinaMap(echarts);
+/*import registerChinaMap from './echartsChinaMap';
+registerChinaMap(echarts);*/
 
 export default echarts;
 

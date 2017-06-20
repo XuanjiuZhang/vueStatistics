@@ -74,27 +74,6 @@ module.exports = {
         NODE_ENV: '"development"'
       }
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: "vendor",
-    //   filename: "vendor.js",
-    //   // minChunks: 2,
-    // }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: "commons",
-    //   filename: "commons.js",
-    //   minChunks: 2,
-    // }),
-    // new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-    // new webpack.LoaderOptionsPlugin({
-    //    debug: true
-    //  })
-    // 压缩js文件
-    // new webpack.optimize.UglifyJsPlugin({
-    //   mangle: true,
-    //   compress: {
-    //     warnings: false // 禁止生成warning
-    //   }
-    // }),
     new webpack.HotModuleReplacementPlugin()
   ]
 };
