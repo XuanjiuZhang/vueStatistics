@@ -14,17 +14,22 @@
 <script>
   import { mapState } from 'Vuex';
   import parseData from './funnelService';
+  const drawExtraInfo = function() {
+    const ctx = this.canvasDom.getContext('2d');
+    ctx.strokeRect(0, 0, 100, 100);
+  }
+
   export default {
     data() {
       return {
         chartInstance: undefined,
+        canvasDom: undefined,
       }
     },
     mounted() {
-      console.log(this.$refs.child);
-
       this.chartInstance = this.echarts.init(this.$refs.child);
-      this.chartInstance.setOption(parseData());
+      this.chartInstance.setOption(parseData({}, drawExtraInfo.bind(this)));
+      this.canvasDom = this.$refs.child.childNodes[0].childNodes[0];
     },
     computed: {
       ...mapState({

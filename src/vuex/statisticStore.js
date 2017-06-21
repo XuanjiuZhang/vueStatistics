@@ -66,7 +66,7 @@ const initStore = () => {
   const state = {
     // sceneId: '463c9e00356b11e7947badc1235072ab',
     statisticApi,
-    echarts,
+    echarts
     /*legendColorList: initLegendColorList(2000),
     sceneChannelTree: undefined,
     currentShowChannel: undefined,*/
