@@ -9,7 +9,7 @@ const parseRawDataToOption = (data, refreshCallBack) => {
       trigger: 'item',
       // formatter: "{a} <br/>{b} : {c}%"
       formatter: params => {
-        // setTimeout(refreshCallBack);
+        setTimeout(refreshCallBack);
         return `${params.seriesName} <br/>${params.name} :　${params.data.value}%`
       }
     },
