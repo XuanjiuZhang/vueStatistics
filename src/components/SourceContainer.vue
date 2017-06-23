@@ -5,7 +5,9 @@
   <div class="container-fluid">
     <Nav-header></Nav-header>
     <div class="container-fluid">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>

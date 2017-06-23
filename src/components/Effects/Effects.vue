@@ -5,6 +5,10 @@
   .content-wrapper-center {
     margin: 0 auto
   }
+  .funnel-chart {
+    width: 600px;
+    height: 500px;
+  }
 </style>
 
 <template>
@@ -14,7 +18,8 @@
         <span>营销漏斗</span>
       </div>
       <div class="funnel-chart content-wrapper-center">
-        <Funnel-chart></Funnel-chart>
+        <!--<Funnel-chart></Funnel-chart>-->
+        <D3-funnel></D3-funnel>
       </div>
     </div>
     <div class="content-wrapper">
@@ -31,6 +36,7 @@
 <script>
   import { mapGetters } from 'Vuex'
   import FunnelChart from './FunnelChart/FunnelChart'
+  import D3Funnel from './D3Chart/D3Funnel'
   import ComposedTable from './Table/ComposedTable'
   export default {
     data() {
@@ -45,7 +51,8 @@
     },
     components: {
       FunnelChart,
-      ComposedTable
+      ComposedTable,
+      D3Funnel
     }
   }
 

@@ -1,10 +1,4 @@
 <style lang="less">
-  .funnel-chart {
-    /*display: inline-block;*/
-    width: 600px;
-    height: 500px;
-    /*margin: 0 auto;*/
-  }
 </style>
 
 <template>
