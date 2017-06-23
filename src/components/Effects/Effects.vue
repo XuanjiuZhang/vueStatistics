@@ -19,7 +19,7 @@
       </div>
       <div class="funnel-chart content-wrapper-center">
         <!--<Funnel-chart></Funnel-chart>-->
-        <D3-funnel></D3-funnel>
+        <D3-funnel2></D3-funnel2>
       </div>
     </div>
     <div class="content-wrapper">
@@ -37,6 +37,7 @@
   import { mapGetters } from 'Vuex'
   import FunnelChart from './FunnelChart/FunnelChart'
   import D3Funnel from './D3Chart/D3Funnel'
+  import D3Funnel2 from './D3Chart/D3Funnel2'
   import ComposedTable from './Table/ComposedTable'
   export default {
     data() {
@@ -52,7 +53,8 @@
     components: {
       FunnelChart,
       ComposedTable,
-      D3Funnel
+      D3Funnel,
+      D3Funnel2
     }
   }
 
