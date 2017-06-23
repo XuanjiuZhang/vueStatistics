@@ -1,16 +1,21 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 import _lodash from 'lodash';
 window._lodash = _lodash;
 import initStore from './vuex/statisticStore';
-/*import ChannelBanner from './components/ChannelBanner';
-import LineChart from './components/LineChart';*/
-import FunnelChart from './components/FunnelChart/FunnelChart';
-import D3Funnel from './components/D3Chart/D3Funnel';
+import SourceContainer from './components/SourceContainer';
+import routes from './components/SourceRouter';
 
 const statisticStore = initStore();
 
+const router = new VueRouter({
+  routes // short for `routes: routes`
+})
+
 const instance = new Vue({
+  router,
   store: statisticStore, // 注入到所有子组件1
-  components: { FunnelChart, D3Funnel }
+  components: { SourceContainer }
 });
 instance.$mount('#' + 'root');

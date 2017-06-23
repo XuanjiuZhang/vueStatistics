@@ -15,6 +15,7 @@
         chartId,
         chartHeight: 500,
         chartWidth: 600,
+        leftLinePos: 580,
         funnelTopWidthRatio: 0.8,
         level: 5
       }
@@ -29,7 +30,7 @@
         return b - a;
       }
 
-      var data = [20, 30, 40, 80, 100].sort(ascFn);
+      var data = [20, 30, 60, 80, 100].sort(ascFn);
 
       const funnelTopWidth = this.chartWidth * this.funnelTopWidthRatio;
       const tubeHeight = this.chartHeight / this.level;
@@ -57,8 +58,31 @@
       points.push(bottomPoints);
       console.log(points);
 
-      const linkLinePoints = points.map(po => {
-        return po[1];
+      const rightPoints = points.map(po => {
+        return po[1] || po[0];
+      });
+      console.log(rightPoints);
+      const LinkLinePoints = [];
+
+      for(var n = 0; n <= rightPoints.length - 2; n++){
+        let x = (rightPoints[n][0] + rightPoints[n + 1][0]) / 2
+        let y = (rightPoints[n][1] + rightPoints[n + 1][1]) / 2
+        LinkLinePoints.push([x, y])
+      }
+      console.log(LinkLinePoints);
+
+      svg.selectAll('line').data(LinkLinePoints).enter().append('line').attr('x1', function(d) {
+        return d[0]
+      }).attr('y1', function(d) {
+        return d[1]
+      }).attr('x2', function(d) {
+        return d[0] + 50
+      }).attr('y2', function(d) {
+        return d[1]
+      }).style('stroke', function(){
+        return 'rgb(99,99,99)'
+      }).style('stroke-width', function(){
+        return '2'
       });
 
       const ploygonArr = [];
@@ -86,9 +110,40 @@
       }).style('fill', function(d){
         return d._extra.color;
       }).on('mouseover', function(d){
+        console.log('mouseover');
         this.style.fill = d._extra.hoverColor
+
+        svg.selectAll('line').data(LinkLinePoints).attr('x1', function(d) {
+          return d[0]
+        }).attr('y1', function(d) {
+          return d[1]
+        }).attr('x2', function(d) {
+          return d[0] + 50
+        }).attr('y2', function(d) {
+          return d[1]
+        }).style('stroke', function(){
+          return 'rgb(228,228,228)'
+        }).style('stroke-width', function(){
+          return '2'
+        });
+
       }).on('mouseleave', function(d){
+        console.log('mouseleave');
         this.style.fill = d._extra.color
+
+        svg.selectAll('line').data(LinkLinePoints).attr('x1', function(d) {
+          return d[0]
+        }).attr('y1', function(d) {
+          return d[1]
+        }).attr('x2', function(d) {
+          return d[0] + 50
+        }).attr('y2', function(d) {
+          return d[1]
+        }).style('stroke', function(){
+          return 'rgb(99,99,99)'
+        }).style('stroke-width', function(){
+          return '2'
+        });
       });
 
     }

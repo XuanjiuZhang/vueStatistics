@@ -1,0 +1,52 @@
+<style lang="less">
+  .content-wrapper {
+    margin-top: 20px;
+  }
+  .content-wrapper-center {
+    margin: 0 auto
+  }
+</style>
+
+<template>
+  <div>
+    <div class="content-wrapper">
+      <div>
+        <span>营销漏斗</span>
+      </div>
+      <div class="funnel-chart content-wrapper-center">
+        <Funnel-chart></Funnel-chart>
+      </div>
+    </div>
+    <div class="content-wrapper">
+      <div>
+        <span>渠道访问明细</span>
+      </div>
+      <div class="composed-table content-wrapper-center">
+        <Composed-table></Composed-table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import { mapGetters } from 'Vuex'
+  import FunnelChart from './FunnelChart/FunnelChart'
+  import ComposedTable from './Table/ComposedTable'
+  export default {
+    data() {
+      return {
+      } 
+    },
+    // props: ['eleData', 'finalScale'],
+    mounted() {
+    },
+    computed: {
+      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
+    },
+    components: {
+      FunnelChart,
+      ComposedTable
+    }
+  }
+
+</script>

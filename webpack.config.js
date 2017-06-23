@@ -56,7 +56,7 @@ module.exports = {
     ],
 
   },
-  devtool: '#eval-source-map',
+  // devtool: '#eval-source-map',
   devServer: {
     hot: true,
     // enable HMR on the server
