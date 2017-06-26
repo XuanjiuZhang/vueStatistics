@@ -7,7 +7,7 @@
   }
   .funnel-chart {
     width: 600px;
-    height: 500px;
+    height: 550px;
   }
 </style>
 

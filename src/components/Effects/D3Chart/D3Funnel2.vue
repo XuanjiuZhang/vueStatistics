@@ -106,7 +106,8 @@
           return d.x
         }).attr('y', function(d){
           return d.y
-        }).html(function(d, index){
+        }).style('stroke', function(){ return '#C2C2C2' })
+        .html(function(d, index){
           return d.text
         }).on('click', (d, index) => {
           // this.polygonClicked(undefined, index);
@@ -160,7 +161,7 @@
           const width = 40
           const height = 30
           // const polygonHeight = d.pointLeftBottom.y - d.pointLeftTop.y
-          var str = `M${index * 80 + 120} 430 h ${width} v ${height} h -${width} v -${height}`
+          var str = `M${index * 80 + 120} 470 h ${width} v ${height} h -${width} v -${height}`
           // var str = `M${index * 80 + 120} 430 C ${index * 80 + 140} 430 ${index * 80 + 160} 450`
           return str
         }).style('fill', function(d){ return d.color }).style('stroke', function() { return '#000' })
@@ -184,7 +185,7 @@
         .attr('x', function(d, index){
           return index * 80 + 120
         }).attr('y', function(d, index){
-          return 480
+          return 520
         }).html(function(d, index) {
           return funnelLabelInfo[index]
         });
@@ -236,8 +237,8 @@
       console.log(widthArr);*/
 
       const Lines = this.widthArr.sort(this.descFn).map((width, index) => {
-        let pointLeft = {x: this.chartWidth / 2 - width / 2, y: index * tubeHeight};
-        let pointRight = {x: this.chartWidth / 2 + width / 2, y: index * tubeHeight};
+        let pointLeft = {x: this.chartWidth / 2 - width / 2, y: index * tubeHeight + 30};
+        let pointRight = {x: this.chartWidth / 2 + width / 2, y: index * tubeHeight + 30};
         return {pointLeft, pointRight};
       });
 
@@ -246,7 +247,7 @@
         if(index === Lines.length - 1){
           let bottomPoints = {
             x: this.chartWidth / 2,
-            y: this.chartHeight
+            y: this.chartHeight + 30
           };
           bottomLine = {
             pointLeft: bottomPoints,
@@ -285,9 +286,9 @@
           pointRightTop: line.pointRight,
           pointLeftBottom: bottomLine.pointLeft,
           pointRightBottom: bottomLine.pointRight,
-          color: '#' + Math.floor(Math.random() * 1000000),
-          hoverColor: '#' + Math.floor(Math.random() * 1000000),
-          disabledColor: '#' + Math.floor(Math.random() * 1000000),
+          color: '#' + Math.max(Math.floor(Math.random() * 1000000), 100000),
+          hoverColor: '#' + Math.max(Math.floor(Math.random() * 1000000), 100000),
+          disabledColor: '#' + Math.max(Math.floor(Math.random() * 1000000), 100000),
           leftLineCenterPoint,
           rightLineUpPoint,
           rightLineDownPoint,
