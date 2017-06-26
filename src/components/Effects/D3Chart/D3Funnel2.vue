@@ -34,14 +34,14 @@
         this.linkPolygonArr.length = 0;
         const sortedArr = indexArr.sort(this.ascFn)
         for(let i = 0; i < sortedArr.length - 1; i++) {
-          let top = this.polygonArr[sortedArr[i]]
-          let bottom = this.polygonArr[sortedArr[i + 1]]
-          this.linkBetween(top, bottom)
+          this.linkBetween(sortedArr[i], sortedArr[i + 1])
         }
         this.drawLinkPolygon();
       },
 
-      linkBetween (top, bottom) {
+      linkBetween (topIndex, bottomIndex) {
+        const top = this.polygonArr[topIndex]
+        const bottom = this.polygonArr[bottomIndex]
         const pointLeftTop = top.rightLineDownPoint
         const pointLeftBottom = bottom.rightLineUpPoint
         const pointRightTop = {
@@ -56,12 +56,15 @@
           x: this.rightLinePos - 60,
           y: (pointRightTop.y + pointRightBottom.y) / 2 + 6
         }
+        
         const ploygon = {
           pointLeftTop,
           pointRightTop,
           pointLeftBottom,
           pointRightBottom,
-          textPoint
+          textPoint,
+          top,
+          bottom
         }
         this.linkPolygonArr.push(ploygon)
       },
@@ -85,7 +88,7 @@
         }).attr('y', function(d){
           return d.textPoint.y
         }).html(function(d){
-          return '转化率: 50%'
+          return `转化率: ${Math.round(d.bottom.data / d.top.data * 100)}%`
         });
       },
 
