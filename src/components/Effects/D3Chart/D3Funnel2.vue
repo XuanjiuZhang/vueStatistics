@@ -313,9 +313,10 @@
         inHoverBg.exit().remove();
         inHoverBg.enter().append('polygon').attr('class', 'in-hover-text-bg');
         inHoverBg.attr('points', function(d) {
+          const width = d.polygon.text.length * 15
           const points = [[offsetX + 10, offsetY - 30],
-          [offsetX + 60, offsetY - 30], 
-          [offsetX + 60, offsetY - 10],
+          [offsetX + 10 + width, offsetY - 30], 
+          [offsetX + 10 + width, offsetY - 10],
           [offsetX + 10, offsetY - 10]]
 
           return points.reduce((pointsStr, nextPoint) => {
