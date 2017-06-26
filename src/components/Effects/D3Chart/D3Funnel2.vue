@@ -95,7 +95,7 @@
       drawInfoText() {
         const innnerCenterTextPointArr = this.polygonArr.map(polygon => {
           return {
-            x: (polygon.pointLeftTop.x + polygon.pointRightTop.x) / 2 - 10,
+            x: (polygon.pointLeftTop.x + polygon.pointRightTop.x) / 2,
             y: (polygon.pointLeftTop.y + polygon.pointLeftBottom.y) / 2,
             text: polygon.text
           }
@@ -103,7 +103,7 @@
         const centerText = this.svg.selectAll('.center-text').data(innnerCenterTextPointArr);
         centerText.exit().remove();
         centerText.enter().append('text').attr('class', 'center-text').attr('x', function(d){
-          return d.x
+          return d.x - 7 * d.text.length
         }).attr('y', function(d){
           return d.y
         }).style('stroke', function(){ return '#C2C2C2' })
@@ -183,6 +183,9 @@
         svg.selectAll('.label-button-text').data(this.polygonArr).enter()
         .append('text').attr('class', 'label-button-text')
         .attr('x', function(d, index){
+          if(funnelLabelInfo[index].length === 2){
+            return index * 80 + 124
+          }
           return index * 80 + 120
         }).attr('y', function(d, index){
           return 520
