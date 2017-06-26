@@ -12,6 +12,9 @@
     data() {
       const chartId = '_funnel' +　Math.floor(Math.random() * 10000);
       return {
+        data: [20, 40, 60, 70, 100],
+        funnelLabelInfo: ['访问量', '点击量', '线索', '商机', '订单'],
+        widthArr: [480, 360, 240, 120, 80],
         chartId,
         chartHeight: 400,
         chartWidth: 600,
@@ -20,13 +23,25 @@
         ploygonMargin: 6,
         funnelTopWidthRatio: 0.8,
         level: 5,
-        ploygonArr: [],
+        polygonArr: [],
+        linkedPolyIndex: [0, 1, 2, 4],
         linkPolygonArr: [],
         svg: undefined
       }
     },
     methods: {
-      linkPolygon(top, bottom){
+      linkPolygon(indexArr){
+        this.linkPolygonArr.length = 0;
+        const sortedArr = indexArr.sort(this.ascFn)
+        for(let i = 0; i < sortedArr.length - 1; i++) {
+          let top = this.polygonArr[sortedArr[i]]
+          let bottom = this.polygonArr[sortedArr[i + 1]]
+          this.linkBetween(top, bottom)
+        }
+        this.drawLinkPolygon();
+      },
+
+      linkBetween (top, bottom) {
         const pointLeftTop = top.rightLineDownPoint
         const pointLeftBottom = bottom.rightLineUpPoint
         const pointRightTop = {
@@ -49,26 +64,14 @@
           textPoint
         }
         this.linkPolygonArr.push(ploygon)
-        this.drawLinkPolygon();
       },
+      
       drawLinkPolygon() {
-        /*const d = `M153 334
-          C153 334 151 334 151 334
-          C151 339 153 344 156 344
-          C164 344 171 339 171 334
-          C171 322 164 314 156 314
-          C142 314 131 322 131 334
-          C131 350 142 364 156 364
-          C175 364 191 350 191 334
-          C191 311 175 294 156 294
-          C131 294 111 311 111 334
-          C111 361 131 384 156 384
-          C186 384 211 361 211 334
-          C211 300 186 274 156 274`*/
-        const linked = this.svg.selectAll('link-line-right').data(this.linkPolygonArr);
-        const linkedText = this.svg.selectAll('link-line-right-text').data(this.linkPolygonArr);
-        linked.exit().remove();
-        linkedText.exit().remove();
+        this.svg.selectAll('.link-line-right').data([]).exit().remove();
+        this.svg.selectAll('.link-line-right-text').data([]).exit().remove();
+
+        const linked = this.svg.selectAll('.link-line-right').data(this.linkPolygonArr);
+        const linkedText = this.svg.selectAll('.link-line-right-text').data(this.linkPolygonArr);
         
         const rightPos = this.rightLinePos;
         linked.enter().append('path').attr('class', 'link-line-right').attr('d', function(d){
@@ -84,19 +87,137 @@
         }).html(function(d){
           return '转化率: 50%'
         });
+      },
+
+      drawInfoText() {
+        const innnerCenterTextPointArr = this.polygonArr.map(polygon => {
+          return {
+            x: (polygon.pointLeftTop.x + polygon.pointRightTop.x) / 2 - 10,
+            y: (polygon.pointLeftTop.y + polygon.pointLeftBottom.y) / 2,
+            text: polygon.text
+          }
+        });
+        const centerText = this.svg.selectAll('.center-text').data(innnerCenterTextPointArr);
+        centerText.exit().remove();
+        centerText.enter().append('text').attr('class', 'center-text').attr('x', function(d){
+          return d.x
+        }).attr('y', function(d){
+          return d.y
+        }).html(function(d, index){
+          return d.text
+        }).on('click', (d, index) => {
+          // this.polygonClicked(undefined, index);
+        });
+      },
+
+      drawLeftLine() {
+        const leftLinePos = this.leftLinePos;
+        this.svg.selectAll('.left-line').data(this.polygonArr).enter()
+        .append('line').attr('class', 'left-line')
+        .attr('x1', function(d) {
+          return d.leftLineCenterPoint.x
+        }).attr('y1', function(d) {
+          return d.leftLineCenterPoint.y
+        }).attr('x2', function(d) {
+          // return d.leftLineCenterPoint.x - 50
+          return leftLinePos
+        }).attr('y2', function(d) {
+          return d.leftLineCenterPoint.y
+        }).style('stroke', function(){
+          return 'rgb(99,99,99)'
+        }).style('stroke-width', function(){
+          return '2'
+        });
+      },
+
+      drawLeftLineText() {
+        const leftLineTextPos = 8;
+        this.svg.selectAll('.left-line-text').data(this.polygonArr).enter()
+        .append('text').attr('class', 'left-line-text')
+        .attr('x', function(d) {
+          return leftLineTextPos
+        }).attr('y', function(d) {
+          return d.leftLineCenterPoint.y + 5
+        }).html(function(d){
+          return d.data
+        });
+      },
+
+      hoverPolygon(polygon) {
+
+      },
+
+      drawLabelButton() {
+        const svg = this.svg;
+        const polygonClicked = this.polygonClicked;
+        const funnelLabelInfo = this.funnelLabelInfo;
+        svg.selectAll('.label-button').data(this.polygonArr).enter()
+        .append('path').attr('class', 'label-button')
+        .attr('d', function(d, index){
+          const width = 40
+          const height = 30
+          // const polygonHeight = d.pointLeftBottom.y - d.pointLeftTop.y
+          var str = `M${index * 80 + 120} 430 h ${width} v ${height} h -${width} v -${height}`
+          // var str = `M${index * 80 + 120} 430 C ${index * 80 + 140} 430 ${index * 80 + 160} 450`
+          return str
+        }).style('fill', function(d){ return d.color }).style('stroke', function() { return '#000' })
+          .on('mouseover', function(d, index){
+          this.style.fill = d.hoverColor
+          svg.selectAll('polygon')._groups[0][index].style.fill = this.style.fill
+        }).on('mouseleave', function(d, index){
+          this.style.fill = d.color
+          svg.selectAll('polygon')._groups[0][index].style.fill = this.style.fill
+        }).on('click', function(d, index) {
+          const polyIndex = polygonClicked(d, index);
+          if(polyIndex != -1){
+            this.style.fill = d.disabledColor
+          }else{
+            this.style.fill = d.color
+          }
+        });
+        
+        svg.selectAll('.label-button-text').data(this.polygonArr).enter()
+        .append('text').attr('class', 'label-button-text')
+        .attr('x', function(d, index){
+          return index * 80 + 120
+        }).attr('y', function(d, index){
+          return 480
+        }).html(function(d, index) {
+          return funnelLabelInfo[index]
+        });
+
+      },
+
+      polygonClicked(d, index) {
+        const svg = this.svg;
+        const polygonIndex = this.linkedPolyIndex.findIndex(lIndex => {
+          return lIndex === index
+        })
+        if(polygonIndex != -1){
+          this.linkedPolyIndex = this.linkedPolyIndex.filter(linked => {
+            return linked != index
+          })
+          svg.selectAll('polygon')._groups[0][index].style.fill = d.disabledColor
+        }else{
+          this.linkedPolyIndex.push(index)
+          svg.selectAll('polygon')._groups[0][index].style.fill = d.color
+        }
+        this.linkPolygon(this.linkedPolyIndex)
+        return polygonIndex
+      },
+
+      ascFn(a, b) {
+        return a - b;
+      },
+
+      descFn(a, b) {
+        return b - a;
       }
     },
     mounted() {
       console.log(this.chartId);
-      const ascFn = (a, b) => {
-        return a - b;
-      };
 
-      const descFn = (a, b) => {
-        return b - a;
-      }
-
-      var data = [20, 40, 60, 70, 100].sort(ascFn);
+      const data = this.data.sort(this.descFn);
 
       const funnelTopWidth = this.chartWidth * this.funnelTopWidthRatio;
       const tubeHeight = this.chartHeight / this.level;
@@ -107,16 +228,15 @@
 
       var x = d3.scaleLinear().domain([0, d3.max(data)]).range([0, funnelTopWidth]);
 
-      const widthArr = data.map(d => Math.floor(x(d)));
-      console.log(widthArr);
+      // const widthArr = data.map(d => Math.floor(x(d)));
+      /*const widthArr = [480, 360, 240, 120, 60];
+      console.log(widthArr);*/
 
-      const Lines = widthArr.sort(descFn).map((width, index) => {
+      const Lines = this.widthArr.sort(this.descFn).map((width, index) => {
         let pointLeft = {x: this.chartWidth / 2 - width / 2, y: index * tubeHeight};
         let pointRight = {x: this.chartWidth / 2 + width / 2, y: index * tubeHeight};
         return {pointLeft, pointRight};
       });
-
-      // const ploygonArr = [];
 
       Lines.forEach((line, index) => {
         var bottomLine;
@@ -156,6 +276,7 @@
           x: fnY2X((line.pointRight.y + bottomLine.pointRight.y) / 2 + 10),
           y: (line.pointRight.y + bottomLine.pointRight.y) / 2 + 10
         }
+
         const ploygon = {
           pointLeftTop: line.pointLeft,
           pointRightTop: line.pointRight,
@@ -163,16 +284,52 @@
           pointRightBottom: bottomLine.pointRight,
           color: '#' + Math.floor(Math.random() * 1000000),
           hoverColor: '#' + Math.floor(Math.random() * 1000000),
+          disabledColor: '#' + Math.floor(Math.random() * 1000000),
           leftLineCenterPoint,
           rightLineUpPoint,
-          rightLineDownPoint
+          rightLineDownPoint,
+          data: data[index],
+          text: this.funnelLabelInfo[index]
         }
-        this.ploygonArr.push(ploygon)
+        this.polygonArr.push(ploygon)
       });
 
-      console.log(this.ploygonArr);
+      const svg = this.svg;
+      const hoverPolygon = this.hoverPolygon;
 
-      this.svg.selectAll('polygon').data(this.ploygonArr).enter().append('polygon').attr('points', function(d) {
+      const throttleMouseMove = _lodash.throttle(function(d, offsetX, offsetY) {
+        const inHoverBg = svg.selectAll('.in-hover-text-bg').data([{
+          polygon: d,
+          offsetX,
+          offsetY
+        }])
+        inHoverBg.exit().remove();
+        inHoverBg.enter().append('polygon').attr('class', 'in-hover-text-bg');
+        inHoverBg.attr('points', function(d) {
+          const points = [[offsetX + 10, offsetY - 30],
+          [offsetX + 60, offsetY - 30], 
+          [offsetX + 60, offsetY - 10],
+          [offsetX + 10, offsetY - 10]]
+
+          return points.reduce((pointsStr, nextPoint) => {
+            return pointsStr + ' ' + nextPoint.join();
+          }, '');
+        }).style('fill', function(d){
+          return '#fff';
+        });
+
+        const inHover = svg.selectAll('.in-hover-text').data([{
+          polygon: d,
+          offsetX,
+          offsetY
+        }])
+        inHover.exit().remove();
+        inHover.enter().append('text').attr('class', 'in-hover-text');
+        inHover.attr('x', d => d.offsetX + 10).attr('y', d => d.offsetY - 15)
+        .attr('background', d => '#fff').html(d => d.polygon.text);
+      }, 40)
+
+      const res = this.svg.selectAll('polygon').data(this.polygonArr).enter().append('polygon').attr('points', function(d) {
 
         const points = [[d.pointLeftTop.x, d.pointLeftTop.y],
         [d.pointRightTop.x, d.pointRightTop.y], 
@@ -185,131 +342,32 @@
       }).style('fill', function(d){
         return d.color;
       }).on('mouseover', function(d){
+        const {offsetX, offsetY} = d3.event;
+        hoverPolygon(d)
+        throttleMouseMove(d, offsetX, offsetY)
         this.style.fill = d.hoverColor
       }).on('mouseleave', function(d){
-        this.style.fill = d.color
-      });
-
-      const leftLinePos = this.leftLinePos;
-
-      this.svg.selectAll('.left-line').data(this.ploygonArr).enter()
-      .append('line').attr('class', 'left-line')
-      .attr('x1', function(d) {
-        return d.leftLineCenterPoint.x
-      }).attr('y1', function(d) {
-        return d.leftLineCenterPoint.y
-      }).attr('x2', function(d) {
-        // return d.leftLineCenterPoint.x - 50
-        return leftLinePos
-      }).attr('y2', function(d) {
-        return d.leftLineCenterPoint.y
-      }).style('stroke', function(){
-        return 'rgb(99,99,99)'
-      }).style('stroke-width', function(){
-        return '2'
-      });
-
-      this.linkPolygon(this.ploygonArr[0], this.ploygonArr[1]);
-      this.linkPolygon(this.ploygonArr[1], this.ploygonArr[2]);
-      this.linkPolygon(this.ploygonArr[2], this.ploygonArr[3]);
-      this.linkPolygon(this.ploygonArr[3], this.ploygonArr[4]);
-
-      /*const points = widthArr.sort(descFn).map((width, index) => {
-        let pointLeft = [this.chartWidth / 2 - width / 2, index * tubeHeight];
-        let pointRight = [this.chartWidth / 2 + width / 2, index * tubeHeight];
-        return [pointLeft, pointRight];
-      });
-      const bottomPoints = [[this.chartWidth / 2, this.chartHeight]];
-      points.push(bottomPoints);
-      console.log(points);
-
-      const rightPoints = points.map(po => {
-        return po[1] || po[0];
-      });
-      console.log(rightPoints);
-      const LinkLinePoints = [];
-
-      for(var n = 0; n <= rightPoints.length - 2; n++){
-        let x = (rightPoints[n][0] + rightPoints[n + 1][0]) / 2
-        let y = (rightPoints[n][1] + rightPoints[n + 1][1]) / 2
-        LinkLinePoints.push([x, y])
-      }
-      console.log(LinkLinePoints);
-
-      svg.selectAll('line').data(LinkLinePoints).enter().append('line').attr('x1', function(d) {
-        return d[0]
-      }).attr('y1', function(d) {
-        return d[1]
-      }).attr('x2', function(d) {
-        return d[0] + 50
-      }).attr('y2', function(d) {
-        return d[1]
-      }).style('stroke', function(){
-        return 'rgb(99,99,99)'
-      }).style('stroke-width', function(){
-        return '2'
-      });
-
-      const ploygonArr = [];
-
-      for(var i = 0; i <= points.length - 2; i++){
-        let temp = [];
-        if(points[i + 1].length > 1){
-          temp = [points[i + 1][1], points[i + 1][0]];
-        }else{
-          temp = points[i + 1];
+        if(!d3.event.toElement || d3.event.toElement.nodeName === 'text'){
+          return
         }
-        let ploygon = points[i].concat(temp);
-        ploygon._extra = {
-          color: '#' + Math.floor(Math.random() * 1000000),
-          hoverColor: '#' + Math.floor(Math.random() * 1000000)
-        };
-        ploygonArr.push(ploygon);
-      }
-      console.log(ploygonArr);
+        const inHover = svg.selectAll('.in-hover-text').data([])
+        inHover.exit().remove()
+        const inHoverBg = svg.selectAll('.in-hover-text-bg').data([])
+        inHoverBg.exit().remove()
+        this.style.fill = d.color
+      }).on('mousemove', function(d) {
+        const {offsetX, offsetY} = d3.event;
+        throttleMouseMove(d, offsetX, offsetY)
+      }).on('click', (d, index) => {
+        // this.polygonClicked(d, index);
+      });
 
-      svg.selectAll('polygon').data(ploygonArr).enter().append('polygon').attr('points', function(d) {
-        return d.reduce((pointsStr, nextPoint) => {
-          return pointsStr + ' ' + nextPoint.join();
-        }, '');
-      }).style('fill', function(d){
-        return d._extra.color;
-      }).on('mouseover', function(d){
-        console.log('mouseover');
-        this.style.fill = d._extra.hoverColor
 
-        svg.selectAll('line').data(LinkLinePoints).attr('x1', function(d) {
-          return d[0]
-        }).attr('y1', function(d) {
-          return d[1]
-        }).attr('x2', function(d) {
-          return d[0] + 50
-        }).attr('y2', function(d) {
-          return d[1]
-        }).style('stroke', function(){
-          return 'rgb(228,228,228)'
-        }).style('stroke-width', function(){
-          return '2'
-        });
-
-      }).on('mouseleave', function(d){
-        console.log('mouseleave');
-        this.style.fill = d._extra.color
-
-        svg.selectAll('line').data(LinkLinePoints).attr('x1', function(d) {
-          return d[0]
-        }).attr('y1', function(d) {
-          return d[1]
-        }).attr('x2', function(d) {
-          return d[0] + 50
-        }).attr('y2', function(d) {
-          return d[1]
-        }).style('stroke', function(){
-          return 'rgb(99,99,99)'
-        }).style('stroke-width', function(){
-          return '2'
-        });
-      });*/
+      this.drawLeftLine();
+      this.drawLeftLineText();
+      this.drawInfoText();
+      this.drawLabelButton();
+      this.linkPolygon(this.linkedPolyIndex);
 
     }
   }
