@@ -1,6 +1,5 @@
 <style lang="less">
   .composed-table {
-    width: 90%;
     height: 800px;
     & .composed-content {
       height: 700px;

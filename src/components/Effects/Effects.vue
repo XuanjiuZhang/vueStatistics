@@ -21,6 +21,9 @@
     width: 600px;
     height: 550px;
   }
+  .composed-table-wrapper {
+    width: 90%;
+  }
 </style>
 
 <template>
@@ -38,7 +41,7 @@
       <div class="title">
         <span><b>渠道明细</b></span>
       </div>
-      <div class="composed-table center">
+      <div class="composed-table-wrapper center">
         <Composed-table></Composed-table>
       </div>
     </div>
