@@ -6,8 +6,7 @@ window._lodash = _lodash;
 import initStore from './vuex/statisticStore';
 import SourceContainer from './components/SourceContainer';
 import routes from './components/SourceRouter';
-import { Pagination } from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import { Pagination } from './lib/elementLib/element-ui.common'
 Vue.use(Pagination)
 
 const statisticStore = initStore();

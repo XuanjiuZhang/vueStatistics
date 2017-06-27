@@ -54,6 +54,7 @@ gulp.task('dev', ['copyStyle', 'copyImage', 'copyFonts'], function() {
 gulp.task('copyStyle', function(){
   return gulp.src([
     './src/style/*',
+    './src/lib/elementLib/theme-default/index.css',
   ])
     .pipe(gulp.dest('./build/style/'));
 });
