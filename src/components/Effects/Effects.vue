@@ -14,7 +14,7 @@
       }
     }
     .center {
-      margin: 0 auto
+      margin: 30px auto 0
     }
   }
   .funnel-chart {

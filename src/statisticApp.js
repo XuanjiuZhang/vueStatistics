@@ -6,8 +6,10 @@ window._lodash = _lodash;
 import initStore from './vuex/statisticStore';
 import SourceContainer from './components/SourceContainer';
 import routes from './components/SourceRouter';
-import { Pagination } from './lib/elementLib/element-ui.common'
+import { Pagination, Table, TableColumn } from './lib/elementLib/element-ui.common'
 Vue.use(Pagination)
+Vue.use(Table)
+Vue.use(TableColumn)
 
 const statisticStore = initStore();
 
