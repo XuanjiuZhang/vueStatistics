@@ -14,7 +14,7 @@
       return {
         data: [20, 40, 60, 70, 100],
         funnelLabelInfo: ['访问量', '点击量', '线索', '商机', '订单'],
-        widthArr: [480, 360, 240, 120, 80],
+        widthArr: [480, 384, 288, 192, 96],
         chartId,
         chartHeight: 400,
         chartWidth: 600,
