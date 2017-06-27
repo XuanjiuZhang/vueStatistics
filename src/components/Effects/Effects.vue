@@ -36,7 +36,7 @@
     </div>
     <div class="content-wrapper">
       <div class="title">
-        <span><b>渠道访问明细</b></span>
+        <span><b>渠道明细</b></span>
       </div>
       <div class="composed-table center">
         <Composed-table></Composed-table>

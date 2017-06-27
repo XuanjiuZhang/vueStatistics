@@ -6,7 +6,7 @@
         <img class="header-img" :src="'/build/img/logo-circle.png'" alt="">
         <img class="header-img" :src="'/build/img/logo-text.png'" alt="">
       </div>
-      <div class="col-sm-4 col-md-3 col-lg-2">
+      <div class="col-sm-4 col-md-4 col-lg-4">
         <ul class="header-nav header-nav-tabs">
           <router-link tag="li" to="/channelChoose"><a>渠道分发</a></router-link>
           <router-link tag="li" class="margin-left-40" to="/effects"><a>效果统计</a></router-link>
@@ -14,7 +14,7 @@
           <li class="margin-left-40"><a href="">效果统计</a></li>-->
         </ul>
       </div>
-      <div class="col-sm-4 col-md-3 col-lg-2 col-md-offset-3 col-lg-offset-6">
+      <div class="col-sm-4 col-md-3 col-lg-2 col-md-offset-1 col-lg-offset-4">
         <img class="user-avatar" :src="'/build/img/user-avatar.jpg'" alt="">
         <span class="user-name">用户昵称</span>
       </div>
