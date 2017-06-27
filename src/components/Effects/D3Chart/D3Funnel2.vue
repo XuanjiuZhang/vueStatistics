@@ -184,9 +184,9 @@
         .append('text').attr('class', 'label-button-text')
         .attr('x', function(d, index){
           if(funnelLabelInfo[index].length === 2){
-            return index * 80 + 124
+            return index * 80 + 125
           }
-          return index * 80 + 120
+          return index * 80 + 119
         }).attr('y', function(d, index){
           return 520
         }).html(function(d, index) {

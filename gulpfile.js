@@ -9,8 +9,23 @@ var buildConfig = require("./webpack.config.build");
 var path = require('path');
 del = require('del');
 
+gulp.task('cleanImage', function(){
+  del([
+      './build/img/*', 
+    ]);
+  console.log('clean /build/img folder.');
+});
 
-gulp.task('dev', ['copyStyle'], function() {
+// 压缩PNG，JPEG，GIF和SVG图像
+gulp.task('copyImage', ['cleanImage'], function(){
+  return gulp.src([
+    './src/images/*',
+  ])
+    .pipe(gulp.dest('./build/img/'));
+});
+
+
+gulp.task('dev', ['copyStyle', 'copyImage'], function() {
   config.entry.statisticApp.unshift('webpack-dev-server/client?http://localhost:8089/', 'webpack/hot/only-dev-server');
 
   var compiler = webpack(config);
@@ -46,20 +61,3 @@ gulp.task('copyStyle', function(){
 /*gulp.task('build', ['cleanImage', 'copyImage'], function() {
   webpack(buildConfig, function(err, stats) { console.log(err) });
 });*/
-
-
-/*gulp.task('cleanImage', function(){
-  del([
-      './build/img/*', 
-    ]);
-  console.log('clean /build/img folder.');
-});
-
-// 压缩PNG，JPEG，GIF和SVG图像
-gulp.task('copyImage', function(){
-  return gulp.src([
-    './src/img/*',
-  ])
-    .pipe(gulp.dest('./build/img/'));
-});*/
-
