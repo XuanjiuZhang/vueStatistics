@@ -73,8 +73,15 @@
       <td class="danger">...</td>
       <td class="info">...</td>
     </tr>
-    <el-pagination>
-    </el-pagination>
+    <!--<el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="100"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="400">
+    </el-pagination>-->
   </table>
   
 </template>
@@ -83,6 +90,15 @@
   export default {
     data() {
       return {
+        currentPage: 0
+      }
+    },
+    methods: {
+      handleSizeChange() {
+
+      },
+      handleCurrentChange() {
+
       }
     },
     mounted() {

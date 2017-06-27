@@ -25,7 +25,7 @@ gulp.task('copyImage', ['cleanImage'], function(){
 });
 
 
-gulp.task('dev', ['copyStyle', 'copyImage'], function() {
+gulp.task('dev', ['copyStyle', 'copyImage', 'copyFonts'], function() {
   config.entry.statisticApp.unshift('webpack-dev-server/client?http://localhost:8089/', 'webpack/hot/only-dev-server');
 
   var compiler = webpack(config);
@@ -56,6 +56,13 @@ gulp.task('copyStyle', function(){
     './src/style/*',
   ])
     .pipe(gulp.dest('./build/style/'));
+});
+
+gulp.task('copyFonts', function(){
+  return gulp.src([
+    './src/fonts/*',
+  ])
+    .pipe(gulp.dest('./build/fonts/'));
 });
 
 /*gulp.task('build', ['cleanImage', 'copyImage'], function() {
