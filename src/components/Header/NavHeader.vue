@@ -59,6 +59,7 @@
     min-height: 88px;
     padding-top: 23px;
     color: #000;
+    border-bottom:solid #EAEFF5 1px;
   }
   .header-row {
     min-height: 50px;

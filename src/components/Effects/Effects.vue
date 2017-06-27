@@ -1,9 +1,21 @@
 <style lang="less">
   .content-wrapper {
     margin-top: 20px;
-  }
-  .content-wrapper-center {
-    margin: 0 auto
+    margin-bottom: 40px;
+    background: #fff;
+    box-shadow: 0 0 8px #cbd3de;
+    .title {
+      height: 55px;
+      border-bottom:solid #EAEFF5 1px;
+      line-height: 55px;
+      span {
+        margin-left: 20px;
+        font-size: 16px;
+      }
+    }
+    .center {
+      margin: 0 auto
+    }
   }
   .funnel-chart {
     width: 600px;
@@ -14,19 +26,19 @@
 <template>
   <div>
     <div class="content-wrapper">
-      <div>
-        <span>营销漏斗</span>
+      <div class="title">
+        <span><b>营销漏斗</b></span>
       </div>
-      <div class="funnel-chart content-wrapper-center">
+      <div class="funnel-chart center">
         <!--<Funnel-chart></Funnel-chart>-->
         <D3-funnel2></D3-funnel2>
       </div>
     </div>
     <div class="content-wrapper">
-      <div>
-        <span>渠道访问明细</span>
+      <div class="title">
+        <span><b>渠道访问明细</b></span>
       </div>
-      <div class="composed-table content-wrapper-center">
+      <div class="composed-table center">
         <Composed-table></Composed-table>
       </div>
     </div>
