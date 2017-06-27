@@ -6,6 +6,9 @@ window._lodash = _lodash;
 import initStore from './vuex/statisticStore';
 import SourceContainer from './components/SourceContainer';
 import routes from './components/SourceRouter';
+import { Pagination } from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+Vue.use(Pagination)
 
 const statisticStore = initStore();
 
@@ -18,4 +21,4 @@ const instance = new Vue({
   store: statisticStore, // 注入到所有子组件1
   components: { SourceContainer }
 });
-instance.$mount('#' + 'root');
+instance.$mount('#' + 'root'); 

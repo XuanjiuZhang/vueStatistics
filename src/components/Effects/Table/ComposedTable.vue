@@ -1,12 +1,12 @@
 <style lang="less">
   .composed-table {
-    width: 1000px;
+    width: 90%;
     height: 800px;
   }
 </style>
 
 <template>
-  <table class="table composed-table">
+  <table class="table composed-table center">
     <tr>
       <th class="active">排名</th>
       <th class="success">渠道分类</th>
@@ -73,7 +73,10 @@
       <td class="danger">...</td>
       <td class="info">...</td>
     </tr>
+    <el-pagination>
+    </el-pagination>
   </table>
+  
 </template>
 
 <script>
