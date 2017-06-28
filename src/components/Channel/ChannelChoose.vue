@@ -314,6 +314,7 @@
         }],
         value: '',
         input2:'',
+        input:'',
         visible2: false,
         visible3:false,
         visible4:false,
@@ -664,7 +665,6 @@ ul, li{
         }
         .two{
           width:165px;
-          border-right:1px dashed #c0ccde;
           .first{
             width:25px;
             height:25px;
@@ -696,6 +696,7 @@ ul, li{
         }
         .three{
           width:220px;
+          border-left:1px dashed #c0ccde;
           .inp{
             margin-left:30px;
             margin-right:12px;

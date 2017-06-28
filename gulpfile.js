@@ -9,23 +9,24 @@ var buildConfig = require("./webpack.config.build");
 var path = require('path');
 del = require('del');
 
-gulp.task('cleanImage', function(){
-  del([
-      './build/img/*', 
+gulp.task('cleanBuild', function(){
+  console.log('clean /build folder.');
+  return del([
+      './build/**/*', 
     ]);
-  console.log('clean /build/img folder.');
 });
 
+gulp.task('copyAll', ['copyStyle', 'copyImage', 'copyFonts', 'copyLib']);
+
 // 压缩PNG，JPEG，GIF和SVG图像
-gulp.task('copyImage', ['cleanImage'], function(){
+gulp.task('copyImage', function(){
   return gulp.src([
     './src/images/*',
   ])
     .pipe(gulp.dest('./build/img/'));
 });
 
-
-gulp.task('dev', ['copyStyle', 'copyImage', 'copyFonts'], function() {
+gulp.task('dev', function() {
   config.entry.statisticApp.unshift('webpack-dev-server/client?http://localhost:8089/', 'webpack/hot/only-dev-server');
 
   var compiler = webpack(config);
@@ -44,7 +45,9 @@ gulp.task('dev', ['copyStyle', 'copyImage', 'copyFonts'], function() {
     proxy: {
       '/h5/service/*': {
         // target: 'http://192.168.51.22/'
-       target: 'http://10.41.3.219/'
+        //  target: 'http://10.41.3.219/'
+        target: 'http://10.41.3.221:3006',
+        pathRewrite: {'^/h5/service/' : '/'}
       }
     }
   });
@@ -66,6 +69,13 @@ gulp.task('copyFonts', function(){
     .pipe(gulp.dest('./build/fonts/'));
 });
 
-/*gulp.task('build', ['cleanImage', 'copyImage'], function() {
+gulp.task('copyLib', function(){
+  return gulp.src([
+    './src/lib/**/*',
+  ])
+    .pipe(gulp.dest('./build/lib/'));
+});
+
+gulp.task('build', ['copyAll'], function() {
   webpack(buildConfig, function(err, stats) { console.log(err) });
-});*/
+});
