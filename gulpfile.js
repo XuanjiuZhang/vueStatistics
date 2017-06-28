@@ -27,7 +27,7 @@ gulp.task('copyImage', function(){
 });
 
 gulp.task('dev', function() {
-  config.entry.statisticApp.unshift('webpack-dev-server/client?http://localhost:8089/', 'webpack/hot/only-dev-server');
+  config.entry.statisticApp.unshift('webpack-dev-server/client?http://10.41.3.223:8089/', 'webpack/hot/only-dev-server');
 
   var compiler = webpack(config);
   var server = new webpackDevServer(compiler, {
@@ -51,7 +51,7 @@ gulp.task('dev', function() {
       }
     }
   });
-  server.listen(8089);
+  server.listen(8089, '10.41.3.223');
 });
 
 gulp.task('copyStyle', function(){
