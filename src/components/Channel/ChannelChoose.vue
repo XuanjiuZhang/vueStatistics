@@ -232,17 +232,20 @@
         visible2: false,
         visible3:false,
         visible4:false,
+        visible5: false,
         visible6:false
       } 
     },
     // props: ['eleData', 'finalScale'],
     mounted() {
-      if(this.$route.params.id) { 
+      /*if(this.$route.params.id) { 
         this.setId({id: this.$route.params.id}) 
-      }
+      }else {
+        this.setId({id: '468ec650361311e7b0c5633546fe687e'});
+      }*/
     },
     methods: {
-      ...mapMutations(['setId'])
+      // ...mapMutations(['setId'])
     },
     computed: {
       // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])

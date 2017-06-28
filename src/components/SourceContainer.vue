@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'Vuex';
+  import { mapGetters, mapMutations } from 'Vuex';
   import NavHeader from './Header/NavHeader';
   export default {
     data() {
@@ -25,6 +25,8 @@
     },
     // props: ['eleData', 'finalScale'],
     mounted() {
+    },
+    methods: {
     },
     computed: {
       // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])

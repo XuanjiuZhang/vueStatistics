@@ -25,92 +25,6 @@
 
 <template>
   <div class="composed-table">
-    <!--<table class="table center composed-content">
-      <tr>
-        <th class="active">排名</th>
-        <th class="success">渠道</th>
-        <th class="warning">参数</th>
-        <th class="danger">访问占比</th>
-        <th class="info">点击</th>
-        <th class="warning">转化率</th>
-        <th class="success">线索</th>
-        <th class="info">转化率</th>
-        <th class="danger">商机</th>
-        <th class="info">转化率</th>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-    </table>-->
     <div class="center composed-content">
       <el-table
         :data="tableData3"
@@ -191,6 +105,7 @@
 </template>
 
 <script>
+  import { mapState } from 'Vuex'
   export default {
     data() {
       const table = [{
@@ -227,12 +142,22 @@
         tableData3: table
       }
     },
+    computed: {
+    },
+    activated() {
+      console.log('activated!');
+      console.log(this.$route.params.id);
+    },
+    deactivated() {
+      console.log('deactivated');
+    },
     methods: {
       tableRowClassName(row, index) {
         return index % 2 === 0 ? 'even-row' : 'odd-row';
       },
       sortClickVisit(data, nextData) {
         console.log('sortClickVisit');
+        console.log(this.$router.params);
 
       },
       handleSizeChange() {
