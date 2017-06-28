@@ -6,11 +6,13 @@ window._lodash = _lodash;
 import initStore from './vuex/statisticStore';
 import SourceContainer from './components/SourceContainer';
 import routes from './components/SourceRouter';
-import { Pagination, Table, TableColumn } from './lib/elementLib/element-ui.common'
+import { Pagination, Table, TableColumn ,Popover,Tooltip,Button} from './lib/elementLib/element-ui.common'
 Vue.use(Pagination)
 Vue.use(Table)
 Vue.use(TableColumn)
-
+Vue.use(Tooltip)
+Vue.use(Popover)
+Vue.use(Button)
 const statisticStore = initStore();
 
 const router = new VueRouter({
