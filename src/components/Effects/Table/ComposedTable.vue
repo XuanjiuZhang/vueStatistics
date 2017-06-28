@@ -1,8 +1,17 @@
 <style lang="less">
+  @tableRowHeight: 45px;
   .composed-table {
     height: 800px;
     > .composed-content {
-      height: 700px;
+      max-height: 700px;
+    }
+    .even-row {
+      height: @tableRowHeight;
+      background: #f4f7fc;
+    }
+    .odd-row {
+      height: @tableRowHeight;
+      background: #fff;
     }
   }
   .table-pagination {
@@ -11,6 +20,7 @@
     margin-right: 5%;
     font-size: 16px;
   }
+  
 </style>
 
 <template>
@@ -104,23 +114,64 @@
     <div class="center composed-content">
       <el-table
         :data="tableData3"
-        height="100%"
         border
+        max-height="700"
+        :row-class-name="tableRowClassName"
         style="width: 100%">
         <el-table-column
-          prop="date"
-          label="日期"
-          sortable
+          prop="name"
+          label="排名"
           width="180">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="姓名"
+          label="渠道"
           width="180">
         </el-table-column>
         <el-table-column
           prop="address"
-          label="地址">
+          label="参数">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          label="访问">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          :sortMethod="sortClickVisit"
+          label="访问占比(点击/访问)">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          label="点击">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          label="转化率(线索/点击)">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          label="线索">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          label="转化率(商机/线索)">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          label="商机">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          sortable
+          label="转化率(商机/线索)">
         </el-table-column>
       </el-table>
     </div>
@@ -142,40 +193,48 @@
 <script>
   export default {
     data() {
-      return {
-        currentPage: 1,
-        tableData3: [{
+      const table = [{
           date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '84,226'
         }, {
           date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '44,226'
         }, {
           date: '2016-05-04',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '446'
         }, {
           date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '48,226'
         }, {
           date: '2016-05-08',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '464,226'
         }, {
           date: '2016-05-06',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '84,226'
         }, {
           date: '2016-05-07',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '674,226'
         }]
+      return {
+        currentPage: 1,
+        tableData3: table
       }
     },
     methods: {
+      tableRowClassName(row, index) {
+        return index % 2 === 0 ? 'even-row' : 'odd-row';
+      },
+      sortClickVisit(data, nextData) {
+        console.log('sortClickVisit');
+
+      },
       handleSizeChange() {
 
       },
