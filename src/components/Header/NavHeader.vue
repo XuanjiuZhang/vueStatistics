@@ -15,8 +15,10 @@
         </ul>
       </div>
       <div class="col-sm-4 col-md-3 col-lg-2 col-md-offset-1 col-lg-offset-4">
-        <img class="user-avatar" :src="'/build/img/user-avatar.jpg'" alt="">
-        <span class="user-name">用户昵称</span>
+        <div class="user-name-wrapper">
+          <img class="user-avatar" :src="'/build/img/user-avatar.jpg'" alt="">
+          <span class="user-name">用户昵称</span>
+        </div>
       </div>
     </div>
     <!--<div class="row header-row">
@@ -97,6 +99,10 @@
         }
       }
     }
+  }
+  .user-name-wrapper {
+    float: right;
+    margin-right: 15px;
   }
   .user-avatar {
     height: 38px;
