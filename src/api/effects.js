@@ -8,7 +8,15 @@ const genReq = (appConfig) => {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       });
-    },  
+    }, 
+    getFunnelData(sid) {
+      const url = `${appConfig.h5Service}/statistics/${sid}/marketingfunnel`;
+      return fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+    },   
     getGeneralStatistics (sceneId) {
       const url = `${appConfig.h5Service}/scene/${sceneId}/stat/overall`;
       return fetch(url, {

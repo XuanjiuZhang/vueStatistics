@@ -14,7 +14,8 @@
       const funnelColorList = ['#4965ac', '#54d1f5', '#ef873c', '#feca2d', '#f53234']
       const funnelHoverColorList = ['rgb(100, 129, 200)', 'rgb(135, 211, 249)', 'rgb(255, 167, 103)', 'rgb(255, 222, 123)', 'rgb(255, 106, 108)']
       return {
-        data: [20, 40, 60, 70, 100],
+        // data: [20, 40, 60, 70, 100],
+        data: [],
         funnelColorList,
         funnelHoverColorList,
         funnelLabelInfo: ['访问量', '点击量', '线索', '商机', '订单'],
@@ -251,7 +252,10 @@
         }).attr('y', function(d){
           return d.textPoint.y
         }).html(function(d){
-          return `转化率: ${Math.round(d.bottom.data / d.top.data * 100)}%`
+          if(d.top.data === 0){
+            return '0'
+          }
+          return `转化率: ${(d.bottom.data / d.top.data).toFixed(2) * 100}%`
         });
       },
 
@@ -401,13 +405,27 @@
         return b - a;
       }
     },
+    computed: {
+      ...mapState(['statisticApi']),
+    },
     mounted() {
-      this.drawFunnel();
-      this.drawLeftLine();
-      this.drawLeftLineText();
-      this.drawInfoText();
-      this.linkPolygon(this.linkedPolyIndex);
-      this.drawLabelButton();
+      this.statisticApi.effects.getFunnelData(this.$route.params.id).then(res => {
+        if(res.ok){
+          return res.json()
+        }
+        return {error: true}
+      }).then(resData => {
+        console.log(resData)
+        const newArr = []
+        const { visit, hits, data, business, order } = resData
+        this.data = _lodash.chain(newArr).push(visit).push(hits).push(data).push(business).push(order).value()
+        this.drawFunnel();
+        this.drawLeftLine();
+        this.drawLeftLineText();
+        this.drawInfoText();
+        this.linkPolygon(this.linkedPolyIndex);
+        this.drawLabelButton();
+      }) 
 
     }
   }
