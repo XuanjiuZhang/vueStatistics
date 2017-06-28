@@ -18,7 +18,7 @@
     }
   }
   .funnel-chart {
-    width: 600px;
+    width: 650px;
     height: 550px;
   }
   .composed-table-wrapper {
