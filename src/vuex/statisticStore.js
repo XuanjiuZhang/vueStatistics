@@ -65,6 +65,7 @@ const initLegendColorList = (count) => {
 const initStore = () => {
   const state = {
     // sceneId: '463c9e00356b11e7947badc1235072ab',
+    id: undefined,
     statisticApi,
     echarts
     /*legendColorList: initLegendColorList(2000),
@@ -75,6 +76,9 @@ const initStore = () => {
   const store = new Vuex.Store({
     state,
     mutations: {
+      setId(state, payload) {
+        state.id = payload.id;
+      }
       /*changeChannelTree(state, payload) {
         state.sceneChannelTree = payload.tree;
       },

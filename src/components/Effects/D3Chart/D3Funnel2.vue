@@ -269,7 +269,7 @@
           return d.x - 7 * d.text.length
         }).attr('y', function(d){
           return d.y
-        }).style('stroke', function(){ return '#C2C2C2' })
+        }).style('stroke', function(){ return '#fff' })
         .html(function(d, index){
           return d.text
         }).on('click', (d, index) => {
