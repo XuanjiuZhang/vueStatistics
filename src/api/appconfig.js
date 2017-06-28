@@ -1,6 +1,7 @@
-// 生产环境
+
 const config = {
-  h5Service: '/h5/service/v1/', // H5接口
+  h5Service: '/h5/service', 
+  // h5Service: ''
 };
 
 export default config;
