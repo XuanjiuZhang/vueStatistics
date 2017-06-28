@@ -25,153 +25,67 @@
 
 <template>
   <div class="composed-table">
-    <!--<table class="table center composed-content">
-      <tr>
-        <th class="active">排名</th>
-        <th class="success">渠道</th>
-        <th class="warning">参数</th>
-        <th class="danger">访问占比</th>
-        <th class="info">点击</th>
-        <th class="warning">转化率</th>
-        <th class="success">线索</th>
-        <th class="info">转化率</th>
-        <th class="danger">商机</th>
-        <th class="info">转化率</th>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-      <tr>
-        <td class="active">1</td>
-        <td class="success">展现-网盟-百度网盟</td>
-        <td class="warning">溯源参数</td>
-        <td class="info">28%</td>
-        <td class="danger">834,445</td>
-        <td class="info">28%</td>
-        <td class="success">3,398</td>
-        <td class="warning">29%</td>
-        <td class="danger">423</td>
-        <td class="info">10%</td>
-      </tr>
-    </table>-->
     <div class="center composed-content">
       <el-table
-        :data="tableData3"
+        :data="tableData"
         border
         max-height="700"
         :row-class-name="tableRowClassName"
         style="width: 100%">
         <el-table-column
-          prop="name"
+          type="index"
           label="排名"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="channel"
           label="渠道"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="param"
           label="参数">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="visit"
           sortable
           label="访问">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="hitsVisit"
           sortable
           :sortMethod="sortClickVisit"
           label="访问占比(点击/访问)">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="hits"
           sortable
           label="点击">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="dataHits"
           sortable
           label="转化率(线索/点击)">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="data"
           sortable
           label="线索">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="businessData"
           sortable
           label="转化率(商机/线索)">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="business"
           sortable
           label="商机">
         </el-table-column>
         <el-table-column
-          prop="address"
+          prop="businessVisit"
           sortable
-          label="转化率(商机/线索)">
+          label="转化率(商机/访问)">
         </el-table-column>
       </el-table>
     </div>
@@ -181,51 +95,67 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :page-sizes="pageSizes"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="tableRawData.length">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'Vuex'
   export default {
     data() {
-      const table = [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '84,226'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '44,226'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '446'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '48,226'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '464,226'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '84,226'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '674,226'
-        }]
       return {
         currentPage: 1,
-        tableData3: table
+        // pageSizes: [10, 20, 50, 100],
+        pageSizes: [1, 2, 5, 10],
+        pageSize: 10,
+        tableRawData: []
       }
+    },
+    computed: {
+      ...mapState(['statisticApi']),
+      tableData() {
+        console.log('??');
+        const pageData = this.tableRawData.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
+        return pageData.map((raw, index) => {
+          var hitsVisit, dataHits, businessData, businessVisit
+          if(raw.visit === 0){
+            hitsVisit = 0
+          } else {
+            hitsVisit = (raw.hits / raw.visit).toFixed(2) * 100  + '%'
+          }
+
+          if(raw.hits === 0){
+            dataHits = 0
+          } else {
+            dataHits = (raw.data / raw.hits * 100).toFixed(2) + '%'
+          }
+
+          if(raw.data === 0){
+            businessData = 0
+          } else {
+            businessData = (raw.business / raw.data).toFixed(2) * 100 + '%'
+          }
+
+          if(raw.visit === 0){
+            businessVisit = 0
+          } else {
+            businessVisit = (raw.business / raw.visit * 100).toFixed(2) + '%'
+          }
+          return Object.assign({...raw}, { hitsVisit, dataHits, businessData, businessVisit})
+        })
+      }
+    },
+    activated() {
+      console.log('5950796889898016bc711f1f');
+      console.log(this.$route.params.id);
+    },
+    deactivated() {
+      console.log('deactivated');
     },
     methods: {
       tableRowClassName(row, index) {
@@ -233,16 +163,26 @@
       },
       sortClickVisit(data, nextData) {
         console.log('sortClickVisit');
+        console.log(this.$router.params);
 
       },
-      handleSizeChange() {
-
+      handleSizeChange(size) {
+        this.pageSize = size 
       },
-      handleCurrentChange() {
-
+      handleCurrentChange(current) {
+        this.currentPage = current
       }
     },
     mounted() {
+      this.statisticApi.effects.getChannelDetail(this.$route.params.id).then(res => {
+        if(res.ok){
+          return res.json()
+        }
+        return {error: true}
+      }).then(data => {
+        console.log(data)
+        this.tableRawData = data
+      })
     },
   }
 

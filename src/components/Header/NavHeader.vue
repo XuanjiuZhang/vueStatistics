@@ -8,8 +8,8 @@
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
         <ul class="header-nav header-nav-tabs">
-          <router-link tag="li" to="/channelChoose"><a>渠道分发</a></router-link>
-          <router-link tag="li" class="margin-left-40" to="/effects"><a>效果统计</a></router-link>
+          <router-link tag="li" to="channelChoose"><a>渠道分发</a></router-link>
+          <router-link tag="li" class="margin-left-40" to="effects"><a>效果统计</a></router-link>
           <!--<li class="active"><a href="">渠道分发</a></li>
           <li class="margin-left-40"><a href="">效果统计</a></li>-->
         </ul>
