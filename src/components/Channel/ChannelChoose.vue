@@ -23,54 +23,27 @@
           </div>
           <div class="center choose-container">
             <div class="container-fluid">
-              <div class="row">
+              <div class="row row-border" v-for="cData in channelData" :key="cData.id">
                 <div class="level-1">
-                  品牌展示
+                  {{cData.name}}
+                  <!--品牌展示-->
                 </div>
                 <div class="level-2">
                   <div class="two-scroll">
-                      <div><img :src="'/build/img/wm.png'" alt=""> <span>网盟 (5)</span></div>
-                      <div><img :src="'/build/img/dsp.png'" alt=""> <span>DSP (3)</span></div>
+                      <div v-for="l2 in cData.children" :key="l2.id" @click="l2Clicked(l2, cData)"
+                       :class="{active: l2._show}">
+                        <img v-show="l2.selected" :src="l2.ligting_icon_channel" alt="">
+                        <img v-show="!l2.selected" :src="l2.ligtingoff_icon_channel" alt="">
+                        <span>{{l2.name}}</span>
+                      </div>
+                      <!--<div><img :src="'/build/img/dsp.png'" alt=""> <span>DSP (3)</span></div>
                       <div><img :src="'/build/img/new.png'" alt=""> <span>新媒体</span></div>
                       <div><img :src="'/build/img/poster.png'" alt=""> <span>户外广告</span></div>
-                      <div><img :src="'/build/img/wm.png'" alt=""> <span>网盟 (5)</span></div>
+                      <div><img :src="'/build/img/wm.png'" alt=""> <span>网盟 (5)</span></div>-->
                   </div>
                 </div>
                 <div class="level-3">
-                  <div class="container-fluid">
-                    <div class="row">
-                      <div class="col-sm-3 col-md-3 col-lg-3">
-                        <div class="level3-wrapper">
-                          <el-tooltip class="item" effect="dark" content="点击选择" placement="top">
-                            <div v-popover:popover5><img :src="'/build/img/baidu.png'" alt=""><span class="text">百度网盟</span></div>
-                          </el-tooltip>
-                        </div>
-                      </div>
-                      <div class="col-sm-3 col-md-3 col-lg-3">
-                        <div class="level3-wrapper">
-                          <div class="add-custom-channel">
-                            <span class="el-icon-plus"></span><span class="text">自定义渠道 </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-3 col-md-3 col-lg-3">
-                        <div class="level3-wrapper">
-                          <div class="add-custom-channel-second">
-                            <input type="text" class="inp" placeholder="请输入渠道名称"><button class="el-icon-check btn"></button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-3 col-md-3 col-lg-3">
-                        <div class="level3-wrapper">
-                          <el-tooltip class="item" effect="dark" content="点击选择" placement="top">
-                            <div v-popover:popover5><img :src="'/build/img/baidu.png'" alt="">
-                              <span class="text">百度网盟</span><span class="closeBtn">x</span>
-                            </div>
-                          </el-tooltip>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <Level3 :cData="cData"></Level3>
                 </div>
               </div>
             </div>
@@ -82,48 +55,51 @@
 </template>
 
 <script>
-  import { mapGetters } from 'Vuex';
+  import { mapState } from 'Vuex';
+  import Level3 from './Level3';
+  import Vue from 'Vue';
   export default {
     data() {
       return {
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: '',
-        input2:'',
-        input:'',
-        visible2: false,
-        visible3:false,
-        visible4:false,
-        visible5:false,
-        visible6:false,
-        visible7:false
+        channelData: []
       } 
     },
-      methods: {
+    methods: {
       handleIconClick(ev) {
         console.log(ev);
+      },
+      parseChannelData(channelData) {
+        console.log(channelData);
+        channelData.forEach(level1 => {
+          level1.children.forEach((level2, l2Index) => {
+            Vue.set(level2, '_show', l2Index === 0)
+          })
+        });
+      },
+      l2Clicked(l2, cData) {
+        cData.children.forEach(level2 => {
+          if(level2.id === l2.id){
+            l2._show = !l2._show
+          }else{
+            level2._show = false
+          }
+        })
       }
     },
     // props: ['eleData', 'finalScale'],
     mounted() {
+      this.statisticApi.channel.getAllChannel(this.$route.params.id).then(res => {
+        return res.json()
+      }).then(data => {
+        console.log(data);
+        this.parseChannelData(data.data);
+        this.channelData = data.data;
+      });
     },
     computed: {
-      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
+      ...mapState(['statisticApi']),
     },
+    components: { Level3 }
   }
 
 </script>
@@ -189,7 +165,11 @@
   .choose-container {
     @height: 205px;
     width: 90%;
-    border: 1px solid #ccc;
+    .row-border {
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      border-radius: 3px;
+    }
     .closeBtn{
       @btn-height:  14px;
       width: @btn-height;
@@ -199,7 +179,7 @@
       overflow: hidden;
       position: absolute;
       color: #fff;
-      top: 0;
+      top: 12px;
       right:5px;
       line-height:@btn-height;
     }
@@ -242,6 +222,10 @@
             background:#e1eaf8;
           }
           &:active{
+              color:#fff;
+              background:#46befc;
+          }
+          &.active{
               color:#fff;
               background:#46befc;
           }
