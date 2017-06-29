@@ -42,6 +42,7 @@
       line-height: @channelHeight * .8;
       float: left;
       width: inherit;
+      margin-left: 10px;
     }
   }
   .copy-btn {
@@ -78,7 +79,7 @@
         </div>
         <div class="channel-params col-sm-9 col-md-9 col-lg-9">
           <div class="container-fluid">
-            <Item-params v-for="param in cData.params" :key="param.id" :pData="param" @confirmDel="confirmDel"></Item-params>
+            <Item-params v-for="param in cData.params" :key="param.id" :pData="param" :cData="cData" @confirmDel="confirmDel"></Item-params>
           </div>
         </div>
       </div>
