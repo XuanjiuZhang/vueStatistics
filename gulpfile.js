@@ -48,7 +48,11 @@ gulp.task('dev', function() {
         //  target: 'http://10.41.3.219/'
         target: 'http://10.41.3.221:3006',
         pathRewrite: {'^/h5/service/' : '/'}
-      }
+      },
+      '/cdn/**/*': {
+      //  target: 'http://192.168.51.22/'
+        target: 'http://10.41.3.219/'
+      },
     }
   });
   server.listen(8089, '10.41.3.223');

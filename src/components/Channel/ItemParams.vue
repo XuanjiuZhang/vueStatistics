@@ -3,72 +3,35 @@
 </style>
 
 <template>
-  <tr>
-    <td width="250" :rowspan="linkData.params.length" v-if="index === 0">
-      <div class="channel-name">
-        <p>{{linkData.name}}</p>
-      </div>
-    </td>
-    <td width="65" :rowspan="linkData.params.length" v-if="index === 0">
-      <div class="cnl-name-operation" @click="addParams">
-        <a href class="cnl-o-btn add-param b-tooltip hover">
-          <i class="b-icon b-add-param"></i>
-          <div class="tooltip top-left b-fade" role="tooltip">
-            <div class="tooltip-arrow"></div>
-            <div class="tooltip-inner">添加参数</div>
-          </div>
-        </a>
-      </div>
-    </td>
-    <td width="225">
-      <div class="cnl-input-group">
-        <div class="inp-item">
-          <input type="text" class="form-control has-shadow" placeholder="请输入参数">
-            <span class="plus-p-nav b-tooltip">
-            <a href class="cnl-o-btn plus-param hover"
-               @click="deleteParams">
-              <i class="b-icon b-plus-param"></i>
-            </a>
-            <div class="tooltip top-right b-fade" role="tooltip">
-              <div class="tooltip-arrow"></div>
-              <div class="tooltip-inner">删除</div>
-            </div>
-          </span>
+  <div class="row params-row">
+    <div class="col-sm-3 col-md-3 col-lg-3 params-name">
+      <el-input class="param-input" v-model="paramsStr" placeholder="请输入参数"></el-input>
+      <el-popover ref="popoverDelete" placement="top" width="160" v-model="popoverDeleteShow">
+        <p>这是一段内容这是一段内容确定删除吗？</p>
+        <div style="text-align: right; margin: 0">
+          <el-button size="mini" type="text" @click="closePop">取消</el-button>
+          <el-button type="primary" size="mini" @click="confirmDel">确定</el-button>
         </div>
-      </div>
-    </td>
-    <td width="100">
-      <div class="channel-qrcode">
-        <div class="qr-code border1"></div>
-        <div class="c-qr-mask dropdown">
-          <a href @click="toggleShowDownload">
-            <i class="b-icon b-download"></i>
-          </a>
-          <ul class="dropdown-menu hover-success">
-            <li @click="downloadQrCode(100)"><a>100px</a></li>
-            <li @click="downloadQrCode(200)"><a>200px</a></li>
-            <li @click="downloadQrCode(1024)"><a>1024px</a></li>
-          </ul>
-        </div>
-      </div>
-    </td>
-    <td width="240">
-      <div class="channel-link ellipsis">{{linkData.url}}&src=paramsValue</div>
-    </td>
-    <td width="150" align="left">
-      <button type="button" @click="copyLink" class="btn sm-radius co-link mr15">复制链接</button>
-    </td>
-    <td width="120" v-show="linkData.channelpromotion">
-      <a :href="linkData.shareurl" class="btn btn-indigo-glow market-btn" target="_blank">
-        <img style="max-width: 24px; max-height: 21px" class="app-img" :src="linkData.channelicon" alt="">推广
-      </a>
-    </td>
-    <td width="120" :rowspan="linkData.params.length" v-if="index === 0">
-      <button type="button" class="btn btn-indigo-glow hover-red" @click="deleteExternalLink">
-      <i class="b-icon b-del-cnl"></i>删除
-    </button>
-    </td>
-  </tr>
+      </el-popover>
+      <span class="el-icon-delete2 param-delete" v-popover:popoverDelete></span>
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5 params-qrc">
+      <img class="qrcode" :src="'/build/img/user-avatar.jpg'" alt="">
+      <span>http://qlelrkr.werwecodfewfewfewewffewfwem</span>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <button class="copy-btn" @click="copyLink">复制链接</button>
+      <!--<div class="add-custom-channel">
+        <span class="el-icon-plus"></span><span class="text">自定义渠道 </span>
+      </div>-->
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <el-select class="down-qrc" v-model="downInfo" placeholder="下载二维码" @change="downInfoSelect">
+        <el-option v-for="item in downInfoOption" :key="item.value" :label="item.label" :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -76,30 +39,30 @@
   export default {
     data() {
       return {
+        paramsStr: '',
+        popoverDeleteShow: false,
+        downInfo: '',
+        downInfoOption: [{value: '256', label: '256px'}, {value: '512', label: '512px'}, {value: '1024', label: '1024px'}]
       }
     },
-    props: ['linkData', 'index'],
+    props: ['pData'],
     mounted() {
     },
     methods: {
-      addParams() {
-        console.log('addParams');
+      closePop() {
+        this.popoverDeleteShow = false
       },
-      deleteParams() {
-        console.log('deleteParams');
+      confirmDel() {
+        this.$emit('confirmDel')
+        this.closePop()
       },
-      toggleShowDownload() {
-        console.log('toggleShowDownload');
-      },
-      downloadQrCode(size) {
-        console.log(size);
+      downInfoSelect(down) {
+        console.log(down);
+        this.downInfo = ''
       },
       copyLink() {
         console.log('copyLink');
       },
-      deleteExternalLink() {
-
-      }
     },
     computed: {
       // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])

@@ -6,14 +6,14 @@
         <el-input
           placeholder="请输入渠道和参数名称"
           icon="search"
-          v-model="input2"
-          :on-icon-click="handleIconClick">
+          v-model="keyword"
+          :on-icon-click="queryChannel">
         </el-input>
       </div>
       <div class="select-bottom">
-        <el-select v-model="value" placeholder="批量下载">
+        <el-select placeholder="批量下载" v-model="downValue" @change="downSelect">
           <el-option
-            v-for="item in options"
+            v-for="item in downOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -22,25 +22,52 @@
       </div>
     </div>
     <div class="center channel-container">
-      <Channel-item></Channel-item>
+      <Channel-item v-for="cData in channelListData" :key="cData._id" :cData="cData"></Channel-item>
     </div>
   </div>
 
 </template>
 
 <script>
-  import { mapGetters } from 'Vuex'
+  import { mapState } from 'Vuex'
   import ChannelItem from './ChannelItem'
   export default {
     data() {
       return {
+        keyword: '',
+        downValue: '',
+        downOptions: [
+          {value: 'qrc', label: '下载二维码'},
+          {value: 'link', label: '下载链接'}
+        ],
+        channelListData: []
       } 
     },
     // props: ['eleData', 'finalScale'],
+    methods: {
+      queryChannel() {
+        this.statisticApi.channel.querySelectedChannel(this.$route.params.id, '').then(res => {
+          return res.json()
+        }).then(data => {
+          console.log(data);
+          this.channelListData = data
+        })
+      },
+      downSelect(type) {
+        this.downValue = '';
+        console.log(type);
+      }
+    },
+    activated() {
+      this.queryChannel()
+    },
+    deactivated() {
+    },
     mounted() {
+      this.queryChannel()
     },
     computed: {
-      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
+      ...mapState(['statisticApi'])
     },
     components: {
       ChannelItem

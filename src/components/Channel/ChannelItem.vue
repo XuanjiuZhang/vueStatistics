@@ -4,6 +4,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 20px;
     .channel-row {
     }
     .channel-info {
@@ -68,8 +69,8 @@
     <div class="container-fluid">
       <div class="row channel-row">
         <div class="channel-info col-sm-3 col-md-3 col-lg-3">
-          <img :src="'/build/img/baidu.png'" class="img">
-          <span class="text">展示-网盟-领科特广告联盟</span>
+          <img :src="cData.icon" class="img">
+          <span class="text">{{cData.name}}</span>
 
           <span class="el-icon-plus first"></span>
           <span class="second"><i class="icon iconfont icon-piliangdaoru"></i></span>
@@ -77,60 +78,8 @@
         </div>
         <div class="channel-params col-sm-9 col-md-9 col-lg-9">
           <div class="container-fluid">
-            <div class="row params-row">
-              <div class="col-sm-3 col-md-3 col-lg-3 params-name">
-                <el-input class="param-input" v-model="input" placeholder="请输入参数"></el-input>
-                <el-popover
-                  ref="popover5"
-                  placement="top"
-                  width="160"
-                  v-model="visible7">
-                  <p>这是一段内容这是一段内容确定删除吗？</p>
-                  <div style="text-align: right; margin: 0">
-                    <el-button size="mini" type="text" @click="visible7 = false">取消</el-button>
-                    <el-button type="primary" size="mini" @click="visible7 = false">确定</el-button>
-                  </div>
-                </el-popover>
-                <span class="el-icon-delete2 param-delete" v-popover:popover5></span>
-              </div>
-              <div class="col-sm-5 col-md-5 col-lg-5 params-qrc">
-                <img class="qrcode" :src="'/build/img/user-avatar.jpg'" alt="">
-                <span>http://qlelrkr.werwecodfewfewfewewffewfwem</span>
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2">
-                <button class="copy-btn">复制链接</button>
-                <!--<div class="add-custom-channel">
-                  <span class="el-icon-plus"></span><span class="text">自定义渠道 </span>
-                </div>-->
-              </div>
-              <div class="col-sm-2 col-md-2 col-lg-2">
-                <el-select class="down-qrc" v-model="value" placeholder="下载二维码">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-            </div>
+            <Item-params v-for="param in cData.params" :key="param.id" :pData="param" @confirmDel="confirmDel"></Item-params>
           </div>
-          <!--<table class="table">
-            <tr>
-              <td>
-                参数-1
-              </td>
-              <td>
-                二维码
-              </td>
-              <td>
-                复制链接
-              </td>
-              <td>
-                下载二维码
-              </td>
-            </tr>
-          </table>-->
         </div>
       </div>
     </div>
@@ -138,28 +87,27 @@
 </template>
 
 <script>
-  import { mapGetters } from 'Vuex';
+  import { mapState } from 'Vuex';
   import ItemParams from './ItemParams'
-  import ItemNoParams from './ItemNoParams'
   export default {
     data() {
       return {
-        linkData: {
-          params: [1, 2, 3],
-          name: 'test',
-          url: 'url!!'
-        }
       } 
     },
-    // props: ['eleData', 'finalScale'],
+    props: ['cData'],
     mounted() {
+      console.log(this.cData);
+    },
+    methods: {
+      confirmDel() {
+        console.log('confirmDel');
+      }
     },
     computed: {
-      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
+      ...mapState(['statisticApi'])
     },
     components: {
-      ItemParams,
-      ItemNoParams
+      ItemParams
     }
   }
 

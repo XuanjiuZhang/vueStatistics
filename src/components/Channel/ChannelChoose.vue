@@ -180,7 +180,7 @@
       position: absolute;
       color: #fff;
       top: 12px;
-      right:5px;
+      right:0;
       line-height:@btn-height;
     }
     .level-1 {
