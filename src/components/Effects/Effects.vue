@@ -1,22 +1,4 @@
 <style lang="less">
-  .content-wrapper {
-    margin-top: 20px;
-    margin-bottom: 40px;
-    background: #fff;
-    box-shadow: 0 0 8px #cbd3de;
-    .title {
-      height: 55px;
-      border-bottom:solid #EAEFF5 1px;
-      line-height: 55px;
-      span {
-        margin-left: 20px;
-        font-size: 16px;
-      }
-    }
-    .center {
-      margin: 30px auto 0
-    }
-  }
   /*.funnel-chart {
     width: 650px;
     height: 550px;

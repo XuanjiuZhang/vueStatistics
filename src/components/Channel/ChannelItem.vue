@@ -1,8 +1,12 @@
 <style lang="less">
+  .channel-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 </style>
 
 <template>
-  <div>
+  <div class="channel-item">
     <table class="table">
       <Item-params v-if="linkData.params.length != 0" v-for="(num, index) in linkData.params" :key="index" :linkData="linkData" :index="index"></Item-params>
       <Item-no-params v-if="linkData.params.length === 0" :linkData="linkData"></Item-no-params>
