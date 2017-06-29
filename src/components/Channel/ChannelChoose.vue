@@ -16,7 +16,7 @@
           <div class="title">
             <span><b>渠道选择</b></span>
             <img src="/build/img/question02.png">
-            <router-link class="right disabled" tag="div" to="channelList"><a>已选择渠道</a></router-link>
+            <router-link class="right disabled" tag="div" to="channelList">已选择渠道</router-link>
             <p class="tip">
               <span>1</span>
             </p>
@@ -147,12 +147,14 @@
       height:35px;
       background-image:-webkit-linear-gradient(0deg, rgb(84,212,253), rgb(8,184,241));
       float:right;
-      a {
+      color:#fff;
+      cursor: pointer;
+      /*a {
         color:#fff;
       }
       a:hover {
         text-decoration:none;
-      }
+      }*/
       &:hover{
         background:#54d4fe;
       }

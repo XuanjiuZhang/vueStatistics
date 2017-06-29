@@ -1,6 +1,7 @@
 import ChannelChoose from './Channel/ChannelChoose'
 // import ChannelChooseO from './Channel/ChannelChoose-old'
 import ChannelList from './Channel/ChannelList'
+import ChannelListO from './Channel/ChannelList-old'
 import Effects from './Effects/Effects'
 
 import SourceContainer from './SourceContainer'
