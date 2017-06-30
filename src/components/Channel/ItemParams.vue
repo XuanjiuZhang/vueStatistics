@@ -7,7 +7,7 @@
     <div class="col-sm-3 col-md-3 col-lg-3 params-name">
       <el-input class="param-input" v-model="pData.name" placeholder="请输入参数"></el-input>
       <el-popover ref="popoverDelete" placement="top" width="160" v-model="popoverDeleteShow">
-        <p>这是一段内容这是一段内容确定删除吗？</p>
+        <p>您确定要删除该参数？</p>
         <div style="text-align: right; margin: 0">
           <el-button size="mini" type="text" @click="closePop">取消</el-button>
           <el-button type="primary" size="mini" @click="confirmDel">确定</el-button>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'Vuex';
+  import { mapState, mapActions } from 'Vuex';
   import qrcanvas from 'qrcanvas'
   import { exportCanvasAsPNG } from './service'
   export default {
@@ -45,6 +45,11 @@
       }
     },
     props: ['pData', 'cData'],
+    watch: {
+      'pData.name'(name) {
+        console.log(name);
+      }
+    },
     mounted() {
       const canvas = qrcanvas({
         data: this.composedUrl,
@@ -56,11 +61,23 @@
       this.$refs.qrcode.appendChild(canvas);
     },
     methods: {
+      ...mapActions(['initChannelSelectedData']),
       closePop() {
         this.popoverDeleteShow = false
       },
       confirmDel() {
-        this.$emit('confirmDel')
+        // this.$emit('confirmDel')
+        const data = this.cData.params.filter(p => {
+          return p.name != this.pData.name
+        })
+        const send = {
+          id: this.cData._id,
+          data
+        }
+        this.statisticApi.channel.modChannelParam(this.sid, send).then(res => res.json()).then(result => {
+          console.log(result);
+          this.initChannelSelectedData()
+        })
         this.closePop()
       },
       downInfoSelect(cellSize) {
@@ -81,7 +98,7 @@
       },
     },
     computed: {
-      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
+      ...mapState(['statisticApi', 'sid']),
       composedUrl() {
         return `${this.cData.url}?qrc=${this.cData._id}&src=${this.pData.name}`
       }

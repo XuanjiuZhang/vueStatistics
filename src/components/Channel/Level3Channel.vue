@@ -73,7 +73,7 @@
             second_channelid: this.showedL2.id
           }
           console.log(data);
-          this.statisticApi.channel.selectChannel(this.$route.params.id, data).then(res => res.json()).then(data => {
+          this.statisticApi.channel.selectChannel(this.sid, data).then(res => res.json()).then(data => {
             console.log(data);
             this.l3.selected = true
             this.changeSelectedCount({selectedCount: this.selectedCount + 1})
@@ -83,7 +83,7 @@
             id: this.l3.id
           }
           console.log(data);
-          this.statisticApi.channel.unselectChannel(this.$route.params.id, data).then(res => res.json()).then(data => {
+          this.statisticApi.channel.unselectChannel(this.sid, data).then(res => res.json()).then(data => {
             console.log(data);
             this.l3.selected = false
             this.changeSelectedCount({selectedCount: this.selectedCount - 1})
@@ -103,7 +103,7 @@
       }
     },
     computed: {
-      ...mapState(['statisticApi', 'selectedCount']),
+      ...mapState(['statisticApi', 'selectedCount', 'sid']),
       canDelete() {
         return this.l3.hasOwnProperty('sid')
       }

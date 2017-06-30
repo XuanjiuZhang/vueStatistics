@@ -56,6 +56,17 @@ const genReq = (appConfig) => {
         body: JSON.stringify(data),
         credentials: 'include',
       });
+    },
+
+    modChannelParam(sid, data) {
+      console.log('modChannelParam?');
+      const url = `${appConfig.h5Service}/channel/${sid}/select`;
+      return fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include',
+      });
     }
 
   };

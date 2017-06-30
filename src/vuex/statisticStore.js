@@ -11,6 +11,7 @@ const initStore = () => {
     echarts,
     channelData: [],
     selectedCount: 0,
+    selectedChannelData: [],
   };
 
   const store = new Vuex.Store({
@@ -30,6 +31,9 @@ const initStore = () => {
       },
       changeSid(state, payload) {
         state.sid = payload.sid;
+      },
+      changeSelectedChannelData(state, payload) {
+        state.selectedChannelData = payload.selectedChannelData;
       }
     },
     getters: {
@@ -58,7 +62,17 @@ const initStore = () => {
           context.commit('changeChannelTree', { tree: data });
           context.commit('changeCurrentShowChannel', { currentShowChannel: data });
         });*/
+      },
+
+      initChannelSelectedData(context, payload = { keyword: '' }) {
+        statisticApi.channel.querySelectedChannel(context.state.sid, payload.keyword).then(res => {
+          return res.json()
+        }).then(data => {
+          console.log(data);
+          context.commit('changeSelectedChannelData', { selectedChannelData: data });
+        });
       }
+
       /*getSceneChannelTree(context, payload) {
         statisticApi.getSceneChannelTree(payload.sceneId).then(res => {
           if (res.ok) {

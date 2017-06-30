@@ -73,13 +73,13 @@
           <img :src="cData.icon" class="img">
           <span class="text">{{cData.name}}</span>
 
-          <span class="el-icon-plus first"></span>
+          <span class="el-icon-plus first" @click="addParam"></span>
           <span class="second"><i class="icon iconfont icon-piliangdaoru"></i></span>
-          <span class="el-icon-delete2 third"></span>
+          <span class="el-icon-delete2 third" @click="deleteChannel"></span>
         </div>
         <div class="channel-params col-sm-9 col-md-9 col-lg-9">
           <div class="container-fluid">
-            <Item-params v-for="param in cData.params" :key="param.id" :pData="param" :cData="cData" @confirmDel="confirmDel"></Item-params>
+            <Item-params v-for="param in cData.params" :key="param.id" :pData="param" :cData="cData"></Item-params>
             <Item0-params v-if="is0params" :cData="cData"></Item0-params>
           </div>
         </div>
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-  import { mapState } from 'Vuex';
+  import { mapState, mapActions } from 'Vuex';
   import ItemParams from './ItemParams'
   import Item0Params from './ItemNoParams'
   export default {
@@ -102,12 +102,52 @@
       console.log(this.cData);
     },
     methods: {
-      confirmDel() {
-        console.log('confirmDel');
+      ...mapActions(['initChannelSelectedData', 'changeSelectedCount']),
+      deleteChannel() {
+        const data = {
+          id: this.cData.channelid
+        }
+        const selectedCount = this.selectedCount - 1
+        this.statisticApi.channel.unselectChannel(this.sid, data).then(res => res.json()).then(data => {
+          this.changeSelectedCount({selectedCount})
+          this.initChannelSelectedData()
+        });
+      },
+      addParam() {
+        console.log(this.cData);
+        if(this.is0params){
+          let data = [{name: Math.round(Math.random() * 1000000) + '', sort: 1}]
+          let send = {
+            id: this.cData._id,
+            data
+          }
+          this.statisticApi.channel.modChannelParam(this.sid, send).then(res => res.json()).then(result => {
+            console.log(result);
+            this.initChannelSelectedData()
+          })
+        }else{
+          let maxSort = 0
+          console.log(this.cData.params);
+          this.cData.params.forEach(p => {
+            maxSort = Math.max(maxSort, p.sort)
+          })
+          let newParam = {name: Math.round(Math.random() * 1000000) + '', sort: maxSort + 1}
+          this.cData.params.push(newParam)
+
+          let send = {
+            id: this.cData._id,
+            data: this.cData.params
+          }
+          this.statisticApi.channel.modChannelParam(this.sid, send).then(res => res.json()).then(result => {
+            console.log(result);
+            // this.initChannelSelectedData()
+          })
+        }
+        
       }
     },
     computed: {
-      ...mapState(['statisticApi']),
+      ...mapState(['statisticApi', 'sid', 'selectedCount']),
       is0params() {
         return !this.cData.hasOwnProperty('params')
       }

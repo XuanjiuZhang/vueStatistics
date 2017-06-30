@@ -22,14 +22,14 @@
       </div>
     </div>
     <div class="center channel-container">
-      <Channel-item v-for="cData in channelListData" :key="cData._id" :cData="cData"></Channel-item>
+      <Channel-item v-for="cData in selectedChannelData" :key="cData._id" :cData="cData"></Channel-item>
     </div>
   </div>
 
 </template>
 
 <script>
-  import { mapState } from 'Vuex'
+  import { mapState, mapActions } from 'Vuex'
   import ChannelItem from './ChannelItem'
   export default {
     data() {
@@ -40,18 +40,14 @@
           {value: 'qrc', label: '下载二维码'},
           {value: 'link', label: '下载链接'}
         ],
-        channelListData: []
+        // channelListData: []
       } 
     },
     // props: ['eleData', 'finalScale'],
     methods: {
+      ...mapActions(['initChannelSelectedData']),
       queryChannel() {
-        this.statisticApi.channel.querySelectedChannel(this.$route.params.id, '').then(res => {
-          return res.json()
-        }).then(data => {
-          console.log(data);
-          this.channelListData = data
-        })
+        this.initChannelSelectedData({keyword: this.keyword})
       },
       downSelect(type) {
         this.downValue = '';
@@ -59,15 +55,15 @@
       }
     },
     activated() {
-      this.queryChannel()
+      this.initChannelSelectedData()
     },
     deactivated() {
     },
     mounted() {
-      this.queryChannel()
+      this.initChannelSelectedData()
     },
     computed: {
-      ...mapState(['statisticApi'])
+      ...mapState(['selectedChannelData'])
     },
     components: {
       ChannelItem
