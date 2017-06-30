@@ -80,6 +80,7 @@
         <div class="channel-params col-sm-9 col-md-9 col-lg-9">
           <div class="container-fluid">
             <Item-params v-for="param in cData.params" :key="param.id" :pData="param" :cData="cData" @confirmDel="confirmDel"></Item-params>
+            <Item0-params v-if="is0params" :cData="cData"></Item0-params>
           </div>
         </div>
       </div>
@@ -90,6 +91,7 @@
 <script>
   import { mapState } from 'Vuex';
   import ItemParams from './ItemParams'
+  import Item0Params from './ItemNoParams'
   export default {
     data() {
       return {
@@ -105,10 +107,14 @@
       }
     },
     computed: {
-      ...mapState(['statisticApi'])
+      ...mapState(['statisticApi']),
+      is0params() {
+        return !this.cData.hasOwnProperty('params')
+      }
     },
     components: {
-      ItemParams
+      ItemParams,
+      Item0Params
     }
   }
 

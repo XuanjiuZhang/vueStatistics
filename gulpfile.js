@@ -52,6 +52,7 @@ gulp.task('dev', function() {
       '/cdn/**/*': {
       //  target: 'http://192.168.51.22/'
         target: 'http://10.41.3.219/'
+        // target: 'http://192.168.150.20/'
       },
     }
   });

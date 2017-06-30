@@ -17,6 +17,45 @@ const genReq = (appConfig) => {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       });
+    },
+
+    addCustomChannel(data) {
+      const url = `${appConfig.h5Service}/channel`;
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include',
+      });
+    },
+
+    delCustomChannel(cid) {
+      const url = `${appConfig.h5Service}/channel?id=${cid}`;
+      return fetch(url, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+    },
+
+    selectChannel(sid, data) {
+      const url = `${appConfig.h5Service}/channel/${sid}/select`;
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include',
+      });
+    },
+
+    unselectChannel(sid, data) {
+      const url = `${appConfig.h5Service}/channel/${sid}/select`;
+      return fetch(url, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include',
+      });
     }
 
   };

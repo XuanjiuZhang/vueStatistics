@@ -18,7 +18,7 @@
             <img src="/build/img/question02.png">
             <router-link class="right disabled" tag="div" to="channelList">已选择渠道</router-link>
             <p class="tip">
-              <span>1</span>
+              <span>{{selectedCount}}</span>
             </p>
           </div>
           <div class="center choose-container">
@@ -55,27 +55,16 @@
 </template>
 
 <script>
-  import { mapState } from 'Vuex';
+  import { mapState, mapActions } from 'Vuex';
   import Level3 from './Level3';
   import Vue from 'Vue';
   export default {
     data() {
       return {
-        channelData: []
       } 
     },
     methods: {
-      handleIconClick(ev) {
-        console.log(ev);
-      },
-      parseChannelData(channelData) {
-        console.log(channelData);
-        channelData.forEach(level1 => {
-          level1.children.forEach((level2, l2Index) => {
-            Vue.set(level2, '_show', l2Index === 0)
-          })
-        });
-      },
+      ...mapActions(['initChannelData']),
       l2Clicked(l2, cData) {
         cData.children.forEach(level2 => {
           if(level2.id === l2.id){
@@ -88,16 +77,11 @@
     },
     // props: ['eleData', 'finalScale'],
     mounted() {
-      this.statisticApi.channel.getAllChannel(this.$route.params.id).then(res => {
-        return res.json()
-      }).then(data => {
-        console.log(data);
-        this.parseChannelData(data.data);
-        this.channelData = data.data;
-      });
+      console.log('initChannelData!');
+      this.initChannelData()
     },
     computed: {
-      ...mapState(['statisticApi']),
+      ...mapState(['channelData', 'selectedCount']),
     },
     components: { Level3 }
   }
@@ -174,6 +158,8 @@
       @btn-height:  14px;
       width: @btn-height;
       height: @btn-height;
+      text-align: center;
+      cursor: pointer;
       background: red;
       border-radius: 56%;
       overflow: hidden;

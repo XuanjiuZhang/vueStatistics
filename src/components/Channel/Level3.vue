@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-3 col-md-3 col-lg-3 row-data" v-for="l3 in showedL2.children" :key="l3.id">
-        <Level3-channel :l3="l3"></Level3-channel>
+        <Level3-channel :l3="l3" :showedL2="showedL2" :cData="cData"></Level3-channel>
         <!--<div class="level3-wrapper">
           <el-popover
               ref="popoverSelect"
@@ -32,7 +32,7 @@
             <span class="el-icon-plus"></span><span class="text">自定义渠道 </span>
           </div>
           <div class="add-custom-channel-second" v-show="inAddCustomChannel">
-            <input type="text" class="inp" placeholder="请输入渠道名称" @blur="inputBlur">
+            <input type="text" class="inp" v-model="customChannelName" placeholder="请输入渠道名称" @blur="inputBlur">
             <button class="el-icon-check btn" @click="confirmAddCustom"></button>
           </div>
         </div>
@@ -56,12 +56,13 @@
 </template>
 
 <script>
-  import { mapGetters } from 'Vuex';
+  import { mapState, mapActions } from 'Vuex';
   import Level3Channel from './Level3Channel';
   export default {
     data() {
       return {
-        inAddCustomChannel: false
+        inAddCustomChannel: false,
+        customChannelName: '',
       }
     },
     props: ['cData'],
@@ -69,11 +70,25 @@
       console.log(this.cData);
     },
     methods: {
+      ...mapActions(['initChannelData']),
       toggleAddCustom() {
         this.inAddCustomChannel = !this.inAddCustomChannel
       },
       confirmAddCustom() {
         this.inAddCustomChannel = false
+        if(this.customChannelName === ''){
+          return
+        }
+        const send = {
+          sort: this.showedL2.children.length + 1,
+          id: this.showedL2.id,
+          sid: this.$route.params.id,
+          name: this.customChannelName
+        }
+        this.statisticApi.channel.addCustomChannel(send).then(res => res.json()).then(data => {
+          console.log(data);
+          this.initChannelData()
+        })
         console.log('confirmAddCustom');
       },
       inputBlur() {
@@ -84,6 +99,7 @@
       }
     },
     computed: {
+      ...mapState(['statisticApi']),
       showedL2() {
         return this.cData.children.find(level2 => {
           return level2._show;

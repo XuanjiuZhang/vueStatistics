@@ -47,10 +47,12 @@
     props: ['pData', 'cData'],
     mounted() {
       const canvas = qrcanvas({
-        data: this.cData.url,
-        // size,
+        data: this.composedUrl,
+        // size: 98,
         cellSize: 4
       });
+      canvas.style.height = '100%'
+      canvas.style.width = '100%'
       this.$refs.qrcode.appendChild(canvas);
     },
     methods: {
@@ -68,7 +70,7 @@
         console.log(cellSize);
         this.downInfo = ''
         const canvas = qrcanvas({
-          data: this.url,
+          data: this.composedUrl,
           // size,
           cellSize
         });
@@ -81,7 +83,7 @@
     computed: {
       // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
       composedUrl() {
-        return `${this.cData.url}?qrc=${this.pData.name}`
+        return `${this.cData.url}?qrc=${this.cData._id}&src=${this.pData.name}`
       }
     },
   }
