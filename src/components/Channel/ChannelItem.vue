@@ -122,6 +122,11 @@
   .part-right {
     float: right;
     line-height: @channelHeight;
+    .file-uploads {
+      height: 25px;
+      font-weight: inherit;
+      overflow: inherit;
+    }
     > span {
       cursor: pointer;
     }
@@ -143,7 +148,13 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="批量导入" placement="top">
-              <span class="second"><i class="icon iconfont icon-piliangdaoru"></i></span>
+              <file-upload v-model="files"
+                @input="handleMultiFiles"
+                @input-file="handlesingleFile">
+                <span class="second">
+                  <i class="icon iconfont icon-piliangdaoru"></i>
+                </span>
+              </file-upload>
             </el-tooltip>
 
             <!--<span class="el-icon-plus first" @click="addParam"></span>
@@ -179,12 +190,14 @@
 
 <script>
   import { mapState, mapActions } from 'Vuex';
+  import FileUpload from 'vue-upload-component'
   import ItemParams from './ItemParams'
   import Item0Params from './ItemNoParams'
   export default {
     data() {
       return {
-        showDelTip: false
+        showDelTip: false,
+        files: [],
       } 
     },
     props: ['cData'],
@@ -257,6 +270,12 @@
           })
         }
         
+      },
+      handleMultiFiles(files) {
+        console.log(files);
+      },
+      handlesingleFile(newFile, oldFile) {
+        console.log(newFile);
       }
     },
     computed: {
@@ -267,7 +286,8 @@
     },
     components: {
       ItemParams,
-      Item0Params
+      Item0Params,
+      FileUpload
     }
   }
 

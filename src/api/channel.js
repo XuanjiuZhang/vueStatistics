@@ -76,6 +76,16 @@ const genReq = (appConfig) => {
     downloadExcel(sid) {
       const url = `${appConfig.h5Service}/channel/${sid}/exportexcel`;
       window.open(url)
+    },
+
+    uploadChannelParamsExcel(data) {
+      const url = `${appConfig.h5Service}/channel/uploader`;
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include',
+      });
     }
 
   };
