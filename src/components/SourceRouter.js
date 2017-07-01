@@ -1,14 +1,12 @@
 import ChannelChoose from './Channel/ChannelChoose'
-// import ChannelChooseO from './Channel/ChannelChoose-old'
 import ChannelList from './Channel/ChannelList'
-import ChannelListO from './Channel/ChannelList-old'
 import Effects from './Effects/Effects'
 
 import SourceContainer from './SourceContainer'
 
 const routes = [
   { path: '/:id', component: SourceContainer, children: [
-    { path: 'ChannelChoose', component: ChannelChoose },
+    { path: 'channelChoose', component: ChannelChoose},
     { path: 'channelList', component: ChannelList },
     { path: 'effects', component: Effects }
   ]}

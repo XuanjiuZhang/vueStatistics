@@ -4,7 +4,7 @@
       <div class="content-wrapper col-sm-4 col-md-3 col-lg-2">
         <div class="title">
           <span><b>消费者行为模型</b></span>
-          <img :src="'/build/img/question.png'" >
+          <img class="question-mark" :src="'/build/img/question.png'" >
         </div>
         <div class="center">
           <img class="full-width bottom-margin" src="/build/img/left.png">
@@ -15,7 +15,7 @@
         <div class="content-wrapper right-channel">
           <div class="title">
             <span><b>渠道选择</b></span>
-            <img src="/build/img/question02.png">
+            <img class="question-mark" src="/build/img/question02.png">
             <router-link class="right disabled" tag="div" to="channelList">已选择渠道</router-link>
             <p class="tip">
               <span>{{selectedCount}}</span>
@@ -80,6 +80,9 @@
 </script>
 
 <style lang="less">
+  .question-mark {
+    vertical-align: text-top;
+  }
   .right-channel {
     margin-left: 1%;
     padding-bottom: 20px;

@@ -129,7 +129,7 @@
         this.Notification({
             // title: '成功',
             type: 'success',
-            message: '已复制',
+            message: '已复制到剪贴板',
             duration: 1000,
             offset: 100
           })

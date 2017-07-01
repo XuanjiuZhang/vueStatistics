@@ -54,6 +54,11 @@
       downSelect(type) {
         this.downValue = '';
         console.log(type);
+        if(type === 'qrc'){
+          this.statisticApi.channel.packageQrc(this.sid)
+        }else if(type === 'link'){
+          this.statisticApi.channel.downloadExcel(this.sid)
+        }
       }
     },
     activated() {
@@ -65,7 +70,7 @@
       this.initChannelSelectedData()
     },
     computed: {
-      ...mapState(['selectedChannelData']),
+      ...mapState(['selectedChannelData', 'statisticApi', 'sid']),
       debouncedQuery() {
         return _lodash.debounce(this.queryChannel, this.queryDebounce)
       }

@@ -37,7 +37,7 @@
         display:inline-block;
         background:#fff;
         color:#c0ccde;
-        line-height:25px;
+        line-height:23px;
         text-align:center;
         &:hover {
           background:#46befc;
@@ -203,6 +203,13 @@
         }
         const selectedCount = this.selectedCount - 1
         this.statisticApi.channel.unselectChannel(this.sid, data).then(res => res.json()).then(data => {
+          this.Notification({
+              // title: '成功',
+              type: 'success',
+              message: '已取消该渠道',
+              duration: 1000,
+              offset: 100
+            })
           this.changeSelectedCount({selectedCount})
           this.initChannelSelectedData()
         });

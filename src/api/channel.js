@@ -59,7 +59,6 @@ const genReq = (appConfig) => {
     },
 
     modChannelParam(sid, data) {
-      console.log('modChannelParam?');
       const url = `${appConfig.h5Service}/channel/${sid}/select`;
       return fetch(url, {
         method: 'PUT',
@@ -67,6 +66,16 @@ const genReq = (appConfig) => {
         body: JSON.stringify(data),
         credentials: 'include',
       });
+    },
+
+    packageQrc(sid) {
+      const url = `${appConfig.h5Service}/channel/${sid}/exportqrc`;
+      window.open(url)
+    },
+
+    downloadExcel(sid) {
+      const url = `${appConfig.h5Service}/channel/${sid}/exportexcel`;
+      window.open(url)
     }
 
   };

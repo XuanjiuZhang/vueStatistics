@@ -91,6 +91,12 @@
           text-decoration-line: none;
           color: #000;
         }
+        &.router-link-active {
+          border-bottom-color: #05B7F1;
+          > a {
+            color: #97A8BD;
+          }
+        }
         &.router-link-exact-active {
           border-bottom-color: #05B7F1;
           > a {
