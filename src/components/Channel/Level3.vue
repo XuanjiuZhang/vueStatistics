@@ -29,10 +29,10 @@
       <div class="col-sm-3 col-md-3 col-lg-3 row-data">
         <div class="level3-wrapper">
           <div class="add-custom-channel" v-show="!inAddCustomChannel" @click="toggleAddCustom">
-            <span class="el-icon-plus"></span><span class="text">自定义渠道 </span>
+            <span class="el-icon-plus"></span><label class="text" :for="custonInp">自定义渠道 </label>
           </div>
           <div class="add-custom-channel-second" v-show="inAddCustomChannel">
-            <input type="text" class="inp" v-model="customChannelName" placeholder="请输入渠道名称" @blur="inputBlur">
+            <input type="text" class="inp" :id="custonInp" v-model="customChannelName" placeholder="请输入渠道名称" @blur="inputBlur">
             <button class="el-icon-check btn" @click="confirmAddCustom"></button>
           </div>
         </div>
@@ -60,9 +60,11 @@
   import Level3Channel from './Level3Channel';
   export default {
     data() {
+      const custonInp = 'custonInp' + Math.round(Math.random() * 1000000)
       return {
         inAddCustomChannel: false,
         customChannelName: '',
+        custonInp: custonInp
       }
     },
     props: ['cData'],

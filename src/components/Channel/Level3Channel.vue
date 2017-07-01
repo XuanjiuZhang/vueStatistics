@@ -1,4 +1,7 @@
 <style lang="less">
+  .custom-channel-active {
+     color: #fe5656;
+  }
 </style>
 
 <template>
@@ -17,26 +20,32 @@
       </el-popover>
     <el-tooltip class="item" effect="dark" content="点击选择" placement="top">
       <div v-popover:popoverSelect>
-        <img v-show="l3.selected" :src="l3.ligting_icon_channel" alt="">
-        <img v-show="!l3.selected" :src="l3.ligtingoff_icon_channel" alt="">
-        <span class="text">{{l3.name}}</span>
+        <!--非自定义渠道-->
+        <img v-if="!canDelete" v-show="l3.selected" :src="l3.ligting_icon_channel" alt="">
+        <img v-if="!canDelete" v-show="!l3.selected" :src="l3.ligtingoff_icon_channel" alt="">
+        <!--非自定义渠道-->
+
+        <!--自定义渠道-->
+        <span v-if="canDelete" :class="{'custom-channel-active': l3.selected}">{{l3.name.charAt(0)}}</span>
+        <!--自定义渠道-->
+
+        <span class="text" :class="{active: l3.selected}">{{l3.name}}</span>
       </div>
     </el-tooltip>
     <el-popover
-        ref="popoverDelete"
-        placement="right"
-        width="160"
-        v-model="showDelTip">
-        <p>删除该渠道?</p>
-        <div style="text-align: right; margin: 0">
-          <el-button size="mini" type="text" @click="hideDelTip">取消</el-button>
-          <el-button type="primary" size="mini" @click="confirmDelTip">确定</el-button>
-        </div>
-      </el-popover>
-    <el-tooltip class="item" effect="dark" content="删除" placement="top">
-      <div v-popover:popoverDelete>
-        <span v-if="canDelete" class="closeBtn">x</span> 
+      v-if="canDelete" 
+      ref="popoverDelete"
+      placement="right"
+      width="160"
+      v-model="showDelTip">
+      <p>删除该渠道?</p>
+      <div style="text-align: right; margin: 0">
+        <el-button size="mini" type="text" @click="hideDelTip">取消</el-button>
+        <el-button type="primary" size="mini" @click="confirmDelTip">确定</el-button>
       </div>
+    </el-popover>
+    <el-tooltip v-if="canDelete" class="item" effect="dark" content="删除" placement="top">
+      <div v-popover:popoverDelete class="closeBtn"><span class="el-icon-circle-cross"></span></div> 
     </el-tooltip>
   </div>
 </template>

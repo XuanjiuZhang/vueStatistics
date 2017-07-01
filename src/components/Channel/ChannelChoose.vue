@@ -26,7 +26,6 @@
               <div class="row row-border" v-for="cData in channelData" :key="cData.id">
                 <div class="level-1">
                   {{cData.name}}
-                  <!--品牌展示-->
                 </div>
                 <div class="level-2">
                   <div class="two-scroll">
@@ -36,10 +35,6 @@
                         <img v-show="!l2.selected" :src="l2.ligtingoff_icon_channel" alt="">
                         <span>{{l2.name}}</span>
                       </div>
-                      <!--<div><img :src="'/build/img/dsp.png'" alt=""> <span>DSP (3)</span></div>
-                      <div><img :src="'/build/img/new.png'" alt=""> <span>新媒体</span></div>
-                      <div><img :src="'/build/img/poster.png'" alt=""> <span>户外广告</span></div>
-                      <div><img :src="'/build/img/wm.png'" alt=""> <span>网盟 (5)</span></div>-->
                   </div>
                 </div>
                 <div class="level-3">
@@ -67,11 +62,7 @@
       ...mapActions(['initChannelData']),
       l2Clicked(l2, cData) {
         cData.children.forEach(level2 => {
-          if(level2.id === l2.id){
-            l2._show = !l2._show
-          }else{
-            level2._show = false
-          }
+          level2._show = level2.id === l2.id
         })
       }
     },
@@ -154,7 +145,15 @@
       margin-bottom: 20px;
       border-radius: 3px;
     }
-    .closeBtn{
+    .closeBtn {
+      margin-left: 15px;
+      /*border-radius: 50%;*/
+      color: #fe5656;
+      span {
+        cursor: pointer;
+      }
+    }
+    /*.closeBtn{
       @btn-height:  14px;
       width: @btn-height;
       height: @btn-height;
@@ -168,7 +167,7 @@
       top: 12px;
       right:0;
       line-height:@btn-height;
-    }
+    }*/
     .level-1 {
       float: left;
       width: 11%;
@@ -233,12 +232,18 @@
         height:@l3Height;
         line-height:@l3Height;
         .item {
-          text-align: center;
+          /*text-align: center;*/
+          float: left;
         }
         .text{
           margin-left: 10px;
+          margin-bottom: 0;
+          &.active {
+            color: #46befc;
+          }
         }
         .add-custom-channel{
+          float: left;
           text-align: center;
           width:80%;
           margin: 0 auto;
@@ -251,6 +256,7 @@
         }
         .add-custom-channel-second {
           /*width:185px;*/
+          color:#000;
           .inp{
             width:60%;
             height:@l3Height;
