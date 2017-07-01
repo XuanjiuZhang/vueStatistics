@@ -52,7 +52,6 @@
     },
     props: ['l3', 'showedL2', 'cData'],
     mounted() {
-      console.log(this.l3);
     },
     methods: {
       ...mapActions(['initChannelData']),
@@ -61,7 +60,6 @@
         this.showTip = false
       },
       confirmTip() {
-        console.log('confirmTip!');
         this.hideTip()
         console.log(this.cData);
         console.log(this.showedL2);
@@ -75,6 +73,13 @@
           console.log(data);
           this.statisticApi.channel.selectChannel(this.sid, data).then(res => res.json()).then(data => {
             console.log(data);
+            this.Notification({
+              // title: '成功',
+              type: 'success',
+              message: '成功添加该渠道',
+              duration: 1000,
+              offset: 100
+            })
             this.l3.selected = true
             this.changeSelectedCount({selectedCount: this.selectedCount + 1})
           });
@@ -86,6 +91,13 @@
           this.statisticApi.channel.unselectChannel(this.sid, data).then(res => res.json()).then(data => {
             console.log(data);
             this.l3.selected = false
+            this.Notification({
+              // title: '成功',
+              type: 'success',
+              message: '操作成功',
+              duration: 1000,
+              offset: 100
+            })
             this.changeSelectedCount({selectedCount: this.selectedCount - 1})
           });
         }
@@ -98,12 +110,19 @@
         this.hideDelTip()
         this.statisticApi.channel.delCustomChannel(this.l3.id).then(res => res.json()).then(data => {
           console.log(data);
+          this.Notification({
+            // title: '成功',
+            type: 'success',
+            message: '操作成功',
+            duration: 1000,
+            offset: 100
+          })
           this.initChannelData()
         });
       }
     },
     computed: {
-      ...mapState(['statisticApi', 'selectedCount', 'sid']),
+      ...mapState(['statisticApi', 'selectedCount', 'sid', 'Notification']),
       canDelete() {
         return this.l3.hasOwnProperty('sid')
       }

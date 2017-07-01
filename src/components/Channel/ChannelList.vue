@@ -4,9 +4,10 @@
       <span><b>已选渠道</b></span>
       <div class="inp-bottom">
         <el-input
-          placeholder="请输入渠道和参数名称"
+          placeholder="请输入渠道或参数名称"
           icon="search"
           v-model="keyword"
+          @change="debouncedQuery"
           :on-icon-click="queryChannel">
         </el-input>
       </div>
@@ -40,6 +41,7 @@
           {value: 'qrc', label: '下载二维码'},
           {value: 'link', label: '下载链接'}
         ],
+        queryDebounce: 500
         // channelListData: []
       } 
     },
@@ -63,7 +65,10 @@
       this.initChannelSelectedData()
     },
     computed: {
-      ...mapState(['selectedChannelData'])
+      ...mapState(['selectedChannelData']),
+      debouncedQuery() {
+        return _lodash.debounce(this.queryChannel, this.queryDebounce)
+      }
     },
     components: {
       ChannelItem

@@ -8,10 +8,15 @@
     </div>
     <div class="col-sm-5 col-md-5 col-lg-5 params-qrc">
       <div class="qrcode" ref="qrcode"></div>
-      <span>{{composedUrl | stringLength}}</span>
+      <div class="params-link">
+        &nbsp&nbsp&nbsp{{composedUrl | stringLength}}
+      </div>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
-      <button class="copy-btn" @click="copyLink">复制链接</button>
+      <button class="copy-btn"
+        v-clipboard:copy="composedUrl"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError">复制链接</button>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
       <el-select class="down-qrc" v-model="downInfo" placeholder="下载二维码" @change="downInfoSelect">
@@ -23,7 +28,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'Vuex';
+  import { mapState } from 'Vuex';
   import qrcanvas from 'qrcanvas'
   import { exportCanvasAsPNG } from './service'
   export default {
@@ -58,12 +63,22 @@
         });
         exportCanvasAsPNG(canvas, `${this.cData.name}`);
       },
-      copyLink() {
-        console.log('copyLink');
+      onCopy (e) {
+        console.log('onCopy');
+        this.Notification({
+            // title: '成功',
+            type: 'success',
+            message: '已复制',
+            duration: 1000,
+            offset: 100
+          })
       },
+      onError (e) {
+        console.log('onError');
+      }
     },
     computed: {
-      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
+      ...mapState(['Notification']),
       composedUrl() {
         return `${this.cData.url}`
       }

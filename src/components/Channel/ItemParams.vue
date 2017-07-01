@@ -13,14 +13,22 @@
           <el-button type="primary" size="mini" @click="confirmDel">确定</el-button>
         </div>
       </el-popover>
-      <span class="el-icon-delete2 param-delete" v-popover:popoverDelete></span>
+      <el-tooltip class="item" effect="dark" content="删除" placement="top">
+        <span class="el-icon-delete2 param-delete" v-popover:popoverDelete></span>
+      </el-tooltip>
+      
     </div>
     <div class="col-sm-5 col-md-5 col-lg-5 params-qrc">
       <div class="qrcode" ref="qrcode"></div>
-      <span>{{composedUrl | stringLength}}</span>
+      <div class="params-link">
+        &nbsp&nbsp&nbsp{{composedUrl | stringLength}}
+      </div>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
-      <button class="copy-btn" @click="copyLink">复制链接</button>
+      <button class="copy-btn"
+        v-clipboard:copy="composedUrl"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError">复制链接</button>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
       <el-select class="down-qrc" v-model="downInfo" placeholder="下载二维码" @change="downInfoSelect">
@@ -41,29 +49,55 @@
         // paramsStr: '',
         popoverDeleteShow: false,
         downInfo: '',
+        canvas: undefined,
         downInfoOption: [{value: '9', label: '256px'}, {value: '18', label: '512px'}, {value: '36', label: '1024px'}]
       }
     },
     props: ['pData', 'cData'],
     watch: {
       'pData.name'(name) {
-        console.log(name);
+        const send = {
+          id: this.cData._id,
+          data: this.cData.params
+        }
+        // this.debouncedUpdateParam(send).then(res => this.init())
+        this.debouncedUpdateParam(send, false)
       }
     },
     mounted() {
-      const canvas = qrcanvas({
-        data: this.composedUrl,
-        // size: 98,
-        cellSize: 4
-      });
-      canvas.style.height = '100%'
-      canvas.style.width = '100%'
-      this.$refs.qrcode.appendChild(canvas);
+      this.init()
     },
     methods: {
       ...mapActions(['initChannelSelectedData']),
+      init() {
+        if(this.canvas) {
+          this.$refs.qrcode.removeChild(this.canvas)
+        }
+        this.canvas = qrcanvas({
+          data: this.composedUrl,
+          // size: 98,
+          cellSize: 4
+        });
+        this.canvas.style.height = '100%'
+        this.canvas.style.width = '100%'
+        this.$refs.qrcode.appendChild(this.canvas);
+      },
       closePop() {
         this.popoverDeleteShow = false
+      },
+      updateParam(send, refresh = false) {
+        this.statisticApi.channel.modChannelParam(this.sid, send)
+          .then(res => {
+            this.Notification({
+              // title: '成功',
+              type: 'success',
+              message: '渠道参数已更新',
+              duration: 1000,
+              offset: 100
+            })
+            this.init()
+            refresh && this.initChannelSelectedData()
+          })
       },
       confirmDel() {
         // this.$emit('confirmDel')
@@ -74,10 +108,7 @@
           id: this.cData._id,
           data
         }
-        this.statisticApi.channel.modChannelParam(this.sid, send).then(res => res.json()).then(result => {
-          console.log(result);
-          this.initChannelSelectedData()
-        })
+        this.updateParam(send, true)
         this.closePop()
       },
       downInfoSelect(cellSize) {
@@ -93,14 +124,27 @@
         });
         exportCanvasAsPNG(canvas, `${this.cData.name} - ${this.pData.name}`);
       },
-      copyLink() {
-        console.log('copyLink');
+      onCopy (e) {
+        console.log('onCopy');
+        this.Notification({
+            // title: '成功',
+            type: 'success',
+            message: '已复制',
+            duration: 1000,
+            offset: 100
+          })
       },
+      onError (e) {
+        console.log('onError');
+      }
     },
     computed: {
-      ...mapState(['statisticApi', 'sid']),
+      ...mapState(['statisticApi', 'sid', 'Notification']),
       composedUrl() {
         return `${this.cData.url}?qrc=${this.cData._id}&src=${this.pData.name}`
+      },
+      debouncedUpdateParam() {
+        return _lodash.debounce(this.updateParam, 1000)
       }
     },
   }

@@ -3,10 +3,12 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 import statisticApi from '../api/statisticApi';
 import echarts from '../components/echarts/echartsRegister';
+import { Notification  } from '../lib/elementLib/element-ui.common'
 
 const initStore = () => {
   const state = {
     sid: '',
+    Notification,
     statisticApi,
     echarts,
     channelData: [],
@@ -69,6 +71,8 @@ const initStore = () => {
           return res.json()
         }).then(data => {
           console.log(data);
+          // 最新添加的显示在最上方
+          _lodash.reverse(data)
           context.commit('changeSelectedChannelData', { selectedChannelData: data });
         });
       }

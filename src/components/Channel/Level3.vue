@@ -87,6 +87,13 @@
         }
         this.statisticApi.channel.addCustomChannel(send).then(res => res.json()).then(data => {
           console.log(data);
+          this.Notification({
+            // title: '成功',
+            type: 'success',
+            message: '成功添加自定义渠道: ' + this.customChannelName,
+            duration: 1000,
+            offset: 100
+          })
           this.initChannelData()
         })
         console.log('confirmAddCustom');
@@ -99,7 +106,7 @@
       }
     },
     computed: {
-      ...mapState(['statisticApi']),
+      ...mapState(['statisticApi', 'Notification']),
       showedL2() {
         return this.cData.children.find(level2 => {
           return level2._show;
