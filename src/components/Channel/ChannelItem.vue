@@ -131,10 +131,116 @@
       cursor: pointer;
     }
   }
+  .el-dialog__body {
+    .header {
+      text-align: center;
+      img {
+        margin-left: 20px;
+      }
+      a {
+        margin-left: 8px;
+      }
+    }
+    .body {
+      @margin: 40px auto;
+      @margin-top: 15px;
+      font-size: 16px;
+      text-align: center;
+      .text-waring {
+        color: #fe5656;
+      }
+      .up-excel-btn{
+        /*float: left;*/
+        cursor: pointer;
+        width: 195px;
+        height: 80px;
+        line-height: 80px;
+        margin: @margin;
+        border:1px solid #CCC;
+        border-radius:3px;
+        &:hover{
+          border:1px solid #46befc;
+          color:#46befc;
+          .el-icon-plus {
+            color: #46befc;
+          }
+        }
+        .el-icon-plus {
+          color: #bfcbdd;
+        }
+        .text {
+          margin-left: 10px;
+        }
+      }
+      .up-excel-suc{
+        margin: @margin;
+        div {
+          margin-top: @margin-top;
+        }
+      }
+      .up-excel-progress {
+        margin: @margin;
+        @border-radius: 3px;
+        .bar {
+          margin: @margin-top auto;
+          width: 280px;
+          height: 20px;
+          .loaded {
+            float: left;
+            height: 100%;
+            background: #44b120;
+            width: 100px;
+            border-radius: @border-radius 0 0 @border-radius;
+          }
+          .unloaded {
+            float: left;
+            height: 100%;
+            width: 180px;
+            border-radius: 0 @border-radius @border-radius 0;
+            background: #dee3ed;
+          }
+        }
+      }
+    }
+  }
 </style>
 
 <template>
   <div class="channel-item">
+
+    <el-dialog :title="dialogOption.title" v-model="dialogVisible" :close-on-click-modal="dialogOption.closeOnClickModal"
+       :modal="dialogOption.modal" :size="dialogOption.size">
+      <div class="header">
+        <span>请按照模板格式上传excel文档,</span><img :src="'/build/img/import-excel.png'" alt=""><a>下载模板</a>
+      </div>
+      <div class="body">
+        <file-upload v-model="files"
+          @input="handleMultiFiles"
+          @input-file="handlesingleFile">
+          <div class="up-excel-btn">
+            <span class="el-icon-plus"></span><span class="text">上传文档</span>
+          </div>
+        </file-upload>
+        
+        <div v-show="upExcelTypeErr">
+          <span class="text-waring">文档格式错误,请重新上传!</span>
+        </div>
+        <!--<div class="up-excel-suc">
+          <img :src="'/build/img/import-excel-suc.png'" alt="">
+          <div>
+            <span>上传成功!</span>
+          </div>
+        </div>-->
+        <!--<div class="up-excel-progress">
+          <div>上传中...</div>
+          <div class="bar">
+            <div class="loaded"></div>
+            <div class="unloaded"></div>
+          </div>
+        </div>-->
+      </div>
+    </el-dialog>
+
     <div class="container-fluid">
       <div class="row channel-row">
         <div class="channel-info col-sm-4 col-md-4 col-lg-4 clearfix">
@@ -148,13 +254,16 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="批量导入" placement="top">
-              <file-upload v-model="files"
+              <span class="second">
+                <i class="icon iconfont icon-piliangdaoru" @click="importExcel"></i>
+              </span>
+              <!--<file-upload v-model="files"
                 @input="handleMultiFiles"
                 @input-file="handlesingleFile">
                 <span class="second">
                   <i class="icon iconfont icon-piliangdaoru"></i>
                 </span>
-              </file-upload>
+              </file-upload>-->
             </el-tooltip>
 
             <!--<span class="el-icon-plus first" @click="addParam"></span>
@@ -198,6 +307,14 @@
       return {
         showDelTip: false,
         files: [],
+        dialogVisible: false,
+        dialogOption: {
+          title: '批量添加参数',
+          closeOnClickModal: false,
+          modal: false,
+          size: 'small'
+        },
+        upExcelTypeErr: false,
       } 
     },
     props: ['cData'],
@@ -271,11 +388,27 @@
         }
         
       },
+      importExcel() {
+        this.dialogVisible = true
+      },
       handleMultiFiles(files) {
         console.log(files);
+        console.log(this.cData);
+        if(files[0].file.type != 'application/vnd.ms-excel'
+         && files[0].file.type != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+          this.upExcelTypeErr = true
+          console.log('upExcelTypeErr!');
+          return
+        }
+        this.upExcelTypeErr = false
+        const send = {
+          id: this.cData._id,
+          file: files[0]
+        }
+        // this.statisticApi.channel.uploadChannelParamsExcel(send)
       },
       handlesingleFile(newFile, oldFile) {
-        console.log(newFile);
+        
       }
     },
     computed: {

@@ -295,7 +295,7 @@ module.exports =
 
 	    top: {
 	      type: String,
-	      default: '15%'
+	      default: '25%'
 	    },
 	    beforeClose: Function
 	  },

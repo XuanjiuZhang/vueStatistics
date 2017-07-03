@@ -3,12 +3,13 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 import statisticApi from '../api/statisticApi';
 import echarts from '../components/echarts/echartsRegister';
-import { Notification  } from '../lib/elementLib/element-ui.common'
+import { Notification, MessageBox } from '../lib/elementLib/element-ui.common'
 
 const initStore = () => {
   const state = {
     sid: '',
     Notification,
+    MessageBox,
     statisticApi,
     echarts,
     channelData: [],

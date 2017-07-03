@@ -56,14 +56,18 @@
         return {error: true}
       }).then(resData => {
         const newArr = []
+        console.log(resData);
         const { visit, hits, data, business, order } = resData
-        this.echartFunnelData = [
+        const rawData = [
               [visit, '#61A0A8', '访问量'],
               [hits, '#2F4554', '点击量'],
               [data, '#C23531', '线索'],
               [business, '#D48265', '商机'],
               [order, '#91C7AE', '订单']
           ]
+        this.echartFunnelData = rawData.filter(d => {
+          return d[0] != 0
+        })
       }) 
     },
     computed: {

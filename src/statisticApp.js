@@ -6,7 +6,7 @@ window._lodash = _lodash;
 import initStore from './vuex/statisticStore';
 import VueClipboard from 'vue-clipboard2'
 import routes from './components/SourceRouter';
-import { Pagination, Table, TableColumn ,Popover,Tooltip,Button,Input,Select,Option} from './lib/elementLib/element-ui.common'
+import { Pagination, Table, TableColumn , Popover, Tooltip, Button, Input, Select, Option, Dialog} from './lib/elementLib/element-ui.common'
 import initFilter from './lib/ourFilter'
 initFilter(Vue)
 
@@ -20,6 +20,7 @@ Vue.use(Input)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(VueClipboard)
+Vue.use(Dialog)
 const statisticStore = initStore();
 
 
