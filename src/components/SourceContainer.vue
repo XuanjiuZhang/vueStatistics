@@ -1,10 +1,11 @@
 <style lang="less">
   .source-contaner {
-    background: #FAFBFC
+    background: #FAFBFC;
+    min-height: 100%;
   }
   .content-wrapper {
     margin-top: 20px;
-    margin-bottom: 40px;
+    /*margin-bottom: 20px;*/
     background: #fff;
     box-shadow: 0 0 8px #cbd3de;
     .title {
@@ -17,7 +18,7 @@
       }
     }
     .center {
-      margin: 30px auto 0;
+      margin: 10px auto 0;
       /*padding: 0 0 20px 0;*/
     }
   }
@@ -46,6 +47,9 @@
     beforeMount() {
       console.log('changeSid');
       this.changeSid({sid: this.$route.params.id})
+    },
+    mounted() {
+      console.log(document.body.clientHeight)
     },
     methods: {
       ...mapMutations(['changeSid'])

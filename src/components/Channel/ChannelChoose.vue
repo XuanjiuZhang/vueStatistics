@@ -1,17 +1,19 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="content-wrapper col-sm-4 col-md-3 col-lg-2">
+      <div class="content-wrapper col-sm-4 col-md-3 col-lg-3 left-channel">
         <div class="title">
           <span><b>消费者行为模型</b></span>
-          <img class="question-mark" :src="'/build/img/question.png'" >
+          <img class="question-mark" :src="'/build/img/question.png'">
         </div>
-        <div class="center">
-          <img class="full-width bottom-margin" src="/build/img/left.png">
+        <div class="center left-img-wrapper">
+          <div class="left-img-div">
+            <img src="/build/img/left.png">
+          </div>
         </div>
       </div>
 
-      <div class="col-sm-8 col-md-9 col-lg-10">
+      <div class="col-sm-8 col-md-9 col-lg-9">
         <div class="content-wrapper right-channel">
           <div class="title">
             <span><b>渠道选择</b></span>
@@ -80,6 +82,16 @@
 </script>
 
 <style lang="less">
+  .left-channel {
+    height: 825px;
+    .left-img-wrapper {
+      overflow: hidden;
+    }
+    .left-img-div {
+      width: 298px;
+      margin: 0 auto;
+    }
+  }
   .question-mark {
     vertical-align: text-top;
   }
@@ -141,7 +153,7 @@
     margin-bottom: 20px;
   }
   .choose-container {
-    @height: 205px;
+    @height: 163px;
     width: 90%;
     .row-border {
       border: 1px solid #ccc;
