@@ -48,7 +48,7 @@ const initStore = () => {
         }).then(data => {
           console.log(data);
           data.data.forEach(level1 => {
-            level1.children.forEach((level2, l2Index) => {
+            level1.children && level1.children.forEach((level2, l2Index) => {
               level2._show = l2Index === 0
             })
           })

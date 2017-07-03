@@ -16,7 +16,7 @@ gulp.task('cleanBuild', function(){
     ]);
 });
 
-gulp.task('copyAll', ['copyStyle', 'copyImage', 'copyFonts', 'copyLib']);
+gulp.task('copyAll', ['copyStyle', 'copyImage', 'copyFonts', 'copyLib', 'copyOtherSource']);
 
 // 压缩PNG，JPEG，GIF和SVG图像
 gulp.task('copyImage', function(){
@@ -79,6 +79,13 @@ gulp.task('copyLib', function(){
     './src/lib/**/*',
   ])
     .pipe(gulp.dest('./build/lib/'));
+});
+
+gulp.task('copyOtherSource', function(){
+  return gulp.src([
+    './src/excel/*',
+  ])
+    .pipe(gulp.dest('./build/excel/'));
 });
 
 gulp.task('build', ['copyAll'], function() {

@@ -110,9 +110,13 @@
     computed: {
       ...mapState(['statisticApi', 'Notification']),
       showedL2() {
-        return this.cData.children.find(level2 => {
-          return level2._show;
-        })
+        if(this.cData.children) {
+          return this.cData.children.find(level2 => {
+            return level2._show;
+          })
+        }else {
+          return {}
+        }
       }
     },
     components: { Level3Channel }

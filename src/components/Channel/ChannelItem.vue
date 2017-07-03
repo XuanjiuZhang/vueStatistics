@@ -170,6 +170,10 @@
         }
         .text {
           margin-left: 10px;
+          /*position: absolute;
+          opacity: 0;
+          width: 195px;
+          top: 150px;*/
         }
       }
       .up-excel-suc{
@@ -201,43 +205,59 @@
           }
         }
       }
+      .up-excel-fail {
+        margin: @margin;
+      }
     }
   }
+
 </style>
 
 <template>
   <div class="channel-item">
 
-    <el-dialog :title="dialogOption.title" v-model="dialogVisible" :close-on-click-modal="dialogOption.closeOnClickModal"
+    <el-dialog :title="dialogOption.title" v-model="dialogVisible"
+       @close="dialogClose"
+       :close-on-click-modal="dialogOption.closeOnClickModal"
+       :close-on-press-escape="dialogOption.closeOnPressEscape"
        :modal="dialogOption.modal" :size="dialogOption.size">
       <div class="header">
-        <span>请按照模板格式上传excel文档,</span><img :src="'/build/img/import-excel.png'" alt=""><a>下载模板</a>
+        <span>请按照模板格式上传excel文档,</span><img :src="'/build/img/import-excel.png'" alt=""><a @click="downloadExcelTemplate">下载模板</a>
       </div>
       <div class="body">
-        <file-upload v-model="files"
-          @input="handleMultiFiles"
-          @input-file="handlesingleFile">
-          <div class="up-excel-btn">
-            <span class="el-icon-plus"></span><span class="text">上传文档</span>
-          </div>
-        </file-upload>
-        
-        <div v-show="upExcelTypeErr">
+        <!--<div class="up-excel-btn">
+          <span class="el-icon-plus"></span><span class="text">上传文档</span>
+        </div>-->
+        <div v-show="upExcelTypeErr" class="up-excel-fail" @click="upExcelTypeErr = false">
           <span class="text-waring">文档格式错误,请重新上传!</span>
         </div>
-        <!--<div class="up-excel-suc">
+        <dropzone
+          :id="dropZoneId"
+          url="/h5/service/channel/uploader"
+          :acceptedFileTypes="acceptedFileTypes"
+          :upExcelTypeErr="upExcelTypeErr"
+          :uploadSuccess="uploadSuccess"
+          @vdropzone-total-upload-progress="onUploadProgress"
+          @vdropzone-files-added="vdropzoneFilesAdded"
+          @vdropzone-success="showUploadSuccess">
+          <input type="hidden" name="id" :value="cData._id">
+        </dropzone>
+
+        <div class="up-excel-progress" v-show="showProgress">
+          <div>上传中...</div>
+          <div class="bar">
+            <div class="loaded" :style="loadedStyle"></div>
+            <div class="unloaded" :style="unloadedStyle"></div>
+          </div>
+        </div>
+
+        
+        <div class="up-excel-suc" v-show="uploadSuccess">
           <img :src="'/build/img/import-excel-suc.png'" alt="">
           <div>
             <span>上传成功!</span>
           </div>
-        </div>-->
-        <!--<div class="up-excel-progress">
-          <div>上传中...</div>
-          <div class="bar">
-            <div class="loaded"></div>
-            <div class="unloaded"></div>
-          </div>
-        </div>-->
+        </div>
       </div>
     </el-dialog>
 
@@ -254,8 +274,8 @@
             </el-tooltip>
 
             <el-tooltip class="item" effect="dark" content="批量导入" placement="top">
-              <span class="second">
-                <i class="icon iconfont icon-piliangdaoru" @click="importExcel"></i>
+              <span class="second" @click="importExcel">
+                <i class="icon iconfont icon-piliangdaoru"></i>
               </span>
               <!--<file-upload v-model="files"
                 @input="handleMultiFiles"
@@ -299,22 +319,31 @@
 
 <script>
   import { mapState, mapActions } from 'Vuex';
-  import FileUpload from 'vue-upload-component'
   import ItemParams from './ItemParams'
   import Item0Params from './ItemNoParams'
+  import Dropzone from 'dropZone'
   export default {
     data() {
+      const dropZoneId = 'dropZone-' + Math.round(Math.random() * 1000000)
       return {
         showDelTip: false,
         files: [],
         dialogVisible: false,
         dialogOption: {
           title: '批量添加参数',
-          closeOnClickModal: false,
-          modal: false,
+          closeOnClickModal: true,
+          closeOnPressEscape: true,
+          modal: true,
           size: 'small'
         },
         upExcelTypeErr: false,
+        uploadSuccess: false,
+        dropZoneId,
+        acceptedFileTypes: 'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .xlsx',
+        showProgress: false,
+        progressBarWidth: 220,
+        loadedStyle: { width: '50px' },
+        unloadedStyle: { width: '60px' },
       } 
     },
     props: ['cData'],
@@ -391,24 +420,34 @@
       importExcel() {
         this.dialogVisible = true
       },
-      handleMultiFiles(files) {
-        console.log(files);
-        console.log(this.cData);
-        if(files[0].file.type != 'application/vnd.ms-excel'
-         && files[0].file.type != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
-          this.upExcelTypeErr = true
-          console.log('upExcelTypeErr!');
+      downloadExcelTemplate() {
+        window.open('/build/excel/上传渠道参数模板.xlsx')
+      },
+      vdropzoneFilesAdded(files) {
+        if(!files.length) {
           return
         }
-        this.upExcelTypeErr = false
-        const send = {
-          id: this.cData._id,
-          file: files[0]
+        if(files[0].type === 'application/vnd.ms-excel'
+         || files[0].type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+          this.upExcelTypeErr = false
+        }else{
+          this.upExcelTypeErr = true
         }
-        // this.statisticApi.channel.uploadChannelParamsExcel(send)
       },
-      handlesingleFile(newFile, oldFile) {
-        
+      showUploadSuccess() {
+        this.uploadSuccess = true
+        this.showProgress = false
+      },
+      onUploadProgress(totaluploadprogress, totalBytes, totalBytesSent) {
+        console.log(totaluploadprogress);
+        console.log('totalBytes: ' + totalBytes);
+        /*this.showProgress = true
+        const load = totaluploadprogress / 100 * this.progressBarWidth
+        this.loadedStyle.width = load + 'px'
+        this.unloadedStyle.width = this.progressBarWidth - load + 'px'*/
+      },
+      dialogClose() {
+        this.uploadSuccess = false
       }
     },
     computed: {
@@ -420,7 +459,7 @@
     components: {
       ItemParams,
       Item0Params,
-      FileUpload
+      Dropzone
     }
   }
 

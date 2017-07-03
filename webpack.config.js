@@ -13,7 +13,8 @@ module.exports = {
    ],
    extensions: ['.js', '.jsx', '.css', '.less', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.js'
+      'vue$': 'vue/dist/vue.js',
+      'dropZone': __dirname + "/src/lib/vue2-dropZone/src/index.vue"
     }
   }, 
   context: __dirname + "/src",
