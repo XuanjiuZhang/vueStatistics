@@ -39,8 +39,8 @@
   import { mapGetters, mapState } from 'Vuex'
   import FunnelChart from './FunnelChart/FunnelChart'
   import echartFunnel from './FunnelChart/ElEchartFunnel'
-  import D3Funnel from './D3Chart/D3Funnel'
-  import D3Funnel2 from './D3Chart/D3Funnel2'
+  /*import D3Funnel from './D3Chart/D3Funnel'
+  import D3Funnel2 from './D3Chart/D3Funnel2'*/
   import ComposedTable from './Table/ComposedTable'
   export default {
     data() {
