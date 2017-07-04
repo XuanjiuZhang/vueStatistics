@@ -207,7 +207,7 @@
         if(res.ok){
           return res.json()
         }
-        return {error: true}
+        return []
       }).then(data => {
         console.log(data)
         this.tableRawData = data

@@ -12,7 +12,8 @@ module.exports = {
     ],
     extensions: ['.js', '.jsx', '.css', '.less', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.js'
+      'vue$': 'vue/dist/vue.js',
+      'dropZone': __dirname + "/src/lib/vue2-dropZone/src/index.vue"
     }
   },
   context: __dirname + "/src",
@@ -24,7 +25,7 @@ module.exports = {
     path: path.join(__dirname, '/build/'),
     // filename: '[name].js',
     filename: '[name].min.js',
-    publicPath: '/build/',
+    publicPath: '/build',
     chunkFilename: '[name].min.js?[hash:8]'
   },
   module: {
@@ -66,13 +67,13 @@ module.exports = {
     //   // minChunks: 2,
     // }),
     // 压缩js文件
-    new webpack.optimize.UglifyJsPlugin({
+    /*new webpack.optimize.UglifyJsPlugin({
       mangle: true,
       compress: {
         warnings: false, // 禁止生成warning
         drop_debugger: true,
         drop_console: true
       }
-    })
+    })*/
   ]
 };

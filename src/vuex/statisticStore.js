@@ -38,7 +38,11 @@ const initStore = () => {
     actions: {
       initChannelData(context) {
         statisticApi.channel.getAllChannel(context.state.sid).then(res => {
-          return res.json()
+          if(res.ok){
+            return res.json()
+          } else {
+            return {data: [], count: 0}
+          }
         }).then(data => {
           console.log(data);
           data.data.forEach(level1 => {
@@ -53,7 +57,11 @@ const initStore = () => {
 
       initChannelSelectedData(context, payload = { keyword: '' }) {
         statisticApi.channel.querySelectedChannel(context.state.sid, payload.keyword).then(res => {
-          return res.json()
+          if(res.ok) {
+            return res.json()
+          } else {
+            return []
+          }
         }).then(data => {
           console.log(data);
           // 最新添加的显示在最上方

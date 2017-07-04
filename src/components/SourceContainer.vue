@@ -44,9 +44,9 @@
       return {
       } 
     },
-    // props: ['eleData', 'finalScale'],
     beforeMount() {
       console.log('changeSid');
+      // 5950796889898016bc711f1f
       this.changeSid({sid: this.$route.params.id})
     },
     mounted() {
@@ -56,7 +56,6 @@
       ...mapMutations(['changeSid'])
     },
     computed: {
-      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
     },
     components: {
       NavHeader

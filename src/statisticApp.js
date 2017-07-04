@@ -41,3 +41,8 @@ const instance = new Vue({
   components: { Root }
 });
 instance.$mount('#' + 'root'); 
+
+if(window.sid) {
+  console.log(window.sid);
+  router.push({ name: 'channelChoose', params: { id: window.sid }})
+}

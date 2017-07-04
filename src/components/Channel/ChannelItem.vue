@@ -7,7 +7,7 @@
        :close-on-press-escape="dialogOption.closeOnPressEscape"
        :modal="dialogOption.modal" :size="dialogOption.size">
       <div class="header">
-        <span>请按照模板格式上传excel文档,</span><img :src="'/build/img/import-excel.png'" alt=""><a @click="downloadExcelTemplate">下载模板</a>
+        <span>请按照模板格式上传excel文档,</span><img :src="'/assets/build/img/import-excel.png'" alt=""><a @click="downloadExcelTemplate">下载模板</a>
       </div>
       <div class="body">
         <!--<div class="up-excel-btn">
@@ -39,7 +39,7 @@
 
         
         <div class="up-excel-suc" v-show="uploadSuccess">
-          <img :src="'/build/img/import-excel-suc.png'" alt="">
+          <img :src="'/assets/build/img/import-excel-suc.png'" alt="">
           <div>
             <span>上传成功!</span>
           </div>
@@ -63,17 +63,7 @@
               <span class="second" @click="importExcel">
                 <i class="icon iconfont icon-piliangdaoru"></i>
               </span>
-              <!--<file-upload v-model="files"
-                @input="handleMultiFiles"
-                @input-file="handlesingleFile">
-                <span class="second">
-                  <i class="icon iconfont icon-piliangdaoru"></i>
-                </span>
-              </file-upload>-->
             </el-tooltip>
-
-            <!--<span class="el-icon-plus first" @click="addParam"></span>
-            <span class="second"><i class="icon iconfont icon-piliangdaoru"></i></span>-->
 
             <el-popover
                 ref="popoverDelete"
@@ -94,7 +84,7 @@
         </div>
         <div class="channel-params col-sm-8 col-md-8 col-lg-8">
           <div class="container-fluid">
-            <Item-params v-for="param in cData.params" :key="param.id" :pData="param" :cData="cData"></Item-params>
+            <Item-params v-for="param in sortedParams" :key="param.id" :pData="param" :cData="cData"></Item-params>
             <Item0-params v-if="is0params" :cData="cData"></Item0-params>
           </div>
         </div>
@@ -245,6 +235,14 @@
       ...mapState(['statisticApi', 'sid', 'selectedCount', 'Notification']),
       is0params() {
         return !this.cData.hasOwnProperty('params')
+      },
+      sortedParams() {
+        if(this.is0params) {
+          return []
+        }
+        return this.cData.params.sort((a, b) => {
+          return a.sort < b.sort
+        })
       }
     },
     components: {

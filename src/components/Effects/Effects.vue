@@ -53,8 +53,11 @@
         if(res.ok){
           return res.json()
         }
-        return {error: true}
+        return 'error'
       }).then(resData => {
+        if(resData === 'error'){
+          return 
+        }
         const newArr = []
         console.log(resData);
         const { visit, hits, data, business, order } = resData
