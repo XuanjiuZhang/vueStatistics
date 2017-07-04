@@ -14,22 +14,6 @@
     <div class="row height-150">
       <div class="col-sm-3 col-md-3 col-lg-3 row-data" v-for="l3 in showedL2.children" :key="l3.id">
         <Level3-channel :l3="l3" :showedL2="showedL2" :cData="cData"></Level3-channel>
-        <!--<div class="level3-wrapper">
-          <el-popover
-              ref="popoverSelect"
-              placement="top"
-              width="160"
-              v-model="visible2">
-              <p>您确定要取消该渠道的选择？</p>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
-              </div>
-            </el-popover>
-          <el-tooltip class="item" effect="dark" content="点击选择" placement="top">
-            <div v-popover:popoverSelect><img :src="'/build/img/baidu.png'" alt=""><span class="text">百度网盟</span></div>
-          </el-tooltip>
-        </div>-->
       </div>
       <div class="col-sm-3 col-md-3 col-lg-3 row-data">
         <div class="level3-wrapper">
@@ -42,20 +26,6 @@
           </div>
         </div>
       </div>
-      <!--<div class="col-sm-3 col-md-3 col-lg-3 row-data">
-        <div class="level3-wrapper">
-          
-        </div>
-      </div>-->
-      <!--<div class="col-sm-3 col-md-3 col-lg-3">
-        <div class="level3-wrapper">
-          <el-tooltip class="item" effect="dark" content="点击选择" placement="top">
-                              <div v-popover:popover5><img :src="'/build/img/baidu.png'" alt="">
-                                <span class="text">百度网盟</span><span class="closeBtn">x</span>
-                              </div>
-                            </el-tooltip>
-        </div>
-      </div>-->
     </div>
   </div>
 </template>

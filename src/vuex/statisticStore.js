@@ -7,25 +7,19 @@ import { Notification, MessageBox } from '../lib/elementLib/element-ui.common'
 
 const initStore = () => {
   const state = {
-    sid: '',
-    Notification,
-    MessageBox,
-    statisticApi,
-    echarts,
-    channelData: [],
-    selectedCount: 0,
-    selectedChannelData: [],
+    sid: '', // sid是目前是场景的id值 
+    Notification, // elementUI 通知 调用方法 Notification(opt)
+    MessageBox, // elementUI 消息框 调用方法 MessageBox(opt)
+    statisticApi, // api服务对象
+    echarts, // echarts
+    channelData: [], // 渠道列表 树结构数据
+    selectedCount: 0, // 已选择的渠道数量
+    selectedChannelData: [], // 当前已选择的渠道
   };
 
   const store = new Vuex.Store({
     state,
     mutations: {
-      /*changeChannelTree(state, payload) {
-        state.sceneChannelTree = payload.tree;
-      },
-      changeCurrentShowChannel(state, payload) {
-        state.currentShowChannel = payload.currentShowChannel;
-      }*/
       changeChannelData(state, payload) {
         state.channelData = payload.channelData;
       },
@@ -55,16 +49,6 @@ const initStore = () => {
           context.commit('changeChannelData', { channelData: data.data });
           context.commit('changeSelectedCount', { selectedCount: data.count });
         });
-
-        /*statisticApi.getSceneChannelTree(payload.sceneId).then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return [];
-        }).then(data => {
-          context.commit('changeChannelTree', { tree: data });
-          context.commit('changeCurrentShowChannel', { currentShowChannel: data });
-        });*/
       },
 
       initChannelSelectedData(context, payload = { keyword: '' }) {
@@ -77,18 +61,6 @@ const initStore = () => {
           context.commit('changeSelectedChannelData', { selectedChannelData: data });
         });
       }
-
-      /*getSceneChannelTree(context, payload) {
-        statisticApi.getSceneChannelTree(payload.sceneId).then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return [];
-        }).then(data => {
-          context.commit('changeChannelTree', { tree: data });
-          context.commit('changeCurrentShowChannel', { currentShowChannel: data });
-        });
-      }*/
     }
   });
 

@@ -60,7 +60,6 @@
           id: this.cData._id,
           data: this.cData.params
         }
-        // this.debouncedUpdateParam(send).then(res => this.init())
         this.debouncedUpdateParam(send, false)
       }
     },

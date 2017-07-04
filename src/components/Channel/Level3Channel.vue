@@ -87,7 +87,7 @@
               type: 'success',
               message: '成功添加该渠道',
               duration: 1000,
-              offset: 100
+              offset: 200
             })
             this.l3.selected = true
             this.changeSelectedCount({selectedCount: this.selectedCount + 1})

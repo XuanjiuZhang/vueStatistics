@@ -8,10 +8,8 @@
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
         <ul class="header-nav header-nav-tabs">
-          <router-link tag="li" to="channelChoose"><a>渠道分发</a></router-link>
+          <router-link tag="li" to="channelChoose" :class="channelChooseClass"><a>渠道分发</a></router-link>
           <router-link tag="li" class="margin-left-40" to="effects"><a>效果统计</a></router-link>
-          <!--<li class="active"><a href="">渠道分发</a></li>
-          <li class="margin-left-40"><a href="">效果统计</a></li>-->
         </ul>
       </div>
       <div class="col-sm-4 col-md-3 col-lg-2 col-md-offset-1 col-lg-offset-4">
@@ -21,18 +19,6 @@
         </div>
       </div>
     </div>
-    <!--<div class="row header-row">
-      <div class="col-sm-3 col-md-2 col-lg-1">
-        <button>返回</button>
-      </div>
-      <div class="col-sm-6 col-md-4 col-lg-2 col-md-offset-2 col-lg-offset-4">
-        <router-link tag="button" to="/channelChoose">选择渠道</router-link>
-        <router-link tag="button" to="/effects">效果统计</router-link>
-      </div>
-      <div class="col-sm-3 col-md-2 col-lg-1 col-md-offset-2 col-lg-offset-4">
-        <router-link tag="button" to="/channelList">渠道列表</router-link>
-      </div>
-    </div>-->
   </header>
 </template>
 
@@ -41,13 +27,22 @@
   export default {
     data() {
       return {
+        currentRouterName: ''
       } 
     },
-    // props: ['eleData', 'finalScale'],
     mounted() {
+      this.currentRouterName = this.$route.name
+      this.$router.afterEach((to, from) => {
+        this.currentRouterName = to.name
+        console.log(this.currentRouterName);
+      })
     },
     computed: {
-      // ...mapGetters(['statisticApi', 'currentShowChannel', 'echarts'])
+      channelChooseClass() {
+        return {
+          'router-link-active': this.currentRouterName === 'channelList' || this.currentRouterName === 'channelChoose'
+        }
+      }
     },
   }
 

@@ -42,10 +42,8 @@
           {value: 'link', label: '下载链接'}
         ],
         queryDebounce: 500
-        // channelListData: []
       } 
     },
-    // props: ['eleData', 'finalScale'],
     methods: {
       ...mapActions(['initChannelSelectedData']),
       queryChannel() {
