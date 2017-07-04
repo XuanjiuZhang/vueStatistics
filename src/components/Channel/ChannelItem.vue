@@ -7,7 +7,7 @@
        :close-on-press-escape="dialogOption.closeOnPressEscape"
        :modal="dialogOption.modal" :size="dialogOption.size">
       <div class="header">
-        <span>请按照模板格式上传excel文档,</span><img :src="'/assets/build/img/import-excel.png'" alt=""><a @click="downloadExcelTemplate">下载模板</a>
+        <span>请按照模板格式上传excel文档,</span><img :src="'/build/img/import-excel.png'" alt=""><a @click="downloadExcelTemplate">下载模板</a>
       </div>
       <div class="body">
         <!--<div class="up-excel-btn">
@@ -39,7 +39,7 @@
 
         
         <div class="up-excel-suc" v-show="uploadSuccess">
-          <img :src="'/assets/build/img/import-excel-suc.png'" alt="">
+          <img :src="'/build/img/import-excel-suc.png'" alt="">
           <div>
             <span>上传成功!</span>
           </div>

@@ -40,9 +40,9 @@ const instance = new Vue({
   store: statisticStore, // 注入到所有子组件1
   components: { Root }
 });
-instance.$mount('#' + 'root'); 
+instance.$mount('#' + 'root');
 
-if(window.sid) {
+if(window.sid && window.sid != '<%-sid%>') {
   console.log(window.sid);
   router.push({ name: 'channelChoose', params: { id: window.sid }})
 }

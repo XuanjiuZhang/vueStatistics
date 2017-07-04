@@ -1,5 +1,5 @@
 /**
- * Created by xuanjiu on 17/2/20.
+ * Created by xuanjiu on 17/6/20.
  */
 const path = require('path');
 const webpack = require('webpack');
@@ -20,10 +20,9 @@ module.exports = {
   context: __dirname + "/src",
   entry: {
     statisticApp: ['./statisticApp.js', 'whatwg-fetch'],
-    // vendor: ['whatwg-fetch', './lib/hammer.min.js']
   },
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'build/js'),
     filename: '[name].min.js',
     publicPath: '/build',
     chunkFilename: '[name].min.js?[hash:8]'

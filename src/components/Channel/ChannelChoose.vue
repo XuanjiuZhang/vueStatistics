@@ -4,7 +4,7 @@
       <div class="content-wrapper col-sm-4 col-md-3 col-lg-3 left-channel">
         <div class="title">
           <span><b>消费者行为模型</b></span>
-          <img class="question-mark" :src="'/assets/build/img/question.png'">
+          <img class="question-mark" :src="'/build/img/question.png'">
         </div>
         <div class="center left-img-wrapper">
           <div class="left-img-div">
@@ -17,7 +17,7 @@
         <div class="content-wrapper right-channel">
           <div class="title">
             <span><b>渠道选择</b></span>
-            <img class="question-mark" src="/assets/build/img/question02.png">
+            <img class="question-mark" :src="'/build/img/question02.png'">
             <router-link class="right disabled" tag="div" to="channelList">已选择渠道</router-link>
             <div class="selected-count">
               <span>{{selectedCount}}</span>

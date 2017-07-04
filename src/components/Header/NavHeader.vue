@@ -3,8 +3,8 @@
     <div class="row header-row">
       <div class="col-sm-4 col-md-3 col-lg-2">
         <!--<span>溯源logo</span>-->
-        <img class="header-img" :src="'/assets/build/img/logo-circle.png'" alt="">
-        <img class="header-img" :src="'/assets/build/img/logo-text.png'" alt="">
+        <img class="header-img" :src="'/build/img/logo-circle.png'" alt="">
+        <img class="header-img" :src="'/build/img/logo-text.png'" alt="">
       </div>
       <div class="col-sm-4 col-md-4 col-lg-4">
         <ul class="header-nav header-nav-tabs">
@@ -14,7 +14,7 @@
       </div>
       <div class="col-sm-4 col-md-3 col-lg-2 col-md-offset-1 col-lg-offset-4">
         <div class="user-name-wrapper">
-          <img class="user-avatar" :src="'/assets/build/img/user-avatar.jpg'" alt="">
+          <img class="user-avatar" :src="'/build/img/user-avatar.jpg'" alt="">
           <span class="user-name">用户昵称</span>
         </div>
       </div>
