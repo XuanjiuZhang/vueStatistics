@@ -19,9 +19,9 @@
             <span><b>渠道选择</b></span>
             <img class="question-mark" src="/build/img/question02.png">
             <router-link class="right disabled" tag="div" to="channelList">已选择渠道</router-link>
-            <p class="tip">
+            <div class="selected-count">
               <span>{{selectedCount}}</span>
-            </p>
+            </div>
           </div>
           <div class="center choose-container">
             <div class="container-fluid">
@@ -98,8 +98,22 @@
   .right-channel {
     margin-left: 1%;
     padding-bottom: 20px;
+    .el-tooltip {
+      white-space: nowrap;
+    }
     .disabled{
       background:#bfcbdd;
+    }
+    .selected-count {
+      position: absolute;
+      top: 3px;
+      right: 33px;
+      span {
+        padding: 2px;
+        color: #fff;
+        background: #fe5656;
+        border-radius: 50%;
+      }
     }
     .right {
       font-family:"微软雅黑";
@@ -163,6 +177,9 @@
     .closeBtn {
       margin-left: 15px;
       /*border-radius: 50%;*/
+      position: absolute;
+      top: 0;
+      right: 0;
       color: #fe5656;
       span {
         cursor: pointer;
@@ -249,15 +266,19 @@
         .item {
           /*text-align: center;*/
           float: left;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          max-width: 80%;
         }
         .text{
-          margin-left: 10px;
           margin-bottom: 0;
+          white-space: nowrap;
           &.active {
             color: #46befc;
           }
         }
         .add-custom-channel{
+          height: @l3Height;
           float: left;
           text-align: center;
           width:80%;

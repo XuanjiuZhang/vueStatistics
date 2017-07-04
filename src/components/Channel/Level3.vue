@@ -1,12 +1,17 @@
 <style lang="less">
   .row-data {
     margin-bottom: 15px;
+    height: 38px;
+  }
+  .height-150 {
+    height: 150px;
+    overflow-y: auto;
   }
 </style>
 
 <template>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row height-150">
       <div class="col-sm-3 col-md-3 col-lg-3 row-data" v-for="l3 in showedL2.children" :key="l3.id">
         <Level3-channel :l3="l3" :showedL2="showedL2" :cData="cData"></Level3-channel>
         <!--<div class="level3-wrapper">

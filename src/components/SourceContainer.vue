@@ -2,6 +2,7 @@
   .source-contaner {
     background: #FAFBFC;
     min-height: 100%;
+    min-width:1200px
   }
   .content-wrapper {
     margin-top: 20px;
