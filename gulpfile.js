@@ -82,6 +82,10 @@ gulp.task('copyLib', function(){
 });
 
 gulp.task('copyOtherSource', function(){
+  gulp.src([
+    './src/source-trace.html',
+  ])
+    .pipe(gulp.dest('./build/'))
   return gulp.src([
     './src/excel/*',
   ])

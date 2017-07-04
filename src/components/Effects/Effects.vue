@@ -76,8 +76,8 @@
     components: {
       FunnelChart,
       ComposedTable,
-      D3Funnel,
-      D3Funnel2,
+      // D3Funnel,
+      // D3Funnel2,
       echartFunnel
     }
   }
