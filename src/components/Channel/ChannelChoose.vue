@@ -109,10 +109,10 @@
       top: 3px;
       right: 33px;
       span {
-        padding: 2px;
+        padding: 2px 4px;
         color: #fff;
         background: #fe5656;
-        border-radius: 50%;
+        border-radius: 5px;
       }
     }
     .right {
