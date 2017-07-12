@@ -61,9 +61,10 @@
 
             <el-tooltip class="item" effect="dark" content="批量导入" placement="top">
               <span class="second" @click="importExcel">
-                <svg t="1499155502107" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1001" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25">
+                <span class="el-icon-document"></span>
+                <!--<svg t="1499155502107" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1001" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25">
                 <path d="M777.985934 243.390309 777.985934 104.192014 85.49007 104.192014l0 683.974793L245.99667 788.166807 245.99667 927.364079l692.51326 0L938.50993 243.390309 777.985934 243.390309zM245.99667 719.980845l-92.321662 0L153.675008 172.375929l556.129056 0 0 71.013357L245.99667 243.389286 245.99667 719.980845zM870.324992 859.179141 314.180586 859.179141 314.180586 311.574225l556.144406 0L870.324992 859.179141z" p-id="1002" fill="#c0ccde" class=""></path>
-                <path d="M560.38294 746.69937 628.567879 746.69937 628.567879 626.842585 759.426229 626.842585 759.426229 558.659693 628.567879 558.659693 628.567879 438.803931 560.38294 438.803931 560.38294 558.659693 429.509241 558.659693 429.509241 626.842585 560.38294 626.842585Z" p-id="1003" fill="#c0ccde"></path></svg>
+                <path d="M560.38294 746.69937 628.567879 746.69937 628.567879 626.842585 759.426229 626.842585 759.426229 558.659693 628.567879 558.659693 628.567879 438.803931 560.38294 438.803931 560.38294 558.659693 429.509241 558.659693 429.509241 626.842585 560.38294 626.842585Z" p-id="1003" fill="#c0ccde"></path></svg>-->
                 <!--<i class="icon iconfont icon-piliangdaoru"></i>-->
               </span>
             </el-tooltip>
@@ -87,7 +88,7 @@
         </div>
         <div class="channel-params col-sm-8 col-md-8 col-lg-8">
           <div class="container-fluid">
-            <Item-params v-for="param in sortedParams" :key="param.id" :pData="param" :cData="cData"></Item-params>
+            <Item-params v-for="param in sortedParams" :key="param.sort" :pData="param" :cData="cData"></Item-params>
             <Item0-params v-if="is0params" :cData="cData"></Item0-params>
           </div>
         </div>
@@ -296,7 +297,7 @@
         display:inline-block;
         background:#fff;
         color:#c0ccde;
-        line-height:23px;
+        line-height:25px;
         text-align:center;
         &:hover {
           background:#46befc;

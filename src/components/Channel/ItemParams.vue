@@ -55,7 +55,10 @@
     },
     props: ['pData', 'cData'],
     watch: {
-      'pData.name'(name) {
+      'pData.name'(name, oldName) {
+        if(name === oldName) {
+          return
+        }
         const send = {
           id: this.cData._id,
           data: this.cData.params

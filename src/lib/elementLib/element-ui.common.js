@@ -4924,6 +4924,18 @@ module.exports =
 	    },
 	    store: function store() {
 	      return this._checkboxGroup ? this._checkboxGroup.value : this.value;
+	    },
+	    checkStyle: function checkStyle() {
+	      if (this.isChecked) {
+	        return {
+	          'background-color': this.color,
+	          'border-color': this.color
+	        };
+	      }
+	      return {
+	        'background-color': '',
+	        'border-color': 'rgb(191, 203, 217)'
+	      };
 	    }
 	  },
 
@@ -4935,7 +4947,11 @@ module.exports =
 	    checked: Boolean,
 	    name: String,
 	    trueLabel: [String, Number],
-	    falseLabel: [String, Number]
+	    falseLabel: [String, Number],
+	    color: {
+	      type: String,
+	      default: '#20a0ff'
+	    }
 	  },
 
 	  methods: {
@@ -5019,7 +5035,8 @@ module.exports =
 	      'is-focus': _vm.focus
 	    }
 	  }, [_c('span', {
-	    staticClass: "el-checkbox__inner"
+	    staticClass: "el-checkbox__inner",
+	    style: (_vm.checkStyle)
 	  }), (_vm.trueLabel || _vm.falseLabel) ? _c('input', {
 	    directives: [{
 	      name: "model",

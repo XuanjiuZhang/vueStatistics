@@ -38,6 +38,29 @@ const genReq = (appConfig) => {
         credentials: 'include',
       });
     },
+
+    getVisitTree (sid) {
+      const url = `${appConfig.h5Service}/statistics/${sid}/channels`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
+
+    getLineTendency (sid, data) {
+      var param = queryString.stringify(data);
+      const url = `${appConfig.h5Service}/statistics/${sid}/tendency?${param}`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    }
     
   };
 };

@@ -34,16 +34,19 @@
         @sort-change="handleSortChange"
         style="width: 100%">
         <el-table-column
+          fixed
           type="index"
           label="排名"
           width="180">
         </el-table-column>
         <el-table-column
+          fixed
           prop="channel"
           label="渠道"
           width="180">
         </el-table-column>
         <el-table-column
+          fixed
           prop="param"
           label="参数">
         </el-table-column>

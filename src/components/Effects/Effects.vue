@@ -10,6 +10,10 @@
   .composed-table-wrapper {
     width: 90%;
   }
+  .line-chart {
+    width: 70%;
+    height: 550px;
+  }
 </style>
 
 <template>
@@ -21,7 +25,7 @@
       <div class="funnel-chart center">
         <!--<Funnel-chart></Funnel-chart>-->
         <!--<D3-funnel2></D3-funnel2>-->
-        <echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>
+        <!--<echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>-->
       </div>
     </div>
     <div class="content-wrapper">
@@ -32,6 +36,16 @@
         <Composed-table></Composed-table>
       </div>
     </div>
+
+    <div class="content-wrapper">
+      <div class="title">
+        <span><b>访问趋势</b></span>
+      </div>
+      <div class="line-chart center">
+        <Line-chart></Line-chart>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -42,6 +56,7 @@
   /*import D3Funnel from './D3Chart/D3Funnel'
   import D3Funnel2 from './D3Chart/D3Funnel2'*/
   import ComposedTable from './Table/ComposedTable'
+  import LineChart from './visit/LineChart'
   export default {
     data() {
       return {
@@ -81,7 +96,8 @@
       ComposedTable,
       // D3Funnel,
       // D3Funnel2,
-      echartFunnel
+      echartFunnel,
+      LineChart
     }
   }
 
