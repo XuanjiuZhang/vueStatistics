@@ -64,7 +64,12 @@ function getDateData(type, base, peroid) {
       date.push([nowCol.getFullYear(), nowCol.getMonth() + 1, nowCol.getDate()].join('/'));
     }
   } else {
-
+    for(let i = 0; i < peroid; i++) {
+      let ctime = base + i * oneHour
+      let nowCol = new Date(ctime)
+      date.push([nowCol.getFullYear(), nowCol.getMonth() + 1, nowCol.getDate()].join('/')
+        + ' ' + nowCol.getHours() + ':00');
+    }
   }
   return date
 }
@@ -80,41 +85,40 @@ function getEchartsLineXAxis(lineData, timeData) {
   const oneDay = 24 * 3600 * 1000;
   const oneHour = 1000 * 3600;
 
-  if(timeData.timeType === 'day') {
-    if(timeData.timePeroid === -1) {
-      // 寻找时间跨度
-      const timeArr = lineData.reduce((timeData, nextLine) => {
-        return timeData.concat(nextLine.data)
-      }, [])
-      timeArr.sort((t1, t2) => {
-        return t1.time > t2.time
-      })
-      const start = timeArr[0].time
-      const end = timeArr[timeArr.length - 1].time
-      const dateLength = Math.ceil((end - start) / oneDay);
-      date = getDateData(timeData.timeType, start, dateLength)
-    } else {
-      // 构建固定的时间跨度
-      let peroid = 1
-      let base
-      switch(timeData.timePeroid) {
-        case 0:
-          base = today
-        break;
-        case 1:
-          base = today - oneDay
-        break;
-        default:
-          peroid = timeData.timePeroid
-          base = today - (peroid - 1) * oneDay;
-        break;
-      }
-      date = getDateData(timeData.timeType, base, peroid)
-    }
+  // 寻找时间跨度
+  const timeArr = lineData.reduce((timeData, nextLine) => {
+    return timeData.concat(nextLine.data)
+  }, [])
+  timeArr.sort((t1, t2) => {
+    return t1.time > t2.time
+  })
+  const start = timeArr[0].time
+  const end = timeArr[timeArr.length - 1].time
+  const dateLength = Math.ceil((end - start) / oneDay);
+  const hourLength = Math.ceil((end - start) / oneHour);
 
+  // 构建固定的时间跨度
+  let peroid = 1
+  let base
+  switch(timeData.timePeroid) {
+    case 0:
+      base = today
+    break;
+    case 1:
+      base = today - oneDay
+    break;
+    default:
+      peroid = timeData.timePeroid
+      base = today - (peroid - 1) * oneDay;
+    break;
+  }
+
+  if(timeData.timePeroid === -1) {
+    date = getDateData(timeData.timeType, base, peroid)
+  } else if(timeData.timeType === 'day') {
+    date = getDateData(timeData.timeType, start, dateLength)
   } else {
-    // date.push([nowCol.getFullYear(), nowCol.getMonth() + 1, nowCol.getDate()].join('/')
-    //         + ' ' + nowCol.getHours() + ':00');
+    date = getDateData(timeData.timeType, start, hourLength)
   }
   console.log(date);
   return {
