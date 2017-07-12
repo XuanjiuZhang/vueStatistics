@@ -2,14 +2,16 @@
 </style>
 
 <template>
-  <div ref="child">
+  <div>
     <Channel-bar @channelChanged="channelChanged" @timeChanged="timeChanged"></Channel-bar>
+    <div ref="child"></div>
   </div>
 </template>
 
 <script>
   import { mapState } from 'Vuex';
   import ChannelBar from './ChannelBar'
+  import { echartsLineDataParser } from './service'
 
   export default {
     data() {
@@ -18,14 +20,18 @@
         timeData: {
           timePeroid: -1,
           timeType: 'day'
-        }
+        },
+        lineData: undefined,
+        echartsOpt: undefined,
+        echartDom: undefined
       }
     },
     mounted() {
       this.getLineData()
+      this.echartDom = this.echarts.init(this.$refs.child);
     },
     computed: {
-      ...mapState(['statisticApi', 'sid'])
+      ...mapState(['statisticApi', 'sid', 'echarts']),
     },
     methods: {
       getLineData() {
@@ -34,6 +40,9 @@
           day: this.timeData.timePeroid === -1 ? undefined : this.timeData.timePeroid
         }).then(res => res.json()).then(data => {
           console.log(data);
+          this.lineData = data
+          this.echartsOpt = echartsLineDataParser(this.lineData, this.timeData)
+          // this.echartDom.setOption(this.echartsOpt)
         })
       },
       channelChanged(channel) {

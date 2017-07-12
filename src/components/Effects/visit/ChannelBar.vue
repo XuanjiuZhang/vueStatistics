@@ -119,7 +119,7 @@
       initCdata(data) {
         console.log(data)
         data.forEach((show, index) => {
-          const colorObj = getColorByIndex(index)
+          const colorObj = getColorByIndex(index, show.name)
           show._checked = false
           show._color = colorObj.colorStr
           if(show.hasOwnProperty('children')) {
