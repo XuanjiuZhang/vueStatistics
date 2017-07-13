@@ -5,9 +5,12 @@ import statisticApi from '../api/statisticApi';
 import echarts from '../components/echarts/echartsRegister';
 import { Notification, MessageBox } from '../lib/elementLib/element-ui.common'
 
+const VueEventBus = new Vue();
+
 const initStore = () => {
   const state = {
     sid: '', // sid是目前是场景的id值 
+    VueEventBus, // 事件中转
     Notification, // elementUI 通知 调用方法 Notification(opt)
     MessageBox, // elementUI 消息框 调用方法 MessageBox(opt)
     statisticApi, // api服务对象

@@ -27,14 +27,14 @@
         },
         lineData: undefined,
         echartsOpt: undefined,
-        echartDom: undefined
+        echartDom: undefined,
       }
     },
     mounted() {
       window.echarts = this.echarts
     },
     computed: {
-      ...mapState(['statisticApi', 'sid', 'echarts']),
+      ...mapState(['statisticApi', 'sid', 'echarts', 'VueEventBus']),
     },
     methods: {
       onGetVisitTree() {
@@ -50,6 +50,7 @@
           this.lineData = data
           this.echartsOpt = echartsLineDataParser(this.lineData, this.timeData)
           this.echartDom.setOption(this.echartsOpt, true)
+          this.VueEventBus.$emit('echartDomInited')
         })
       },
       channelChanged(channel) {

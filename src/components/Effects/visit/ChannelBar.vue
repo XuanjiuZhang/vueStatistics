@@ -114,6 +114,9 @@
         this.showData = this.cData
         this.$emit('getVisitTree')
       })
+      this.VueEventBus.$on('echartDomInited', () => {
+        // this.initCheck(this.cData)
+      })
     },
     methods: {
       changeShowAll() {
@@ -143,11 +146,13 @@
         if(index === -1 && this.showDataStack.length) {
           this.showDataStack.length = 0
           this.showData = this.cData
+          this.showData.forEach(show => show._checked = true)
           this.$emit('channelChanged')
           return 
         }
         this.showDataStack = window._lodash.take(this.showDataStack, index + 1)
         this.showData = this.showDataStack[this.showDataStack.length - 1].children
+        this.showData.forEach(show => show._checked = true)
         this.$emit('channelChanged', this.showDataStack[this.showDataStack.length - 1])
       },
       initCdata(data) {
@@ -158,6 +163,14 @@
           show._color = colorObj.colorStr
           if(show.hasOwnProperty('children')) {
             this.initCdata(show.children)
+          }
+        })
+      },
+      initCheck(data) {
+        data.forEach(show => {
+          if(this.echartDom) { this.changeCheck(show) }
+          if(show.hasOwnProperty('children')) {
+            this.initCheck(show.children)
           }
         })
       },
@@ -177,7 +190,7 @@
       }
     },
     computed: {
-      ...mapState(['statisticApi', 'sid']),
+      ...mapState(['statisticApi', 'sid', 'VueEventBus']),
     }
   }
 
