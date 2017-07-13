@@ -4,7 +4,7 @@
 <template>
   <div>
     <Channel-bar @channelChanged="channelChanged" @timeChanged="timeChanged"></Channel-bar>
-    <div ref="child"></div>
+    <div ref="child" style="width: 500px; height: 400px;"></div>
   </div>
 </template>
 
@@ -27,6 +27,7 @@
       }
     },
     mounted() {
+      window.echarts = this.echarts
       this.getLineData()
       this.echartDom = this.echarts.init(this.$refs.child);
     },
@@ -42,7 +43,7 @@
           console.log(data);
           this.lineData = data
           this.echartsOpt = echartsLineDataParser(this.lineData, this.timeData)
-          // this.echartDom.setOption(this.echartsOpt)
+          this.echartDom.setOption(this.echartsOpt)
         })
       },
       channelChanged(channel) {
