@@ -15,7 +15,7 @@
 <script>
   import { mapState } from 'Vuex';
   import ChannelBar from './ChannelBar'
-  import { echartsLineDataParser } from './service'
+  import { echartsLineDataParser } from './lineChartService'
 
   export default {
     data() {

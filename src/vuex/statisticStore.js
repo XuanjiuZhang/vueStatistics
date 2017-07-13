@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex';
 Vue.use(Vuex);
 import statisticApi from '../api/statisticApi';
-import echarts from '../components/echarts/echartsRegister';
+import echarts from 'echarts';
 import { Notification, MessageBox } from '../lib/elementLib/element-ui.common'
 
 const VueEventBus = new Vue();
@@ -71,6 +71,12 @@ const initStore = () => {
           _lodash.reverse(data)
           context.commit('changeSelectedChannelData', { selectedChannelData: data });
         });
+      },
+
+      registerMapData(context, payload) {
+        statisticApi.effects.getMapData(payload).then(res => res.json()).then(data => {
+          console.log(data);
+        })
       }
     }
   });

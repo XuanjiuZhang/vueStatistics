@@ -14,6 +14,10 @@
     width: 70%;
     height: 800px;
   }
+  .device-chart {
+    width: 70%;
+    /*height: 450px;*/
+  }
 </style>
 
 <template>
@@ -46,6 +50,24 @@
       </div>
     </div>
 
+    <div class="content-wrapper">
+      <div class="title">
+        <span><b>设备机型</b></span>
+      </div>
+      <div class="device-chart center">
+        <Device-chart></Device-chart>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="title">
+        <span><b>地域统计</b></span>
+      </div>
+      <div class="device-chart center">
+        <Map-chart></Map-chart>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -57,6 +79,8 @@
   import D3Funnel2 from './D3Chart/D3Funnel2'*/
   import ComposedTable from './Table/ComposedTable'
   import LineChart from './visit/LineChart'
+  import DeviceChart from './visit/DeviceChart'
+  import MapChart from './visit/MapChart'
   export default {
     data() {
       return {
@@ -97,7 +121,9 @@
       // D3Funnel,
       // D3Funnel2,
       echartFunnel,
-      LineChart
+      LineChart,
+      DeviceChart,
+      MapChart
     }
   }
 

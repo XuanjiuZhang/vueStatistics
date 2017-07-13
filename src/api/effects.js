@@ -60,7 +60,76 @@ const genReq = (appConfig) => {
         },
         credentials: 'include',
       });
-    }
+    },
+
+    getDeviceData (sid) {
+      const url = `${appConfig.h5Service}/statistics/${sid}/device`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
+
+    getMobileModels (sid) {
+      const url = `${appConfig.h5Service}/statistics/${sid}/mobilemodels`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
+
+    getMobileSystem (sid) {
+      const url = `${appConfig.h5Service}/statistics/${sid}/os`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
+
+    getCountryVisit (sid, data) {
+      var param = queryString.stringify(data);
+      const url = `${appConfig.h5Service}/statistics/${sid}/address?${param}`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
+
+    getProvinceVisit (sid, data) {
+      var param = queryString.stringify(data);
+      const url = `${appConfig.h5Service}/statistics/${sid}/address/province?${param}`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
+
+    getMapData (data) {
+      var param = queryString.stringify(data);
+      const url = `${appConfig.h5Service}/map?${param}`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
     
   };
 };

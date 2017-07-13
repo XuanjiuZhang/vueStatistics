@@ -23,13 +23,13 @@
   .el-icon-information {
     cursor: pointer;
   }
+  .mt-4 {
+    margin-top: -4px;
+  }
   .c-time {
     float: right;
     .time-type {
       float: right;
-    }
-    ul {
-      margin-top: -4px;
     }
     li {
       border-radius: 5px;
@@ -72,7 +72,7 @@
         </li>
       </ul>
       <div class="c-time">
-        <ul class="peroid">
+        <ul class="peroid mt-4">
           <li :class="{active: timePeroid === 0}" @click="changeTimePeroid(0)">今天</li>
           <li :class="{active: timePeroid === 1}" @click="changeTimePeroid(1)">昨天</li>
           <li :class="{active: timePeroid === 7}" @click="changeTimePeroid(7)">近七天</li>
@@ -91,7 +91,7 @@
 
 <script>
   import { mapState } from 'Vuex';
-  import { getColorByIndex } from './service'
+  import { getColorByIndex } from './lineChartService'
 
   export default {
     data() {
@@ -115,7 +115,7 @@
         this.$emit('getVisitTree')
       })
       this.VueEventBus.$on('echartDomInited', () => {
-        // this.initCheck(this.cData)
+        this.initCdata(this.cData)
       })
     },
     methods: {

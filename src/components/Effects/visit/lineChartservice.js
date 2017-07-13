@@ -49,10 +49,6 @@ const getColorByIndex = (i, name) => {
   return result
 }
 
-function colorMapGetter() {
-  return colorMap
-}
-
 function getDateData(type, base, peroid) {
   console.log(type);
   console.log(base);
@@ -283,4 +279,4 @@ const echartsLineDataParser = (lineData, timeData) => {
   return option
 }
 
-export { getColorByIndex, echartsLineDataParser, colorMapGetter } 
+export { getColorByIndex, echartsLineDataParser } 
