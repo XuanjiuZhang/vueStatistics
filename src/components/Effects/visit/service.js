@@ -132,7 +132,8 @@ function getEchartsLineXAxis(lineData, timeData) {
 }
 
 function getEchartsLineSeries(lineData, timeData, xAxisData) {
-  const eseries = [];
+  const eseries = []
+  const eseriesDataArr = []
   lineData.forEach(line => {
     const colorObj = colorMap.get(line.channel)
     const { randomR, randomG, randomB, colorStr } = colorObj
@@ -166,6 +167,7 @@ function getEchartsLineSeries(lineData, timeData, xAxisData) {
       }
     })
 
+    eseriesDataArr.push(showData)
     eseries.push({
       name: line.channel,
       type: 'line',
@@ -192,6 +194,40 @@ function getEchartsLineSeries(lineData, timeData, xAxisData) {
     })
   })
 
+  const AllData = _lodash.zip(...eseriesDataArr).map(pointArr => {
+    return pointArr.reduce((p1, p2) => {
+      return p1 + p2
+    }, 0)
+  })
+  console.log('AllData!');
+  console.log(AllData);
+
+  // 所有数据统计在一起的值
+  eseries.push({
+    name: '全部',
+    type: 'line',
+    smooth: true,
+    symbol: 'none',
+    sampling: 'average',
+    itemStyle: {
+      normal: {
+        color: 'rgb(175,238,238)'
+      }
+    },
+    areaStyle: {
+      normal: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          offset: 0,
+          color: 'rgba(175,238,238, 0)'
+        }, {
+          offset: 1,
+          color: 'rgba(175,238,238, 1)'
+        }])
+      }
+    },
+    data: AllData
+  })
+
   return eseries
 }
 
@@ -204,6 +240,7 @@ const echartsLineDataParser = (lineData, timeData) => {
   console.log(eseries);
 
   const legend = eseries.map(s => s.name)
+  legend.push('全部')
 
   const option = {
     title: {

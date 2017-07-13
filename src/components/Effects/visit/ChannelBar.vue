@@ -59,6 +59,11 @@
     </ul>
     <div class="c-current">
       <ul class="channel">
+        <li>
+          <el-checkbox v-model="showAll" :color="allColor" @change="changeShowAll">
+            <span>全部</span>
+          </el-checkbox>
+        </li>
         <li v-for="(ch, index) in showData" :key="ch.id">
           <el-checkbox v-model="ch._checked" :color="ch._color" @change="changeCheck(ch)">
             <span>{{ch.name}}</span>
@@ -95,7 +100,9 @@
         showData: [],
         showDataStack: [],
         timePeroid: -1,
-        timeType: 'day'
+        timeType: 'day',
+        showAll: true,
+        allColor: 'rgb(175,238,238)'
       }
     },
     props: ['echartDom'],
@@ -109,6 +116,13 @@
       })
     },
     methods: {
+      changeShowAll() {
+        this.echartDom.dispatchAction({
+          type: this.showAll ? 'legendSelect' : 'legendUnSelect',
+          // 图例名称
+          name: '全部'
+        })
+      },
       changeCheck(ch) {
         const checked = ch._checked
         this.echartDom.dispatchAction({
