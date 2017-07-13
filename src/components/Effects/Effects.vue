@@ -12,7 +12,7 @@
   }
   .line-chart {
     width: 70%;
-    height: 550px;
+    height: 800px;
   }
 </style>
 

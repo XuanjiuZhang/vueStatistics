@@ -10,12 +10,15 @@
     }
   }
   .c-current {
-    float: left;
-    li {
-      margin-right: 15px;
-      display: inline;
-      list-style: none;
+    .channel {
+      float: left;
+      li {
+        margin-right: 15px;
+        display: inline;
+        list-style: none;
+      }
     }
+    
   }
   .el-icon-information {
     cursor: pointer;
@@ -44,6 +47,8 @@
       }
     }
   }
+
+  .clear{clear:both;height:0;overflow:hidden;}
 </style>
 
 <template>
@@ -53,27 +58,28 @@
       <li v-for="(stack, index) in showDataStack" :key="index" @click="handleShowStack(index, stack)">> &nbsp&nbsp {{stack.name}} &nbsp&nbsp</li>
     </ul>
     <div class="c-current">
-      <ul>
+      <ul class="channel">
         <li v-for="(ch, index) in showData" :key="ch.id">
-          <el-checkbox v-model="ch._checked" :color="ch._color">
-            {{ch.name}}
+          <el-checkbox v-model="ch._checked" :color="ch._color" @change="changeCheck(ch)">
+            <span>{{ch.name}}</span>
           </el-checkbox>
-          <span class="el-icon-information" @click.stop="chDetail(ch)"></span>
+          <span class="el-icon-information" v-if="showChDetail(ch)" @click.stop="chDetail(ch)"></span>
         </li>
       </ul>
-    </div>
-    <div class="c-time">
-      <ul class="peroid">
-        <li :class="{active: timePeroid === 0}" @click="changeTimePeroid(0)">今天</li>
-        <li :class="{active: timePeroid === 1}" @click="changeTimePeroid(1)">昨天</li>
-        <li :class="{active: timePeroid === 7}" @click="changeTimePeroid(7)">近七天</li>
-        <li :class="{active: timePeroid === 30}" @click="changeTimePeroid(30)">近三十天</li>
-        <li :class="{active: timePeroid === -1}" @click="changeTimePeroid(-1)">全部</li>
-      </ul>
-      <ul class="time-type">
-        <li :class="{active: timeType === 'day'}" @click="changeTimeType('day')">天</li>
-        <li :class="{active: timeType === 'hour'}" @click="changeTimeType('hour')">小时</li>
-      </ul>
+      <div class="c-time">
+        <ul class="peroid">
+          <li :class="{active: timePeroid === 0}" @click="changeTimePeroid(0)">今天</li>
+          <li :class="{active: timePeroid === 1}" @click="changeTimePeroid(1)">昨天</li>
+          <li :class="{active: timePeroid === 7}" @click="changeTimePeroid(7)">近七天</li>
+          <li :class="{active: timePeroid === 30}" @click="changeTimePeroid(30)">近三十天</li>
+          <li :class="{active: timePeroid === -1}" @click="changeTimePeroid(-1)">全部</li>
+        </ul>
+        <ul class="time-type">
+          <li :class="{active: timeType === 'day'}" @click="changeTimeType('day')">天</li>
+          <li :class="{active: timeType === 'hour'}" @click="changeTimeType('hour')">小时</li>
+        </ul>
+      </div>
+      <div class="clear"></div>
     </div>
   </div>
 </template>
@@ -92,15 +98,28 @@
         timeType: 'day'
       }
     },
+    props: ['echartDom'],
     mounted() {
       this.statisticApi.effects.getVisitTree(this.sid).then(res => res.json()).then(data => {
         console.log(data);
         this.initCdata(data)
         this.cData = data
         this.showData = this.cData
+        this.$emit('getVisitTree')
       })
     },
     methods: {
+      changeCheck(ch) {
+        const checked = ch._checked
+        this.echartDom.dispatchAction({
+          type: checked ? 'legendSelect' : 'legendUnSelect',
+          // 图例名称
+          name: ch.name
+        })
+      },
+      showChDetail(ch) {
+        return ch.hasOwnProperty('children')
+      },
       chDetail(ch) {
         this.showData = ch.children
         this.showDataStack.push(ch)
@@ -110,6 +129,7 @@
         if(index === -1 && this.showDataStack.length) {
           this.showDataStack.length = 0
           this.showData = this.cData
+          this.$emit('channelChanged')
           return 
         }
         this.showDataStack = window._lodash.take(this.showDataStack, index + 1)
@@ -120,7 +140,7 @@
         console.log(data)
         data.forEach((show, index) => {
           const colorObj = getColorByIndex(index, show.name)
-          show._checked = false
+          show._checked = true
           show._color = colorObj.colorStr
           if(show.hasOwnProperty('children')) {
             this.initCdata(show.children)

@@ -81,7 +81,6 @@ function getEchartsLineXAxis(lineData, timeData) {
   var date
   const today = +new Date()
   const oneDay = 24 * 3600 * 1000;
-  const oneHour = 1000 * 3600;
 
   // 寻找时间跨度
   const timeArr = lineData.reduce((timeData, nextLine) => {
@@ -96,7 +95,6 @@ function getEchartsLineXAxis(lineData, timeData) {
   console.log('end?');
   console.log(end);
   const dateLength = Math.ceil((end - start) / oneDay);
-  const hourLength = Math.ceil((end - start) / oneHour);
 
   // 构建固定的时间跨度
   let peroid = 1
@@ -118,7 +116,7 @@ function getEchartsLineXAxis(lineData, timeData) {
     if (timeData.timeType === 'day') {
       date = getDateData(timeData.timeType, start, dateLength)
     } else {
-      date = getDateData(timeData.timeType, start, hourLength)
+      date = getDateData(timeData.timeType, start, dateLength)
     }
   } else if (timeData.timeType === 'day') {
     date = getDateData(timeData.timeType, base, peroid)
@@ -221,6 +219,8 @@ const echartsLineDataParser = (lineData, timeData) => {
       }
     },
     legend: {
+      top: '-10000%',
+      left: '-10000%',
       data: legend
     },
     toolbox: {
