@@ -1,6 +1,12 @@
 <style lang="less">
-  .custom-channel-active {
-     color: #fe5656;
+  .custom-channel {
+    border-radius: 50%;
+    background: #ccc;
+    color: #fff;
+    padding: 0 3px 3px;
+    &.active {
+      background: #fe5656;
+    }
   }
 </style>
 
@@ -26,7 +32,7 @@
         <!--非自定义渠道-->
 
         <!--自定义渠道-->
-        <span v-if="canDelete" :class="{'custom-channel-active': l3.selected}">{{l3.name.charAt(0)}}</span>
+        <span v-if="canDelete" class="custom-channel" :class="{'active': l3.selected}">{{l3.name.charAt(0)}}</span>
         <!--自定义渠道-->
 
         <span class="text" :class="{active: l3.selected}">{{l3.name}}</span>

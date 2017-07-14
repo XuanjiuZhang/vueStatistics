@@ -13,11 +13,15 @@
       padding: 10px;
     }
   }
+  .device-canvas {
+    width: 100%;
+    height: 400px;
+  }
 </style>
 
 <template>
   <div>
-    <div ref="child" class="center" style="width: 1200px; height: 400px;"></div>
+    <div ref="child" class="center device-canvas"></div>
     <div>
       <div class="device-table">
         <el-tabs v-model="deviceTabsValue" type="card">
@@ -112,7 +116,7 @@
       this.statisticApi.effects.getDeviceData(this.sid).then(res => res.json()).then(data => {
         console.log(data);
         this.backData = data
-        const opt = dataParser(data)
+        const opt = dataParser(data, this.$refs.child)
         this.echartDom.setOption(opt, true)
       })
       this.statisticApi.effects.getMobileModels(this.sid).then(res => res.json()).then(data => {

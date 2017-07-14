@@ -8,19 +8,22 @@
     height: 550px;
   }
   .composed-table-wrapper {
-    width: 90%;
+    width: 80%;
   }
   .line-chart {
-    width: 70%;
+    width: 80%;
     height: 800px;
   }
   .device-chart {
-    width: 70%;
+    width: 80%;
     /*height: 450px;*/
   }
   .map-chart {
-    width: 90%;
+    width: 80%;
     /*height: 450px;*/
+  }
+  .mb-20 {
+    margin-bottom: 20px;
   }
 </style>
 
@@ -33,7 +36,7 @@
       <div class="funnel-chart center">
         <!--<Funnel-chart></Funnel-chart>-->
         <!--<D3-funnel2></D3-funnel2>-->
-        <!--<echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>-->
+        <echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>
       </div>
     </div>
     <div class="content-wrapper">
@@ -63,7 +66,7 @@
       </div>
     </div>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper mb-20">
       <div class="title">
         <span><b>地域统计</b></span>
       </div>

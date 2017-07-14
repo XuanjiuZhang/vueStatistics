@@ -1,4 +1,8 @@
 <style lang="less">
+  .line-canvas {
+    width: 93%;
+    height: 650px;
+  }
 </style>
 
 <template>
@@ -8,7 +12,7 @@
       @timeChanged="timeChanged"
       @getVisitTree="onGetVisitTree"
       :echartDom="echartDom"></Channel-bar>
-    <div ref="child" class="center" style="width: 1200px; height: 600px;"></div>
+    <div ref="child" class="center line-canvas"></div>
   </div>
 </template>
 

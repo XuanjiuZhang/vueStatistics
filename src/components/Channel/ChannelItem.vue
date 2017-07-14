@@ -331,6 +331,7 @@
     margin-top: @channelHeight / 3;
   }
   .qrcode {
+    cursor: pointer;
     @size: @channelHeight * .8;
     width: @size;
     height: @size;

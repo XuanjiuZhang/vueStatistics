@@ -19,7 +19,10 @@
       
     </div>
     <div class="col-sm-5 col-md-5 col-lg-5 params-qrc">
-      <div class="qrcode" ref="qrcode"></div>
+      <div class="qrcode" ref="qrcode"
+        v-clipboard:copy="composedUrl"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError"></div>
       <div class="params-link">
         &nbsp&nbsp&nbsp{{composedUrl | stringLength}}
       </div>
@@ -131,7 +134,7 @@
         this.Notification({
             // title: '成功',
             type: 'success',
-            message: '已复制到剪贴板',
+            message: '已复制url到剪贴板',
             duration: 1000,
             offset: 100
           })
@@ -143,7 +146,7 @@
     computed: {
       ...mapState(['statisticApi', 'sid', 'Notification']),
       composedUrl() {
-        return `${this.cData.url}?qrc=${this.cData._id}&src=${this.pData.name}`
+        return `${this.cData.url}?qrc=${this.cData._id}&src=${encodeURIComponent(this.pData.name)}`
       },
       debouncedUpdateParam() {
         return _lodash.debounce(this.updateParam, 1000)

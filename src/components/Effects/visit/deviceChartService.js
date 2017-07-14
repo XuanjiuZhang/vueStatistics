@@ -1,4 +1,4 @@
-function dataParser(data) {
+function dataParser(data, dom) {
   const totalCount = data.reduce((count, d) => {
     return count + 　d.value
   }, 0)
@@ -66,7 +66,7 @@ function dataParser(data) {
     legend: {
       left: '12%',
       top: '80%',
-      itemGap: 230,
+      itemGap: dom.offsetWidth * .23 - 50,
       data: legend
     },
     series

@@ -1,7 +1,8 @@
 <style lang="less">
   @tableRowHeight: 45px;
   .composed-table {
-    height: 800px;
+    /*height: 800px;*/
+    padding-bottom: 20px;
     > .composed-content {
       max-height: 700px;
     }
@@ -20,6 +21,9 @@
     margin-right: 5%;
     font-size: 16px;
   }
+  .el-table__body {
+    text-align: center;
+  }
   
 </style>
 
@@ -37,18 +41,19 @@
           fixed
           type="index"
           label="排名"
-          width="180">
+          width="80">
         </el-table-column>
         <el-table-column
           fixed
           prop="channel"
           label="渠道"
-          width="180">
+          width="220">
         </el-table-column>
         <el-table-column
           fixed
           prop="param"
-          label="参数">
+          label="参数"
+          width="220">
         </el-table-column>
         <el-table-column
           prop="visit"
@@ -112,6 +117,8 @@
         :total="tableRawData.length">
       </el-pagination>
     </div>
+
+    <div class="clear"></div>
   </div>
 </template>
 
@@ -122,7 +129,7 @@
       return {
         currentPage: 1,
         // pageSizes: [10, 20, 50, 100],
-        pageSizes: [1, 2, 5, 10],
+        pageSizes: [1, 5, 10, 20],
         pageSize: 10,
         tableRawData: []
       }

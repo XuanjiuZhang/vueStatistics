@@ -11,11 +11,26 @@
     float: right;
     width: 50%;
   }
+  .map-table {
+    text-align: right;
+    margin-top: 60px;
+    th {
+      text-align: right;
+    }
+  }
+  .close-btn {
+    position: absolute;
+    padding: 30px;
+    span {
+      cursor: pointer;
+    }
+  }
 </style>
 
 <template>
   <div class="map-layout">
     <div ref="child" class="map-canvas"></div>
+    <div class="close-btn"><span @click="escProvince({keyCode: 27})" class="el-icon-d-arrow-left" v-show="currentPosition != 'china'"></span></div>
     <div class="map-static">
       <div class="c-time">
         <ul class="peroid">
@@ -26,7 +41,7 @@
           <li :class="{active: timePeroid === -1}" @click="changeTimePeroid(-1)">全部</li>
         </ul>
       </div>
-      <table class="table">
+      <table class="table map-table">
         <tr>
           <th>排名</th>
           <th>访问来源</th>
