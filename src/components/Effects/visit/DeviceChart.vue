@@ -5,6 +5,14 @@
     padding: 20px;
     font-size: 16px;
   }
+  .table {
+    td {
+      padding: 15px;
+    }
+    th {
+      padding: 10px;
+    }
+  }
 </style>
 
 <template>
@@ -56,7 +64,7 @@
           >
           </el-tab-pane>
         </el-tabs>
-        <table class="table table-striped">
+        <table class="table">
           <tr>
             <th>排名</th>
             <th>品牌</th>

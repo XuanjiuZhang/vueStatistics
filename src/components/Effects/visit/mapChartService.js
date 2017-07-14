@@ -1,4 +1,4 @@
-function getSeries(data, isCountryMap) {
+function getSeries(data, currentPosition) {
   const seriesData = data.map(d => {
     const total = d.pv.reduce((count, pv) => {
       return count + pv[1]
@@ -7,12 +7,14 @@ function getSeries(data, isCountryMap) {
       name: d.name,
       value: total
     }
+  }).sort((s1, s2) => {
+    return s1.total < s2.total
   })
   return {
       name: '访问用户',
       type: 'map',
-      mapType: isCountryMap ? 'china' : 'province',
-      layoutCenter: ['50%', '40%'],
+      map: currentPosition,
+      layoutCenter: ['50%', '50%'], 
       // 不超过 500 的区域
       layoutSize: 600,
       roam: false,
@@ -29,8 +31,8 @@ function getSeries(data, isCountryMap) {
 }
 
 
-function parseData(data, isCountryMap) {
-  const series = getSeries(data, isCountryMap)
+function parseData(data, currentPosition) {
+  const series = getSeries(data, currentPosition)
   const option = {
     backgroundColor: '#fff',
     title: {
@@ -49,8 +51,8 @@ function parseData(data, isCountryMap) {
       },
       min: 0,
       max: 100,
-      top: '60%',
-      left: '10%',
+      top: '70%',
+      left: '5%',
       itemHeight  : '140%',
       text: ['高', '低'],           // 文本，默认为数值文本
       calculable: true
@@ -58,6 +60,7 @@ function parseData(data, isCountryMap) {
     xAxis: {
       type: 'category',
       boundaryGap: false,
+      show: false,
       data: []
     },
     yAxis: {

@@ -120,8 +120,19 @@ const genReq = (appConfig) => {
     },
 
     getMapData (data) {
-      var param = queryString.stringify(data);
+      var param = queryString.stringify(data)
       const url = `${appConfig.h5Service}/map?${param}`;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+      });
+    },
+
+    getChinaMap () {
+      const url = `${appConfig.h5Service}/map/china`;
       return fetch(url, {
         method: 'GET',
         headers: {

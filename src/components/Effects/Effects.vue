@@ -18,6 +18,10 @@
     width: 70%;
     /*height: 450px;*/
   }
+  .map-chart {
+    width: 90%;
+    /*height: 450px;*/
+  }
 </style>
 
 <template>
@@ -63,7 +67,7 @@
       <div class="title">
         <span><b>地域统计</b></span>
       </div>
-      <div class="device-chart center">
+      <div class="map-chart center">
         <Map-chart></Map-chart>
       </div>
     </div>
