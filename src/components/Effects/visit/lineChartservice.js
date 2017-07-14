@@ -240,7 +240,8 @@ const echartsLineDataParser = (lineData, timeData) => {
 
   const option = {
     title: {
-      text: '访问趋势图'
+      text: '访问趋势图',
+      left: '5%'
     },
     tooltip: {
       trigger: 'axis',
@@ -262,8 +263,8 @@ const echartsLineDataParser = (lineData, timeData) => {
       }
     },*/
     grid: {
-      left: '1%',
-      right: '1%',
+      left: '5%',
+      right: '5%',
       bottom: '8%',
       containLabel: true
     },

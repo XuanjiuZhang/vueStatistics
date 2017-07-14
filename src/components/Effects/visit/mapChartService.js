@@ -8,8 +8,9 @@ function getSeries(data, currentPosition) {
       value: total
     }
   }).sort((s1, s2) => {
-    return s1.total < s2.total
+    return s1.value < s2.value
   })
+  console.log('mapSeriesData:', seriesData);
   return {
       name: '访问用户',
       type: 'map',
