@@ -156,6 +156,7 @@
         this.$emit('channelChanged', this.showDataStack[this.showDataStack.length - 1])
       },
       initCdata(data) {
+        this.showAll = true
         console.log(data)
         data.forEach((show, index) => {
           const colorObj = getColorByIndex(index, show.name)

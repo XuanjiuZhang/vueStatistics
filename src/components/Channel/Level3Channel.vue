@@ -8,6 +8,20 @@
       background: #fe5656;
     }
   }
+
+  .info-circle {
+    fill: #ccc;
+    &.active {
+      fill: #fe5656
+    }
+  }
+  .info-text {
+    font-size: 12px;
+    fill: #4A4A4A;
+    &.active {
+      fill: #fff;
+    }
+  }
 </style>
 
 <template>
@@ -32,7 +46,8 @@
         <!--非自定义渠道-->
 
         <!--自定义渠道-->
-        <span v-if="canDelete" class="custom-channel" :class="{'active': l3.selected}">{{l3.name.charAt(0)}}</span>
+        <div ref="custom" v-if="canDelete" style="float: left"></div>
+        <!--<span v-if="canDelete" class="custom-channel" :class="{'active': l3.selected}">{{l3.name.charAt(0)}}</span>-->
         <!--自定义渠道-->
 
         <span class="text" :class="{active: l3.selected}">{{l3.name}}</span>
@@ -67,6 +82,22 @@
     },
     props: ['l3', 'showedL2', 'cData'],
     mounted() {
+      if(this.canDelete) {
+        let size = 38
+        let d3 = window.d3
+        let svg = d3.select(this.$refs.custom).append('svg')
+        let info = this.l3.name.charAt(0)
+        let dx = this.checkChinese(info) ? -6 : -4
+        svg.attr('width', size).attr('height', size)
+        svg.append('circle').attr('class', 'info-circle').classed('active', this.l3.selected)
+          .attr('cx', size / 3).attr('cy', size / 2).attr('r', size / 3)
+        svg.append('text').attr('class', 'info-text').classed('active', this.l3.selected)
+          .attr('x', size / 3).attr('y', size / 2).attr('dx', dx).attr('dy', 4).html(info)
+        this.$watch('l3.selected', (selected) => {
+          svg.select('.info-circle').classed('active', this.l3.selected)
+          svg.select('.info-text').classed('active', this.l3.selected)
+        })
+      }
     },
     methods: {
       ...mapActions(['initChannelData']),
@@ -134,6 +165,10 @@
           })
           this.initChannelData()
         });
+      },
+      checkChinese(val) {
+        const reg = new RegExp('[\\u4E00-\\u9FFF]+', 'g');
+        return reg.test(val)     
       }
     },
     computed: {
