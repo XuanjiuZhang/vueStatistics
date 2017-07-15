@@ -12,7 +12,7 @@
   .info-circle {
     fill: #ccc;
     &.active {
-      fill: #fe5656
+      fill: #02bdab
     }
   }
   .info-text {
@@ -22,6 +22,29 @@
       fill: #fff;
     }
   }
+  .el-popover {
+    > p:nth-child(1) {
+      padding: 15px 10px 5px 10px;
+    }
+  }
+  .channel-cancel {
+    border: none;
+    background: #bfcbdd;
+    color: #fff;
+    &:hover {
+      background: #99a2b1;
+      color: #fff;
+    }
+  }
+  .channel-comfirm {
+    border: none;
+    background: #46befc;
+    color: #fff;
+    &:hover {
+      background: #3898ca;
+      color: #fff;
+    }
+  }
 </style>
 
 <template>
@@ -29,16 +52,16 @@
     <el-popover
         ref="popoverSelect"
         placement="top"
-        width="160"
+        width="200"
         v-model="showTip">
         <p v-show="l3.selected">您确定要取消该渠道的选择？</p>
         <p v-show="!l3.selected">选择该渠道?</p>
         <div style="text-align: right; margin: 0">
-          <el-button size="mini" type="text" @click="hideTip">取消</el-button>
-          <el-button type="primary" size="mini" @click="confirmTip">确定</el-button>
+          <el-button size="small" class="channel-cancel" @click="hideTip">取消</el-button>
+          <el-button size="small" class="channel-comfirm" @click="confirmTip">确定</el-button>
         </div>
       </el-popover>
-    <el-tooltip class="item" effect="dark" content="点击选择" placement="top">
+    <el-tooltip class="item" effect="dark" :content="popoverContent" placement="top">
       <div v-popover:popoverSelect>
         <!--非自定义渠道-->
         <img v-if="!canDelete" v-show="l3.selected" :src="l3.ligting_icon_channel" alt="">
@@ -175,6 +198,9 @@
       ...mapState(['statisticApi', 'selectedCount', 'sid', 'Notification']),
       canDelete() {
         return this.l3.hasOwnProperty('sid')
+      },
+      popoverContent() {
+        return this.l3.selected ? '点击取消选择' : '点击选择'
       }
     },
   }

@@ -3,7 +3,7 @@
     width:100%;
     height:100%;
     min-width:300px;
-    min-height:300px;
+    min-height:600px;
   }
 </style>
 
@@ -81,7 +81,10 @@
                           [centerX - bwidth / 2, centerY + height / 2]
                 ]
               },
-              style: api.style()
+              style: api.style(),
+              onclick: function () { 
+                console.log('onclick!!');
+              }  
             })
             shapes.push({
               type: 'text',
@@ -241,6 +244,9 @@
               }
             })}
           this.echart.setOption(Object.assign({}, this.option, optionSet))
+          this.echart.on('click',function(params){
+            console.log(params)
+          })
         }
       },
       mounted: function () {

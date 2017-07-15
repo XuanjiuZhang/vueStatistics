@@ -5,7 +5,7 @@
   }*/
   .funnel-chart {
     width: 100%;
-    height: 550px;
+    /*height: 550px;*/
   }
   .composed-table-wrapper {
     width: 80%;
@@ -36,6 +36,7 @@
       <div class="funnel-chart center">
         <!--<Funnel-chart></Funnel-chart>-->
         <!--<D3-funnel2></D3-funnel2>-->
+        <!--<D3-funnel3></D3-funnel3>-->
         <echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>
       </div>
     </div>
@@ -84,6 +85,7 @@
   import echartFunnel from './FunnelChart/ElEchartFunnel'
   /*import D3Funnel from './D3Chart/D3Funnel'
   import D3Funnel2 from './D3Chart/D3Funnel2'*/
+  import D3Funnel3 from './D3Chart/D3Funnel3'
   import ComposedTable from './Table/ComposedTable'
   import LineChart from './visit/LineChart'
   import DeviceChart from './visit/DeviceChart'
@@ -127,6 +129,7 @@
       ComposedTable,
       // D3Funnel,
       // D3Funnel2,
+      D3Funnel3,
       echartFunnel,
       LineChart,
       DeviceChart,
