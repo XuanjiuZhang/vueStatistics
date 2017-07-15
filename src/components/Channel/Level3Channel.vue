@@ -24,6 +24,11 @@
   }
   .el-popover {
     > p:nth-child(1) {
+      text-align: center;
+      padding: 15px 10px 5px 10px;
+    }
+    > p:nth-child(2) {
+      text-align: center;
       padding: 15px 10px 5px 10px;
     }
   }
@@ -36,7 +41,7 @@
       color: #fff;
     }
   }
-  .channel-comfirm {
+  .channel-confirm {
     border: none;
     background: #46befc;
     color: #fff;
@@ -58,7 +63,7 @@
         <p v-show="!l3.selected">选择该渠道?</p>
         <div style="text-align: right; margin: 0">
           <el-button size="small" class="channel-cancel" @click="hideTip">取消</el-button>
-          <el-button size="small" class="channel-comfirm" @click="confirmTip">确定</el-button>
+          <el-button size="small" class="channel-confirm" @click="confirmTip">确定</el-button>
         </div>
       </el-popover>
     <el-tooltip class="item" effect="dark" :content="popoverContent" placement="top">

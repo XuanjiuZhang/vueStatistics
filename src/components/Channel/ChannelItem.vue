@@ -76,8 +76,8 @@
                 v-model="showDelTip">
                 <p>删除该渠道和参数?</p>
                 <div style="text-align: right; margin: 0">
-                  <el-button size="mini" type="text" @click="hideDelTip">取消</el-button>
-                  <el-button type="primary" size="mini" @click="deleteChannel">确定</el-button>
+                  <el-button size="small" class="channel-cancel" @click="hideDelTip">取消</el-button>
+                  <el-button size="small" class="channel-confirm" @click="deleteChannel">确定</el-button>
                 </div>
               </el-popover>
             <el-tooltip class="item" effect="dark" content="删除" placement="top">

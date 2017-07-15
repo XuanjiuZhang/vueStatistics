@@ -43,7 +43,7 @@ function getPolygons(pLeftTop, pRightTop, pBottom, polygonNumber, polygonGap) {
 
 function drawPolygons(update) {
   update.enter().append('polygon').attr('points', function(d) {
-    const points = [d[0][0], d[1][0], d[1][1], d[0][1]]
+    const points = [d.lines[0][0], d.lines[1][0], d.lines[1][1], d.lines[0][1]]
     console.log('points', points);
     return points.reduce((pointsStr, nextPoint) => {
       return pointsStr + ' ' + nextPoint.join();
@@ -55,7 +55,7 @@ function drawPolygons(update) {
   update.exit().remove()
 
   update.attr('points', function(d) {
-    const points = [d[0][0], d[1][0], d[0][1], d[1][1]]
+    const points = [d.lines[0][0], d.lines[1][0], d.lines[0][1], d.lines[1][1]]
     return points.reduce((pointsStr, nextPoint) => {
       return pointsStr + ' ' + nextPoint.join();
     }, '');
@@ -64,6 +64,62 @@ function drawPolygons(update) {
   })
 }
 
-const funnelService = { getPolygons, drawPolygons }
+function drawPolygonsText(update) {
+  update.enter().append('text').attr('class', 'polygon-center-text').attr('x', function(d){
+    return (d.lines[0][0][0] + d.lines[1][0][0]) / 2
+  }).attr('y', function(d){
+    return (d.lines[0][0][1] + d.lines[0][1][1]) / 2
+  }).attr('dx', function(d){
+    return -d.label.length * 6
+  }).style('fill', function(){ return '#fff' })
+  .html(function(d, index){
+    return d.label
+  })
+
+  update.exit().remove()
+
+  update.attr('x', function(d){
+    return (d[0][0][0] + d[1][0][0]) / 2
+  }).attr('y', function(d){
+    return (d[0][0][0] + d[0][0][1]) / 2
+  }).attr('dx', function(d){
+    return -d.label.length * 6
+  }).style('fill', function(){ return '#fff' })
+  .html(function(d, index){
+    return d.label
+  })
+}
+
+function getPolygonRightLinks (polygonsWithData, rightPosition) {
+  const linkPoints = polygonsWithData.map(polygon => {
+    return [(polygon.lines[1][0][0] + polygon.lines[1][1][0]) / 2,
+     (polygon.lines[1][0][1] + polygon.lines[1][1][1]) / 2]
+  })
+  console.log('linkPoints', linkPoints);
+  const linePaths = []
+  for(let i = 0; i < linkPoints.length - 1; i++) {
+    let points = [linkPoints[i], [linkPoints[i][0], rightPosition],
+     [linkPoints[i + 1][0], rightPosition], linkPoints[i + 1]]
+    linePaths.push(points)
+  }
+  console.log('linePaths', linePaths);
+  return linePaths
+}
+
+function drawPolygonsRightLinks(update) {
+  const linePath = d3.line()
+  update.enter().append('path').attr('class', 'g-polygon-right-link')
+  .attr('d', function(d){
+    return linePath(d)
+  })
+
+  update.exit().remove()
+
+  update.attr('d', function(d){
+    return linePath(d)
+  })
+}
+
+const funnelService = { getPolygons, drawPolygons, drawPolygonsText, getPolygonRightLinks, drawPolygonsRightLinks }
 
 export default funnelService

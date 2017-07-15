@@ -19,6 +19,7 @@
         svg: undefined,
         gPolygonClassName: 'g-polygon',
         gPolygonItemClassName: 'g-polygon-item',
+        gPolygonRightLinkClassName: 'g-polygon-right-link',
       }
     },
     props: {
@@ -51,14 +52,21 @@
         return b - a;
       },
       drawPolygons() {
+        console.log('this.polygonsWithData', this.polygonsWithData);
         const update = this.svg.select(`.${this.gPolygonClassName}`)
-          .selectAll(`.${this.gPolygonItemClassName}`).data(this.polygons)
+          .selectAll(`.${this.gPolygonItemClassName}`).data(this.polygonsWithData)
         funnelService.drawPolygons(update)
       },
       drawPolygonsText() {
         const update = this.svg.select('.polygon-text')
-          .selectAll(`.${this.gPolygonItemClassName}`).data(this.polygons)
+          .selectAll(`.${this.gPolygonItemClassName}`).data(this.polygonsWithData)
         funnelService.drawPolygonsText(update)
+      },
+      drawPolygonRightLinks() {
+        const linePaths = funnelService.getPolygonRightLinks(this.polygonsWithData, this.width * .9)
+        const update = this.svg.select('.polygon-link-right')
+          .selectAll(`.${this.gPolygonRightLinkClassName}`).data(linePaths)
+        funnelService.drawPolygonsRightLinks(update)
       }
     },
     computed: {
@@ -77,6 +85,16 @@
         const polygons = funnelService.getPolygons(pLeftTop, pRightTop, pBottom, polygonNumber, this.polygonGap)
         console.log('polygons', polygons);
         return polygons
+      },
+      polygonsWithData() {
+        return this.polygons.map((poly, index) => {
+          return {
+            lines: poly,
+            label: this.labelInfo[index],
+            active: true,
+            data: this.data[index]
+          }
+        })
       }
     },
     mounted() {
@@ -84,8 +102,10 @@
       this.svg.attr('width', '100%').attr('height', '100%')
       this.svg.append('g').attr('class', this.gPolygonClassName)
       this.svg.append('g').attr('class', 'polygon-text')
+      this.svg.append('g').attr('class', 'polygon-link-right')
       this.drawPolygons()
-      // this.drawPolygonsText()
+      this.drawPolygonsText()
+      this.drawPolygonRightLinks()
     }
   }
 
