@@ -27,7 +27,7 @@ function dataParser(data, dom) {
       },
       type: 'pie',
       radius: ['40%', '60%'],
-      center: [15 + 23 * index + '%' , '40%'],
+      center: [15 + 24 * index + '%' , '40%'],
       avoidLabelOverlap: false,
       label: {
         normal: {
@@ -66,7 +66,7 @@ function dataParser(data, dom) {
     legend: {
       left: '12%',
       top: '80%',
-      itemGap: dom.offsetWidth * .23 - 50,
+      itemGap: dom.offsetWidth * .24 - 50,
       data: legend
     },
     series

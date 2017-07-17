@@ -33,9 +33,9 @@
                   <div class="two-scroll">
                       <div v-for="l2 in cData.children" :key="l2.id" @click="l2Clicked(l2, cData)"
                        :class="{active: l2._show}">
-                        <img v-show="l2.selected" :src="l2.ligting_icon_channel" alt="">
-                        <img v-show="!l2.selected" :src="l2.ligtingoff_icon_channel" alt="">
-                        <span>{{l2.name}}</span>
+                        <img v-show="l2._show" :src="l2.ligting_icon_channel" alt="">
+                        <img v-show="!l2._show" :src="l2.ligtingoff_icon_channel" alt="">
+                        <span>{{l2.name}} ({{getL3Count(l2)}})</span>
                       </div>
                   </div>
                 </div>
@@ -66,9 +66,14 @@
         cData.children.forEach(level2 => {
           level2._show = level2.id === l2.id
         })
+      },
+      getL3Count(l2) {
+        if(l2.hasOwnProperty('children')) {
+          return l2.children.filter(l3 => l3.selected).length
+        }
+        return 0
       }
     },
-    // props: ['eleData', 'finalScale'],
     mounted() {
       console.log('initChannelData!');
       this.initChannelData()
@@ -294,7 +299,7 @@
           /*width:185px;*/
           color:#000;
           .inp{
-            width:60%;
+            width:50%;
             height:@l3Height;
             border:1px solid #46befc;
             margin-right:5px;

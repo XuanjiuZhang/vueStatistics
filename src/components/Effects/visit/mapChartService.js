@@ -16,8 +16,8 @@ function getSeries(data, currentPosition) {
       type: 'map',
       map: currentPosition,
       layoutCenter: ['50%', '50%'], 
-      // 不超过 600 的区域
-      layoutSize: 600,
+      // 不超过区域
+      layoutSize: 510,
       roam: false,
       label: {
         normal: {
