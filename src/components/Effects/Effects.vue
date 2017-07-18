@@ -93,11 +93,14 @@
   export default {
     data() {
       return {
-        echartFunnelData: []
+        echartFunnelData: {
+          labelInfo: [],
+
+        }
       } 
     },
     mounted() {
-      this.statisticApi.effects.getFunnelData(this.$route.params.id).then(res => {
+      /*this.statisticApi.effects.getFunnelData(this.sid).then(res => {
         if(res.ok){
           return res.json()
         }
@@ -106,8 +109,6 @@
         if(resData === 'error'){
           return 
         }
-        const newArr = []
-        console.log(resData);
         const { visit, hits, data, business, order } = resData
         const rawData = [
               [visit, '#61A0A8', '访问量'],
@@ -119,10 +120,10 @@
         this.echartFunnelData = rawData.filter(d => {
           return d[0] != 0
         })
-      }) 
+      }) */
     },
     computed: {
-      ...mapState(['statisticApi']),
+      ...mapState(['statisticApi', 'sid']),
     },
     components: {
       FunnelChart,

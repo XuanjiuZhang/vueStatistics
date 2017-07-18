@@ -18,10 +18,12 @@
         funnelPaddingLeftRight: 0.25,
         polygonGap,
         svg: undefined,
+        data: [],
+        labelInfo: []
       }
     },
     props: {
-      data: {
+      /*data: {
         type: Array,
         default: function() {
           return [10, 33, 45, 26]
@@ -32,7 +34,7 @@
         default: function() {
           return ['访问', '线索', '商机', '订单']
         }
-      },
+      },*/
       width: {
         type: Number,
         default: 1300
@@ -119,7 +121,7 @@
       }
     },
     computed: {
-      ...mapState(['statisticApi']),
+      ...mapState(['statisticApi', 'sid']),
       chartStyle() {
         return {
           width: this.width + 'px',
@@ -161,13 +163,41 @@
       this.svg.append('g').attr('class', 'g-polygon-left-number')
       this.svg.append('g').attr('class', 'g-polygon-link-right-label')
       this.svg.append('g').attr('class', 'g-polygon-label')
-      this.drawMarkers()
-      this.drawPolygons()
-      this.drawPolygonsText()
-      this.drawPolygonRightLinks()
-      this.drawPolygonsLeftLinks()
-      this.drawPolygonsLeftLinksNumber()
-      this.drawLabels()
+
+      this.statisticApi.effects.getFunnelData(this.sid).then(res => {
+        if(res.ok){
+          return res.json()
+        }
+        return 'error'
+      }).then(resData => {
+        if(resData === 'error'){
+          return 
+        }
+        const { visit, hits, data, business, order } = resData
+        const rawData = [
+              [visit, '访问量'],
+              [hits, '点击量'],
+              [data, '线索'],
+              [business, '商机'],
+              [order, '订单']
+          ]
+        const echartFunnelData = rawData.filter(d => {
+          return d[0] != 0
+        })
+
+        const unziped = _lodash.unzip(echartFunnelData)
+        this.data = unziped[0]
+        this.labelInfo = unziped[1]
+
+        this.drawMarkers()
+        this.drawPolygons()
+        this.drawPolygonsText()
+        this.drawPolygonRightLinks()
+        this.drawPolygonsLeftLinks()
+        this.drawPolygonsLeftLinksNumber()
+        this.drawLabels()
+      }) 
+      
     }
   }
 
