@@ -36,8 +36,8 @@
       <div class="funnel-chart center">
         <!--<Funnel-chart></Funnel-chart>-->
         <!--<D3-funnel2></D3-funnel2>-->
-        <!--<D3-funnel3></D3-funnel3>-->
-        <echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>
+        <D3-funnel3></D3-funnel3>
+        <!--<echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>-->
       </div>
     </div>
     <div class="content-wrapper">

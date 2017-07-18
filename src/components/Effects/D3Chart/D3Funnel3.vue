@@ -11,10 +11,11 @@
   import funnelService from './d3Funnel3Service'
   export default { 
     data() {
-      const funnelPadding = [0.15, 0.25]
       const polygonGap = 8
       return {
-        funnelPadding,
+        funnelPaddingTop: 0.1,
+        funnelPaddingBottom: 0.2,
+        funnelPaddingLeftRight: 0.25,
         polygonGap,
         svg: undefined,
       }
@@ -23,7 +24,7 @@
       data: {
         type: Array,
         default: function() {
-          return [10, 26, 33, 45]
+          return [10, 33, 45, 26]
         }
       },
       labelInfo: {
@@ -67,6 +68,7 @@
       polyClickCallBack(data) {
         console.log(data)
         this.drawPolygonRightLinks()
+        this.drawLabels()
       },
       labelClickCallBack(data) {
         console.log(data)
@@ -113,7 +115,7 @@
           .selectAll('.polygon-label').data(this.polygonsWithData)
         const polygonItems = this.svg.select('.g-polygon')
           .selectAll('.polygon-item')
-        funnelService.drawPolygonLabel(update, 'polygon-label', this.width * .35, this.height * .9, polygonItems, this.labelClickCallBack)
+        funnelService.drawPolygonLabel(update, 'polygon-label', this.width * .353, this.height * .85, polygonItems, this.labelClickCallBack)
       }
     },
     computed: {
@@ -125,21 +127,23 @@
         }
       },
       polygons() {
-        const pLeftTop = [this.width * this.funnelPadding[1], this.height * this.funnelPadding[0]]
-        const pRightTop = [this.width * (1 - this.funnelPadding[1]), this.height * this.funnelPadding[0]]
-        const pBottom = [this.width * .5, this.height * (1 - this.funnelPadding[0])]
+        const pLeftTop = [this.width * this.funnelPaddingLeftRight, this.height * this.funnelPaddingTop]
+        const pRightTop = [this.width * (1 - this.funnelPaddingLeftRight), this.height * this.funnelPaddingTop]
+        const pBottom = [this.width * .5, this.height * (1 - this.funnelPaddingBottom)]
         const polygonNumber = this.data.length
         const polygons = funnelService.getPolygons(pLeftTop, pRightTop, pBottom, polygonNumber, this.polygonGap)
         console.log('polygons', polygons);
         return polygons
       },
       polygonsWithData() {
+        const sortedData = [].concat(this.data).sort(this.descFn)
+        console.log('sortedData', sortedData);
         return this.polygons.map((poly, index) => {
           return {
             lines: poly,
             label: this.labelInfo[index],
             active: true,
-            data: this.data[index],
+            data: sortedData[index],
             color: this.funnelColorList[index],
             hoverColor: this.funnelHoverColorList[index],
             disabledColor: this.funnelDisabledColor
