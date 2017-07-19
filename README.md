@@ -20,4 +20,3 @@
 * /lib vue2-dropzone是上传渠道excel文件的第三方组件,进行了一些修改(修改的文件为vue2-dropzone/src/index.vue)
 * /style 下放置了一些静态css文件
 * /vuex 初始化store
----
