@@ -238,7 +238,7 @@
     computed: {
       ...mapState(['statisticApi', 'sid', 'selectedCount', 'Notification']),
       is0params() {
-        return !this.cData.hasOwnProperty('params')
+        return !this.cData.hasOwnProperty('params') || this.cData.params.length === 0
       },
       sortedParams() {
         if(this.is0params) {
