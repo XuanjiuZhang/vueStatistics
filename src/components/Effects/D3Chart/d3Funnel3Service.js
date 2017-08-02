@@ -45,7 +45,7 @@ function getPolygons(pLeftTop, pRightTop, pBottom, polygonNumber, polygonGap) {
 }
 
 function drawPolygons(update, className, callBack) {
-  this.exec = function(obj) {
+  function exec(obj) {
     obj.attr('points', function(d) {
       const points = [d.lines[0][0], d.lines[1][0], d.lines[1][1], d.lines[0][1]]
       console.log('points', points);
@@ -71,15 +71,15 @@ function drawPolygons(update, className, callBack) {
     })
   }
 
-  update.enter().append('polygon').attr('class', className).call(this.exec)
+  update.enter().append('polygon').attr('class', className).call(exec)
 
   update.exit().remove()
 
-  update.call(this.exec)
+  update.call(exec)
 }
 
 function drawPolygonsText(update, className) {
-  this.exec = function(obj) {
+  function exec(obj) {
     obj.attr('x', function(d){
       return (d.lines[0][0][0] + d.lines[1][0][0]) / 2
     }).attr('y', function(d){
@@ -91,11 +91,11 @@ function drawPolygonsText(update, className) {
       return d.label
     })
   }
-  update.enter().append('text').attr('class', className).call(this.exec)
+  update.enter().append('text').attr('class', className).call(exec)
 
   update.exit().remove()
 
-  update.call(this.exec)
+  update.call(exec)
 }
 
 function getCenterPoint(p1, p2) {
@@ -122,17 +122,17 @@ function getPolygonRightLinks (polygonsWithData, rightPosition) {
 }
 
 function drawPolygonsRightLinks(update, className) {
-  this.exec = function(obj) {
+  function exec(obj) {
     obj.attr('d', function(d){
       return linePath(d.points)
     }).attr('fill', '#fff').attr('stroke', '#ccc').attr('stroke-width', 1)
   }
   const linePath = d3.line()
-  update.enter().append('path').attr('class', className).call(this.exec)
+  update.enter().append('path').attr('class', className).call(exec)
   
   update.exit().remove()
 
-  update.call(this.exec)
+  update.call(exec)
 }
 
 function drawMarkers(svg) {
@@ -144,7 +144,7 @@ function drawMarkers(svg) {
 }
 
 function drawPolygonsLeftLinks(update, className) {
-  this.exec = function(obj) {
+  function exec(obj) {
     obj.attr('d', function(d){
       const lineFn = getLineFn(d.lines[0][0], d.lines[0][1])
       const center = getCenterPoint(d.lines[0][0], d.lines[0][1])
@@ -160,16 +160,16 @@ function drawPolygonsLeftLinks(update, className) {
       .attr('marker-end', 'url(#left-line-circle)')
   }
   const linePath = d3.line()
-  update.enter().append('path').attr('class', className).call(this.exec)
+  update.enter().append('path').attr('class', className).call(exec)
   
   
   update.exit().remove()
 
-  update.call(this.exec)
+  update.call(exec)
 }
 
 function drawLeftLinkNumber(update, className) {
-  this.exec = function(obj) {
+  function exec(obj) {
     obj.attr('x', function(d){
       const center = getCenterPoint(d.lines[0][0], d.lines[0][1])
       return center[0] - 95
@@ -182,16 +182,16 @@ function drawLeftLinkNumber(update, className) {
       return d.data
     })
   }
-  update.enter().append('text').attr('class', className).call(this.exec)
+  update.enter().append('text').attr('class', className).call(exec)
   
   
   update.exit().remove()
 
-  update.call(this.exec)
+  update.call(exec)
 }
 
 function drawLinkRightLabel(update, className) {
-  this.execRect1 = function(obj) {
+  function execRect1(obj) {
     obj.attr('x', function(d){
       return getCenterPoint(d.points[1], d.points[2])[0] - width
     }).attr('y', function(d){
@@ -202,7 +202,7 @@ function drawLinkRightLabel(update, className) {
       return height
     }).attr('fill', '#4cd3ff')
   }
-  this.execRect2 = function(obj) {
+  function execRect2(obj) {
     obj.attr('x', function(d){
       return getCenterPoint(d.points[1], d.points[2])[0] - width * (1 - d.ratio)
     }).attr('y', function(d){
@@ -213,7 +213,7 @@ function drawLinkRightLabel(update, className) {
       return height
     }).attr('fill', '#6784e3')
   }
-  this.execLabelInfo = function(obj) {
+  function execLabelInfo(obj) {
     obj.attr('x', function(d){
       return getCenterPoint(d.points[1], d.points[2])[0] - width + 15
     }).attr('y', function(d){
@@ -226,25 +226,25 @@ function drawLinkRightLabel(update, className) {
   const height = 30
   const appendG = update.enter().append('g').attr('class', className)
 
-  appendG.append('rect').attr('class', 'rect1').call(this.execRect1)
+  appendG.append('rect').attr('class', 'rect1').call(execRect1)
 
-  appendG.append('rect').attr('class', 'rect2').call(this.execRect2)
+  appendG.append('rect').attr('class', 'rect2').call(execRect2)
 
-  appendG.append('text').attr('class', 'rect-label-info').call(this.execLabelInfo)
+  appendG.append('text').attr('class', 'rect-label-info').call(execLabelInfo)
   
   update.exit().remove()
 
   console.log('update', update);
-  update.select('.rect1').call(this.execRect1)
+  update.select('.rect1').call(execRect1)
 
-  update.select('.rect2').call(this.execRect2)
+  update.select('.rect2').call(execRect2)
 
-  update.select('.rect-label-info').call(this.execLabelInfo)
+  update.select('.rect-label-info').call(execLabelInfo)
 }
 
 
 function drawPolygonLabel(update, className, startX, startY, polygonItems, callBack) {
-  this.execLabelRect = function(obj) {
+  function execLabelRect(obj) {
     obj.attr('d', function(d, index){
       let currentX = startX + index * gap
       const points = [[currentX, startY], [currentX + width, startY], [currentX + width, startY + height], [currentX, startY + height]]
@@ -276,10 +276,10 @@ function drawPolygonLabel(update, className, startX, startY, polygonItems, callB
       }
     }).style('stroke', function() { return '#000' })
   }
-  this.execRectText = function(obj) {
+  function execRectText(obj) {
     obj.attr('class', 'label-rect-text').attr('x', function(d, index){
       let currentX = startX + index * gap
-      return currentX + 10
+      return currentX + 25 - d.label.length * 15 / 2
     }).attr('y', function(d){
       return startY + 50
     }).html(function(d){
@@ -291,17 +291,17 @@ function drawPolygonLabel(update, className, startX, startY, polygonItems, callB
   const gap = 110
   const linePath = d3.line()
   const appendG = update.enter().append('g').attr('class', className)
-  appendG.append('path').attr('class', 'label-rect').call(this.execLabelRect)
+  appendG.append('path').attr('class', 'label-rect').call(execLabelRect)
   
-  appendG.append('text').attr('class', 'label-rect-text').call(this.execRectText)
+  appendG.append('text').attr('class', 'label-rect-text').call(execRectText)
 
   update.exit().remove()
 
   const updateG = update.selectAll('class', className)
 
-  update.select('.label-rect').call(this.execLabelRect)
+  update.select('.label-rect').call(execLabelRect)
 
-  update.select('.label-rect-text').call(this.execRectText)
+  update.select('.label-rect-text').call(execRectText)
 
 }
 

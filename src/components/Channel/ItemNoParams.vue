@@ -83,7 +83,7 @@
     computed: {
       ...mapState(['Notification']),
       composedUrl() {
-        return `${this.cData.url}`
+        return `${this.cData.url}?qrc=${this.cData._id}`
       }
     },
   }
