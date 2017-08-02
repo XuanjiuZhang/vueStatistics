@@ -36,8 +36,8 @@
       <div class="funnel-chart center">
         <!--<Funnel-chart></Funnel-chart>-->
         <!--<D3-funnel2></D3-funnel2>-->
-        <D3-funnel3></D3-funnel3>
-        <!--<echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>-->
+        <!--<D3-funnel3></D3-funnel3>-->
+        <echart-funnel v-if="echartFunnelData.length" :data="echartFunnelData"></echart-funnel>
       </div>
     </div>
     <div class="content-wrapper">
@@ -100,7 +100,7 @@
       } 
     },
     mounted() {
-      /*this.statisticApi.effects.getFunnelData(this.sid).then(res => {
+      this.statisticApi.effects.getFunnelData(this.sid).then(res => {
         if(res.ok){
           return res.json()
         }
@@ -120,7 +120,7 @@
         this.echartFunnelData = rawData.filter(d => {
           return d[0] != 0
         })
-      }) */
+      })
     },
     computed: {
       ...mapState(['statisticApi', 'sid']),
