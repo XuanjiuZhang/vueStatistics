@@ -111,11 +111,11 @@
         }
         const { visit, hits, data, business, order } = resData
         const rawData = [
-              [visit, '#61A0A8', '访问量'],
-              [hits, '#2F4554', '点击量'],
-              [data, '#C23531', '线索'],
-              [business, '#D48265', '商机'],
-              [order, '#91C7AE', '订单']
+              [visit, 'rgb(73,101,172)', '访问量'],
+              [hits, 'rgb(84,209,245)', '点击量'],
+              [data, 'rgb(84,209,245)', '线索'],
+              [business, 'rgb(239,135,60)', '商机'],
+              [order, 'rgb(254,202,45)', '订单']
           ]
         this.echartFunnelData = rawData.filter(d => {
           return d[0] != 0

@@ -124,7 +124,7 @@
               silent: true,
               style: {
                 text: value,
-                x: centerX - width / 2 - 10,
+                x: centerX - width / 2 - 30,
                 y: centerY,
                 font: '12px cursive ',
                 textAlign: 'right',
@@ -172,7 +172,6 @@
                   textVerticalAlign: 'middle',
                   fill: '#000000'
                 }
-
               })
             } else { // 清除
               shapes.push({
