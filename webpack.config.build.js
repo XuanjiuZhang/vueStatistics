@@ -25,7 +25,7 @@ module.exports = {
     path: path.join(__dirname, '/build/'),
     // filename: '[name].js',
     filename: '[name].min.js',
-    publicPath: '/build',
+    publicPath: './',
     chunkFilename: '[name].min.js?[hash:8]'
   },
   module: {

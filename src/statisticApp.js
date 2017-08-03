@@ -60,5 +60,5 @@ function getQueryStringByName(name) {
 }
 
 if (getQueryStringByName('sid') != '') {
-  router.push({ name: 'channelChoose', params: { id: window.sid } })
+  router.push({ name: 'channelChoose', params: { id: getQueryStringByName('sid') } })
 }
