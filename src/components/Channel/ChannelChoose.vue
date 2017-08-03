@@ -8,7 +8,7 @@
         </div>
         <div class="center left-img-wrapper">
           <div class="left-img-div">
-            <img src="./img/left.png">
+            <img :src="'./img/left.png'">
           </div>
         </div>
       </div>
