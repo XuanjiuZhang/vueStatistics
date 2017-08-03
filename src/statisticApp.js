@@ -6,8 +6,10 @@ window._lodash = _lodash;
 import initStore from './vuex/statisticStore';
 import VueClipboard from 'vue-clipboard2'
 import routes from './components/SourceRouter';
-import { Pagination, Table, TableColumn , Popover, Tooltip, Button,
-   Input, Select, Option, Dialog, Checkbox, Tabs, TabPane} from './lib/elementLib/element-ui.common'
+import {
+  Pagination, Table, TableColumn, Popover, Tooltip, Button,
+  Input, Select, Option, Dialog, Checkbox, Tabs, TabPane
+} from './lib/elementLib/element-ui.common'
 import initFilter from './lib/ourFilter'
 initFilter(Vue)
 
@@ -45,6 +47,18 @@ const instance = new Vue({
 });
 instance.$mount('#' + 'root');
 
-if(window.sid && window.sid != '<%-sid%>' && window.location.hash === '#/') {
-  router.push({ name: 'channelChoose', params: { id: window.sid }})
+if (window.sid && window.sid != '<%-sid%>' && window.location.hash === '#/') {
+  router.push({ name: 'channelChoose', params: { id: window.sid } })
+}
+
+function getQueryStringByName(name) {
+  var result = location.search.match(new RegExp('[\?\&]' + name + '=([^\&]+)', 'i'))
+  if (result == null || result.length < 1) {
+    return ''
+  }
+  return result[1];
+}
+
+if (getQueryStringByName('sid') != '') {
+  router.push({ name: 'channelChoose', params: { id: window.sid } })
 }

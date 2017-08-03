@@ -36,7 +36,7 @@ gulp.task('copyImage', function(){
 });
 
 gulp.task('dev', ['copyAll'], function() {
-  config.entry.statisticApp.unshift('webpack-dev-server/client?http://10.41.3.223:8089/', 'webpack/hot/only-dev-server');
+  config.entry.statisticApp.unshift('webpack-dev-server/client?http://10.41.3.245:8089/', 'webpack/hot/only-dev-server');
 
   var compiler = webpack(config);
   var server = new webpackDevServer(compiler, {
@@ -64,11 +64,11 @@ gulp.task('dev', ['copyAll'], function() {
         // target: 'http://192.168.150.20/'
       },
       '**/*': { 
-        target: 'http://10.41.3.223:3007'
+        target: 'http://10.41.3.245:3007'
       }
     }
   });
-  server.listen(8089, '10.41.3.223');
+  server.listen(8089, '10.41.3.245');
 });
 
 gulp.task('copyStyle', function(){
