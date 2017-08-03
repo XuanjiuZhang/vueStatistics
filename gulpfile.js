@@ -25,7 +25,7 @@ gulp.task('cleanBuild', function(){
 });
 
 
-gulp.task('copyAll', ['cleanBuild', 'copyStyle', 'copyImage', 'copyFonts', 'copyLib', 'copyOtherSource']);
+gulp.task('copyAll', ['cleanBuild', 'copyStyle', 'copyIcon', 'copyImage', 'copyFonts', 'copyLib', 'copyOtherSource']);
 
 // 压缩PNG，JPEG，GIF和SVG图像
 gulp.task('copyImage', function(){
@@ -79,12 +79,12 @@ gulp.task('copyStyle', function(){
     .pipe(gulp.dest('./build/style/'));
 });
 
-/*gulp.task('copyIcon', function(){
+gulp.task('copyIcon', function(){
   return gulp.src([
     './src/icon/*',
   ])
     .pipe(gulp.dest('./build/icon/'));
-});*/
+});
 
 gulp.task('copyFonts', function(){
   return gulp.src([
