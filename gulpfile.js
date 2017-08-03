@@ -90,7 +90,7 @@ gulp.task('copyFonts', function(){
   return gulp.src([
     './src/fonts/*',
   ])
-    .pipe(gulp.dest('./build/fonts/'));
+    .pipe(gulp.dest('./build/style/fonts/'));
 });
 
 gulp.task('copyLib', function(){
