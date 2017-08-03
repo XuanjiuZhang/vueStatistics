@@ -1,6 +1,6 @@
 
 const config = {
-  h5Service: '/h5/service', 
+  h5Service: '/source/service', 
   // h5Service: ''
 };
 
