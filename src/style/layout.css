@@ -1,0 +1,18 @@
+.w-h-full {
+  height: 100%;
+  width: 100%;
+}
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width:1400px)
+{
+  .choose-container .level-3 .level3-wrapper .text {
+    margin-left: 7px;
+  }
+}

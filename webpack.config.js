@@ -1,5 +1,5 @@
 /**
- * Created by xuanjiu on 17/2/20.
+ * Created by xuanjiu on 17/6/20.
  */
 const path = require('path');
 const webpack = require('webpack');
@@ -13,18 +13,18 @@ module.exports = {
    ],
    extensions: ['.js', '.jsx', '.css', '.less', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.js'
+      'vue$': 'vue/dist/vue.js',
+      'dropZone': __dirname + "/src/lib/vue2-dropZone/src/index.vue"
     }
   }, 
   context: __dirname + "/src",
   entry: {
-    statisticApp: ['./statisticApp.js'],
-    // vendor: ['whatwg-fetch', './lib/hammer.min.js']
+    statisticApp: ['./statisticApp.js', 'whatwg-fetch'],
   },
   output: {
-    path: path.join(__dirname, 'build'),
-    filename: '[name].js',
-    publicPath: '/build',
+    path: path.join(__dirname, 'build/js'),
+    filename: '[name].min.js',
+    publicPath: './',
     chunkFilename: '[name].min.js?[hash:8]'
   },
   module: {

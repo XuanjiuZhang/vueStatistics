@@ -12,19 +12,20 @@ module.exports = {
     ],
     extensions: ['.js', '.jsx', '.css', '.less', '.vue'],
     alias: {
-      'vue$': 'vue/dist/vue.js'
+      'vue$': 'vue/dist/vue.js',
+      'dropZone': __dirname + "/src/lib/vue2-dropZone/src/index.vue"
     }
   },
   context: __dirname + "/src",
   entry: {
-    app: ['./statisticApp.js'],
+    statisticApp: ['./statisticApp.js', 'whatwg-fetch'],
     // vendor: ['whatwg-fetch', './lib/hammer.min.js']
   },
   output: {
     path: path.join(__dirname, '/build/'),
     // filename: '[name].js',
     filename: '[name].min.js',
-    publicPath: '/build/',
+    publicPath: './',
     chunkFilename: '[name].min.js?[hash:8]'
   },
   module: {
